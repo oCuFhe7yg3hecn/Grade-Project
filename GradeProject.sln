@@ -3,7 +3,42 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject", "GradeProject\GradeProject.csproj", "{133D87BD-7516-40B3-BFAA-EDEEA01BBD21}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FA391D0-53E4-4A2B-8DAA-883CA3A02F90}"
+	ProjectSection(SolutionItems) = preProject
+		MicrosAim.txt = MicrosAim.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{6F45A4FC-CC81-4232-B6BD-62A3EFCE55B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{D3E047BE-756A-4A69-AEA7-EF54774663F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games Catalog Service", "Games Catalog Service", "{B31CE14C-2252-4111-B8D5-4B404085EB60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradeProject-Web\", "{78B87DE8-A66A-4309-AD58-2D8FF08434C1}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51572"
+		Debug.AspNetCompiler.PhysicalPath = "GradeProject-Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51572\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51572"
+		Release.AspNetCompiler.PhysicalPath = "GradeProject-Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51572\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51572"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client", "Web Client", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +46,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{133D87BD-7516-40B3-BFAA-EDEEA01BBD21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{133D87BD-7516-40B3-BFAA-EDEEA01BBD21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{133D87BD-7516-40B3-BFAA-EDEEA01BBD21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{133D87BD-7516-40B3-BFAA-EDEEA01BBD21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F45A4FC-CC81-4232-B6BD-62A3EFCE55B1} = {7FA391D0-53E4-4A2B-8DAA-883CA3A02F90}
+		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A} = {D3E047BE-756A-4A69-AEA7-EF54774663F2}
+		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3} = {B31CE14C-2252-4111-B8D5-4B404085EB60}
+		{78B87DE8-A66A-4309-AD58-2D8FF08434C1} = {2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42482759-E2C3-4B02-BE1C-96D10B803BC0}
