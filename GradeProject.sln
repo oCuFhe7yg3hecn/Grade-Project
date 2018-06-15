@@ -36,6 +36,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradePr
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "51572"
+		SlnRelativePath = "GradeProject-Web\"
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client", "Web Client", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
