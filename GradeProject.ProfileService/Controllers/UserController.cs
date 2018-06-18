@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Models;
 using GradeProject.ProfileService.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +23,16 @@ namespace GradeProject.ProfileService.Controllers
             _userService = userServie;
         }
 
-        // GET: api/User
         [HttpGet]
-        public async Task<List<User>> GetAsync() => await _userService.GetUsers();
+        [Authorize]
+        public IActionResult GetCalims()
+        {
+            return new JsonResult(User.Claims.Select(x => new { x.Type, x.Value }));
+        }
+
+        //// GET: api/User
+        //[HttpGet]
+        //public async Task<List<User>> GetAsync() => await _userService.GetUsers();
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]

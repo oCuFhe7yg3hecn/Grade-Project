@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
@@ -30,6 +31,25 @@ namespace GradeProject.ProfileService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.SignInScheme = "Cookies";
+
+                    options.Authority = "http://localhost:44313";
+                    options.RequireHttpsMetadata = false;
+
+                    options.ClientId = "mvc";
+                    options.SaveTokens = true;
+                });
+
             services.AddMvc();
 
             services.Configure<MongoDbSettings>(opts =>
@@ -56,7 +76,6 @@ namespace GradeProject.ProfileService
             AppContainer = builder.Build();
 
             return new AutofacServiceProvider(this.AppContainer);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,8 +88,9 @@ namespace GradeProject.ProfileService
 
             var contRootPath = env.ContentRootPath;
 
-            app.UseStaticFiles();
+            app.UseAuthentication();
 
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
