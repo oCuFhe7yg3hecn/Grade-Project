@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradePr
 		SlnRelativePath = "GradeProject-Web\"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client", "Web Client", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client - Angular", "Web Client - Angular", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{2638D681-4D50-4AA3-AD6E-52E7297CA70C}"
 EndProject
@@ -37,6 +37,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{D3D60674-A9D0-4D43-8F87-C8419AF807DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Catalog Service", "Game Catalog Service", "{5E730C81-6181-45CB-B4E3-017B029B318C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.MVCWeb", "GradeProject.MVCWeb\GradeProject.MVCWeb.csproj", "{00546911-06AF-472F-B563-FBD455DE0DF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client - MVC", "Web Client - MVC", "{4B70FF24-21C6-44CD-80C4-0B18868D9794}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Registration Service", "Game Registration Service", "{6BCA6DAF-9FFF-4195-AD41-6B2EB0861F9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.GameRegService", "GradeProject.GameRegService\GradeProject.GameRegService.csproj", "{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +68,14 @@ Global
 		{7727124F-0835-4017-A5B0-F35348F0F071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00546911-06AF-472F-B563-FBD455DE0DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00546911-06AF-472F-B563-FBD455DE0DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00546911-06AF-472F-B563-FBD455DE0DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00546911-06AF-472F-B563-FBD455DE0DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +85,8 @@ Global
 		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD} = {2638D681-4D50-4AA3-AD6E-52E7297CA70C}
 		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5} = {5E730C81-6181-45CB-B4E3-017B029B318C}
 		{7727124F-0835-4017-A5B0-F35348F0F071} = {D3D60674-A9D0-4D43-8F87-C8419AF807DD}
+		{00546911-06AF-472F-B563-FBD455DE0DF6} = {4B70FF24-21C6-44CD-80C4-0B18868D9794}
+		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D} = {6BCA6DAF-9FFF-4195-AD41-6B2EB0861F9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42482759-E2C3-4B02-BE1C-96D10B803BC0}
