@@ -34,8 +34,9 @@ export class AuthService {
   }
 
   getClientSettings(): UserManagerSettings {
+    console.log("Got Auth Settings");
     return {
-      authority: "http://localhost:44350/",
+      authority: "https://localhost:44350/",
       client_id: "Platform.AngularClient",
       redirect_uri: "http://localhost:4200/auth-callback",
       post_logout_redirect_uri: "http://localhost:4200/",

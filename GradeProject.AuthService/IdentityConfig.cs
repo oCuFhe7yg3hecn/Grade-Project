@@ -73,7 +73,8 @@ namespace GradeProject.AuthService
 
                     RedirectUris = { "http://localhost:4200//auth-callback" }, // Url of the WebApp Client
                     PostLogoutRedirectUris = { "http://localhost:4200/" }, // Url of the WebApp Client
-                    
+                    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
+
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

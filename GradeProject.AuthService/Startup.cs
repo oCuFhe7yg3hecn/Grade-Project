@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeProject.AuthService.MongoInfrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,16 @@ namespace GradeProject.AuthService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MongoDbSettings>(opts =>
+            {
+                opts.Database = Configuration["MongoDbSettings:Database"];
+                opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
+            });
+
+            services.AddTransient<MongoDbSettings>();
+            services.AddTransient<MongoDbContext>();
+
+
             services.AddCors(opts => opts.AddPolicy("AllowAll", builder =>
              {
                  builder.AllowAnyOrigin()
@@ -30,19 +41,20 @@ namespace GradeProject.AuthService
 
             services.AddMvc();
 
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddMongoRepository()
+            //    .AddIdentityApiResources()
+            //    .AddPersistedGrants()
+            //    .AddClients()
+            //    .AddTestUsers(IdentityConfig.GetUsers());
+
             services.AddIdentityServer()
                          .AddDeveloperSigningCredential() /* TODO: REPLACE THIS WITH YOUR SIGNING */
                          .AddInMemoryApiResources(IdentityConfig.GetApiResources())
                          .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                          .AddInMemoryClients(IdentityConfig.GetClients())
                          .AddTestUsers(IdentityConfig.GetUsers());
-
-            //services.AddIdentityServer()
-            //           .AddDeveloperSigningCredential() /* TODO: REPLACE THIS WITH YOUR SIGNING */
-            //           .AddInMemoryApiResources(IdentityConfig.GetApiResources())
-            //           .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
-            //           .AddInMemoryClients(IdentityConfig.GetClients())
-            //           .AddTestUsers(IdentityConfig.GetUsers());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
