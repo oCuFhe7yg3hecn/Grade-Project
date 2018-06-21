@@ -3,21 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FA391D0-53E4-4A2B-8DAA-883CA3A02F90}"
-	ProjectSection(SolutionItems) = preProject
-		MicrosAim.txt = MicrosAim.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{6F45A4FC-CC81-4232-B6BD-62A3EFCE55B1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{D3E047BE-756A-4A69-AEA7-EF54774663F2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games Catalog Service", "Games Catalog Service", "{B31CE14C-2252-4111-B8D5-4B404085EB60}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}"
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradeProject-Web\", "{78B87DE8-A66A-4309-AD58-2D8FF08434C1}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -41,7 +26,17 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradePr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client", "Web Client", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity Service", "Identity Service", "{2638D681-4D50-4AA3-AD6E-52E7297CA70C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{2638D681-4D50-4AA3-AD6E-52E7297CA70C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{7727124F-0835-4017-A5B0-F35348F0F071}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{D3D60674-A9D0-4D43-8F87-C8419AF807DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Catalog Service", "Game Catalog Service", "{5E730C81-6181-45CB-B4E3-017B029B318C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,27 +44,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7727124F-0835-4017-A5B0-F35348F0F071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7727124F-0835-4017-A5B0-F35348F0F071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6F45A4FC-CC81-4232-B6BD-62A3EFCE55B1} = {7FA391D0-53E4-4A2B-8DAA-883CA3A02F90}
-		{143C5EAE-50EF-4D0C-9BC2-2377AF486D4A} = {D3E047BE-756A-4A69-AEA7-EF54774663F2}
-		{437D53E9-A100-4FF7-8C59-FC1B99C2A8E3} = {B31CE14C-2252-4111-B8D5-4B404085EB60}
 		{78B87DE8-A66A-4309-AD58-2D8FF08434C1} = {2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}
+		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD} = {2638D681-4D50-4AA3-AD6E-52E7297CA70C}
+		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5} = {5E730C81-6181-45CB-B4E3-017B029B318C}
+		{7727124F-0835-4017-A5B0-F35348F0F071} = {D3D60674-A9D0-4D43-8F87-C8419AF807DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42482759-E2C3-4B02-BE1C-96D10B803BC0}

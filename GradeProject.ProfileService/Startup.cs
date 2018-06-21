@@ -31,26 +31,51 @@ namespace GradeProject.ProfileService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.SignInScheme = "Cookies";
-
-                    options.Authority = "http://localhost:44313";
-                    options.RequireHttpsMetadata = false;
-
-                    options.ClientId = "mvc";
-                    options.SaveTokens = true;
-                });
+            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf
+                                                                    .AllowAnyOrigin()
+                                                                    .AllowAnyMethod()));
 
             services.AddMvc();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            //Platform.ProfileService
+
+            services.AddAuthentication("Bearer")
+                    .AddIdentityServerAuthentication(options =>
+                    {
+
+                        // === FOR DEMO ONLY
+                        options.RequireHttpsMetadata = false;
+                        // SET THIS TO true IN PRODUCTION!
+
+                        options.Authority = "http://localhost:5000";
+                        options.ApiName = "Platform.ProfileService";
+                        //options.ApiSecret = "profileService-secret";
+                    });
+
+            //services.AddAut
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultScheme = "Cookies";
+            //    options.DefaultChallengeScheme = "oidc";
+            //})
+            //    .AddCookie("Cookies")
+            //    .AddOpenIdConnect("oidc", options =>
+            //    {
+            //        options.SignInScheme = "Cookies";
+
+            //        options.Authority = "http://localhost:5000";
+            //        options.RequireHttpsMetadata = false;
+
+            //        options.ClientId = "mvc";
+            //        options.SaveTokens = true;
+            //    });
+
+            //services.AddMvc();
+
+            services.AddAuthentication();
 
             services.Configure<MongoDbSettings>(opts =>
             {
@@ -86,9 +111,9 @@ namespace GradeProject.ProfileService
                 app.UseDeveloperExceptionPage();
             }
 
-            var contRootPath = env.ContentRootPath;
+            //app.UseAuthentication();
 
-            app.UseAuthentication();
+            app.UseCors("AllowAll");
 
             app.UseStaticFiles();
             app.UseMvc();
