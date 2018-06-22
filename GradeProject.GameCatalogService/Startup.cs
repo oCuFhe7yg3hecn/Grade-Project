@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +26,16 @@ namespace GradeProject.GameCatalogService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.Configure<MongoDbSettings>(opts =>
+            {
+                opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
+                opts.Database = Configuration["MongoDbSettings:Database"];
+            });
+
+            services.AddTransient<MongoDbContext>();
+            services.AddTransient<GamesRepository>();
+            services.AddTransient<GamesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

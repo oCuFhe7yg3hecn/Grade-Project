@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>118ae428-320f-41ea-bd9a-6029472acb50</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
   </ItemGroup>
 
   <ItemGroup>
