@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Builder;
@@ -22,8 +24,10 @@ namespace GradeProject.GameCatalogService
 
         public IConfiguration Configuration { get; }
 
+        public IContainer AppContainer { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
@@ -33,9 +37,23 @@ namespace GradeProject.GameCatalogService
                 opts.Database = Configuration["MongoDbSettings:Database"];
             });
 
-            services.AddTransient<MongoDbContext>();
-            services.AddTransient<GamesRepository>();
-            services.AddTransient<GamesService>();
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+
+            //Context
+            builder.Register(c => new MongoDbSettings());
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+
+            //Repos
+            builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>()));
+
+            //Services
+            builder.Register(c => new GamesService(c.Resolve<GamesRepository>()));
+
+            AppContainer = builder.Build();
+
+            return new AutofacServiceProvider(this.AppContainer);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
