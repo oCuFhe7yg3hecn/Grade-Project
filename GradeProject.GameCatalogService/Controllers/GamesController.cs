@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -13,15 +14,18 @@ namespace GradeProject.GameCatalogService.Controllers
     public class GamesController : Controller
     {
         private readonly GamesService _gamesSvc;
+        private readonly ILogger<GamesController> _logger;
 
-        public GamesController(GamesService gamesSvc)
+        public GamesController(GamesService gamesSvc, ILogger<GamesController> logger)
         {
             _gamesSvc = gamesSvc;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogInformation("Games were requested!");
             var games = await _gamesSvc.GetAll();
             return Ok(games);
         }
