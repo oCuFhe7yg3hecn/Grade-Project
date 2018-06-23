@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using GradeProject.GameCatalogService.Controllers;
+using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,7 +32,9 @@ namespace GradeProject.GameCatalogService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(opts => {
+                opts.Filters.Add(typeof(ApiExceptionFilter));
+            });
 
             services.Configure<MongoDbSettings>(opts =>
             {

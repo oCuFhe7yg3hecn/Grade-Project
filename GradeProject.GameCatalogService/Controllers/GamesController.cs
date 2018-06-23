@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,9 +26,9 @@ namespace GradeProject.GameCatalogService.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            _logger.LogInformation("Games were requested!");
-            var games = await _gamesSvc.GetAll();
-            return Ok(games);
+            throw new ArgumentException("NLog testing exception");
+            //var games = await _gamesSvc.GetAll();
+            //return Ok(games);
         }
 
         [HttpGet]
