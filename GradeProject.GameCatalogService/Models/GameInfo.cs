@@ -13,6 +13,7 @@ namespace GradeProject.GameCatalogService.Models
         {
             Id = Guid.NewGuid();
             Tags = new List<string>();
+            Categories = new List<string>();
             MultiMedias = new List<string>();
 
             CreatedAt = DateTime.Now;
@@ -30,6 +31,8 @@ namespace GradeProject.GameCatalogService.Models
         public string Description { get; set; }
 
         public string Version { get; set; }
+
+        public List<string> Categories { get; set; }
 
         public List<string> Tags { get; set; }
 

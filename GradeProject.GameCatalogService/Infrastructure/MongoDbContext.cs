@@ -15,6 +15,8 @@ namespace GradeProject.GameCatalogService.Infrastructure
 
         public IMongoCollection<GameInfo> Games => _database.GetCollection<GameInfo>("GamesData");
 
+        public IMongoCollection<Category> Categories => _database.GetCollection<Category>("Categories");
+
         public MongoDbContext(IOptions<MongoDbSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);

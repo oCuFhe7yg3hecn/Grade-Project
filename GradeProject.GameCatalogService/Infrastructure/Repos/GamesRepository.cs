@@ -1,5 +1,6 @@
 ﻿using GradeProject.GameCatalogService.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,8 @@ namespace GradeProject.GameCatalogService.Infrastructure
 
         public async Task<List<GameInfo>> Where(Expression<Func<GameInfo, bool>> filter, int count = 10, int page = 1)
         {
-            //var lastId = _games.Find(_ => true).First().Id;
-            //for (int i = 0; i < page-1; i++)
-            //{
-            //    var games = _games.Find(g => g.Id == lastId).Limit(count).ToList();
-            //    lastId = games.LastOrDefault().Id;
-            //}
             return await _games.Find(filter)
-                        .Skip(count * (page - 1))
+                        .Skip(count * (page <= 0 ? 1 : page - 1))
                         .Limit(count)
                         .ToListAsync();
         }

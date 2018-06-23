@@ -24,18 +24,17 @@ namespace GradeProject.GameCatalogService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(PagingOptions pageOptions)
         {
-            throw new ArgumentException("NLog testing exception");
-            //var games = await _gamesSvc.GetAll();
-            //return Ok(games);
+            var games = await _gamesSvc.GetAllAsync(pageOptions);
+            return Ok(games);
         }
 
         [HttpGet]
         [Route("{id:required}")]
         public async Task<IActionResult> Get(string id)
         {
-            var game = await _gamesSvc.GetById(id);
+            var game = await _gamesSvc.GetByIdAsync(id);
             return Ok(game);
         }
 
