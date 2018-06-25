@@ -17,6 +17,7 @@ namespace GradeProject.GameCatalogService.Infrastructure
             _repo = repo;
         }
 
+
         public async Task<List<GameInfo>> GetAllAsync(PagingOptions pageOptions)
         {
             return await _repo.Where(_ => true,
@@ -32,10 +33,17 @@ namespace GradeProject.GameCatalogService.Infrastructure
                                   count,
                                   page);
 
-        public async Task<List<GameInfo>> GetByCategoriesAsync(List<string> categories, PagingOptions opts) =>
-             await _repo.Where(g => g.Categories.Any(category => categories.Contains(category)),
-                                   opts.PageSize,
-                                   opts.Page);
+        public async Task<PaginatedResponse<GameInfo>> GetByCategoriesAsync(List<string> categories, PagingOptions opts)
+        {
+            var itemsCount = await _repo.CountAsync(g => g.Categories.Any(category => categories.Contains(category)));
+            if (itemsCount == 0) { return new PaginatedResponse<GameInfo>(opts.Page, opts.PageSize, itemsCount, null); }
+
+            var games = await _repo.Where(g => g.Categories.Any(category => categories.Contains(category)),
+                                  opts.PageSize,
+                                  opts.Page);
+
+            return new PaginatedResponse<GameInfo>(opts.Page, opts.PageSize, itemsCount/opts.PageSize, games);
+        }
 
     }
 }

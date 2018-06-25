@@ -105,5 +105,8 @@ namespace GradeProject.GameCatalogService.Infrastructure
             }
         }
 
+        public IMongoCollection<T> GetClollection<T>(string collectionName) => _database.GetCollection<T>(collectionName);
+
+
     }
 }

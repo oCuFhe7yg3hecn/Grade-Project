@@ -19,6 +19,12 @@ namespace GradeProject.GameCatalogService.Infrastructure
             _games = context.Games;
         }
 
+        public async Task<int> CountAsync(Expression<Func<GameInfo, bool>> filter = null)
+        {
+            var count = filter == null ? await _games.CountAsync(filter) : await _games.CountAsync(_ => true);
+            return Convert.ToInt32(count);
+        }
+
         public async Task<GameInfo> Single(Expression<Func<GameInfo, bool>> filter) =>
             await _games.Find(filter).FirstAsync();
 
@@ -41,9 +47,15 @@ namespace GradeProject.GameCatalogService.Infrastructure
             return res.IsAcknowledged && res.ModifiedCount == 1;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> UpdateManyAsync(UpdateDefinition<GameInfo> updateDefinition)
         {
-            var deleteResult = await _games.DeleteOneAsync(g => g.Id == id);
+            var res = await _games.UpdateManyAsync(_ => true, updateDefinition);
+            return res.IsAcknowledged && res.ModifiedCount > 0;
+        }
+
+        public async Task<bool> Delete(Expression<Func<GameInfo, bool>> filter)
+        {
+            var deleteResult = await _games.DeleteOneAsync(filter);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount == 1;
         }
 

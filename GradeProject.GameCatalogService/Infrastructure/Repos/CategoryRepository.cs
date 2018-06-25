@@ -45,9 +45,9 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
             return res.IsAcknowledged && res.ModifiedCount == 1;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(Expression<Func<Category, bool>> filter)
         {
-            var deleteResult = await _categories.DeleteOneAsync(g => g.Id == id);
+            var deleteResult = await _categories.DeleteOneAsync(filter);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount == 1;
         }
 

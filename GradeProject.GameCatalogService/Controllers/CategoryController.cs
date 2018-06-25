@@ -15,18 +15,18 @@ namespace GradeProject.GameCatalogService.Controllers
     public class CategoryController : Controller
     {
         private readonly GamesService _gameSvc;
-        private readonly CategoryRepository _ctgRepo;
+        private readonly CategoryService _categorygSvc;
 
-        public CategoryController(GamesService gameSvc, CategoryRepository ctgRepo)
+        public CategoryController(GamesService gameSvc, CategoryService ctgRepo)
         {
             _gameSvc = gameSvc;
-            _ctgRepo = ctgRepo;
+            _categorygSvc = ctgRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var categories = await _ctgRepo.AllAsync();
+            var categories = await _categorygSvc.AllAsync();
             return Ok(categories);
         }
 
@@ -35,16 +35,26 @@ namespace GradeProject.GameCatalogService.Controllers
         public async Task<IActionResult> GetByCategories(string categories, PagingOptions pageOptions)
         {
             var categoriesList = categories.Split(",").Select(x => x.Trim()).ToList();
-            var games = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions);
-            return Ok(games);
+            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions);
+
+            return Ok(gamesResponse);
         }
 
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody]string name)
         {
-            var newCategory = new Category(name);
-            await _ctgRepo.Add(newCategory);
-            return CreatedAtRoute("GetByCategories", name);
+            await _categorygSvc.AddAsync(name);
+            return CreatedAtRoute(nameof(GetByCategories), new { categories = name }, name);
+        }
+
+        //[Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteCategory(string name)
+        {
+            if (await _categorygSvc.DeleteCategory(name)) { return NoContent(); }
+            else { return BadRequest("Error. Deletion wasnt completed. Check your data"); }
         }
     }
 }

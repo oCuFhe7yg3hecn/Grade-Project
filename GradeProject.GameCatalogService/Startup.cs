@@ -7,6 +7,7 @@ using Autofac.Extensions.DependencyInjection;
 using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,9 +52,11 @@ namespace GradeProject.GameCatalogService
 
             //Repos
             builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>()));
+            builder.Register(c => new CategoryRepository(c.Resolve<MongoDbContext>()));
 
             //Services
             builder.Register(c => new GamesService(c.Resolve<GamesRepository>()));
+            builder.Register(c => new CategoryService(c.Resolve<CategoryRepository>(), c.Resolve<GamesRepository>()));
 
             AppContainer = builder.Build();
 
