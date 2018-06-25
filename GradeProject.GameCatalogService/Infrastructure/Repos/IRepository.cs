@@ -9,6 +9,8 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
 {
     interface IRepository<T> where T : class
     {
+        Task<int> CountAsync(Expression<Func<T, bool>> filter = null);
+
         Task<T> SingleAsync(Expression<Func<T, bool>> filter);
         Task<List<T>> WhereAsync(Expression<Func<T, bool>> filter, int count = 10, int page = 1);
 
