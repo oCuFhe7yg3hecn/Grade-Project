@@ -17,11 +17,11 @@ namespace GradeProject.ProfileService.Controllers
     [Route("api/Users")]
     public class UsersController : Controller
     {
-        private readonly UserService _userService;
+        private readonly UserService _userSvc;
 
         public UsersController(UserService userServie)
         {
-            _userService = userServie;
+            _userSvc = userServie;
         }
 
         //[HttpGet]
@@ -35,20 +35,20 @@ namespace GradeProject.ProfileService.Controllers
         [HttpGet]
         [EnableCors("AllowAll")]
         [Authorize]
-        public async Task<List<User>> GetAsync() => await _userService.GetUsers();
+        public async Task<List<User>> GetAsync() => await _userSvc.GetUsers();
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
-            return "value";
+            return _userSvc
         }
 
         // POST: api/User
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]UserInsertDTO newUser)
         {
-            await _userService.CreateUser(newUser);
+            await _userSvc.CreateUser(newUser);
             return NoContent();
         }
 
@@ -58,14 +58,14 @@ namespace GradeProject.ProfileService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody]UserInsertDTO user)
         {
-            await _userService.UpdateUser(id, user);
+            await _userSvc.UpdateUser(id, user);
             return NoContent();
         }
 
         [HttpPost("{userId}/friend/{friendId}")]
         public async Task<IActionResult> AddFriend(string userId, string friendId)
         {
-            await _userService.AddFriend(userId, friendId);
+            await _userSvc.AddFriend(userId, friendId);
             return NoContent();
         }
 
@@ -73,7 +73,7 @@ namespace GradeProject.ProfileService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _userService.DeleteUser(id);
+            await _userSvc.DeleteUser(id);
             return NoContent();
         }
     }
