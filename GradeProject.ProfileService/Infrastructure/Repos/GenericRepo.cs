@@ -37,7 +37,7 @@ namespace GradeProject.ProfileService.Infrastructure.Repos
         public async Task AddOneAsync(T newGame) =>
             await _coll.InsertOneAsync(newGame);
 
-        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition, Guid gameId)
+        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition)
         {
             var res = await _coll.UpdateOneAsync(filter,
                                                  updateDefinition);
@@ -57,6 +57,12 @@ namespace GradeProject.ProfileService.Infrastructure.Repos
         {
             var deleteResult = await _coll.DeleteOneAsync(filter);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount == 1;
+        }
+
+        public async Task<bool> CheckASync(Expression<Func<T, bool>> statement)
+        {
+            var user = await SingleAsync(statement);
+            return user != null ? true : false;
         }
     }
 }

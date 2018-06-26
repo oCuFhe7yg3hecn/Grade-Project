@@ -16,9 +16,11 @@ namespace GradeProject.ProfileService.Infrastructure.Repos
 
         Task AddOneAsync(T newGame);
 
-        Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition, Guid gameId);
+        Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition);
         Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition);
 
         Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter);
+
+        Task<bool> CheckASync(Expression<Func<T, bool>> statement);
     }
 }

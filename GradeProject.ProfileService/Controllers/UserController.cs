@@ -35,13 +35,14 @@ namespace GradeProject.ProfileService.Controllers
         [HttpGet]
         [EnableCors("AllowAll")]
         [Authorize]
-        public async Task<List<User>> GetAsync() => await _userSvc.GetUsers();
+        public async Task<List<User>> GetAsync() => await _userSvc.GetUsersAsync();
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return _userSvc
+            var user = await _userSvc.GetUserByIdAsync(id);
+            return Ok(user);
         }
 
         // POST: api/User
@@ -66,7 +67,7 @@ namespace GradeProject.ProfileService.Controllers
         public async Task<IActionResult> AddFriend(string userId, string friendId)
         {
             await _userSvc.AddFriend(userId, friendId);
-            return NoContent();
+            return Ok(_userSvc.GetUserByIdAsync(userId));
         }
 
         // DELETE: api/ApiWithActions/5
