@@ -7,6 +7,7 @@ using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -16,16 +17,22 @@ namespace GradeProject.GameCatalogService.Controllers
     {
         private readonly GamesService _gameSvc;
         private readonly CategoryService _categorygSvc;
+        private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(GamesService gameSvc, CategoryService ctgRepo)
+        public CategoryController(
+            GamesService gameSvc, 
+            CategoryService ctgRepo, 
+            ILogger<CategoryController> logger)
         {
             _gameSvc = gameSvc;
             _categorygSvc = ctgRepo;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogWarning("Test Elmahio bug");
             var categories = await _categorygSvc.AllAsync();
             return Ok(categories);
         }

@@ -38,19 +38,19 @@ namespace GradeProject.GameCatalogService.Controllers
             return Ok(game);
         }
 
-        // Into tags Controller
-        //[HttpGet]
-        //[Route("{tags}")]
-        //public async Task<IActionResult> GetByTags(string tags, [FromQuery]int count = 10, [FromQuery]int page = 1)
-        //{
-        //    var tagsList = tags.Split(",").Select(x => x.Trim()).ToList();
-        //    var games = await _gamesSvc.GetByTags(tagsList, count, page);
-        //    return Ok(new
-        //    {
-        //        Page = page,
-        //        Items = games.Count,
-        //        Games = games,
-        //    });
-        //}
+       // Into tags Controller
+       //[HttpGet]
+       //[Route("{tags}")]
+       // public async Task<IActionResult> GetByTags(string tags, [FromQuery]int count = 10, [FromQuery]int page = 1)
+       // {
+       //     var tagsList = tags.Split(",").Select(x => x.Trim()).ToList();
+       //     var games = await _gamesSvc.GetByTags(tagsList, count, page);
+       //     return Ok(new
+       //     {
+       //         Page = page,
+       //         Items = games.Count,
+       //         Games = games,
+       //     });
+       // }
     }
 }

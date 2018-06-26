@@ -33,32 +33,31 @@ namespace GradeProject.GameCatalogService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(opts => {
+            services.AddMvc(opts =>
+            {
                 opts.Filters.Add(typeof(ApiExceptionFilter));
             });
 
+            //Add Authentication
+            services.AddAuthentication("Bearer")
+                  .AddIdentityServerAuthentication(options =>
+                  {
+                      // SET THIS TO true IN PRODUCTION!
+                      options.RequireHttpsMetadata = false;
+
+                      options.Authority = "http://localhost:5000";
+                      options.ApiName = $"Platform.GameCatalogService";
+                  });
+
+            //Configuration
             services.Configure<MongoDbSettings>(opts =>
             {
                 opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
                 opts.Database = Configuration["MongoDbSettings:Database"];
             });
 
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-
-            //Context
-            builder.Register(c => new MongoDbSettings());
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
-
-            //Repos
-            builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>()));
-            builder.Register(c => new CategoryRepository(c.Resolve<MongoDbContext>()));
-
-            //Services
-            builder.Register(c => new GamesService(c.Resolve<GamesRepository>()));
-            builder.Register(c => new CategoryService(c.Resolve<CategoryRepository>(), c.Resolve<GamesRepository>()));
-
-            AppContainer = builder.Build();
+            //REgister Dependencies
+            AppContainer = RegisterDependencies(services);
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -72,7 +71,34 @@ namespace GradeProject.GameCatalogService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseMvc();
+        }
+
+        private IContainer RegisterDependencies(IServiceCollection services)
+        {
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+
+            //Context
+            builder.Register(c => new MongoDbSettings());
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+
+            //Repos
+            //builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
+            //builder.Register(c => new CategoryRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
+            //Services
+            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
+                                                                                                                                   .InstancePerLifetimeScope();
+
+            builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
+                                                      c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
+                                                                                                                                   .InstancePerLifetimeScope();
+
+            return builder.Build();
         }
     }
 }

@@ -9,28 +9,30 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
 {
     public class CategoryService
     {
-        private readonly CategoryRepository _ctgRepo;
-        private readonly GamesRepository _gameRepo;
+        private readonly IRepository<Category> _ctgRepo;
+        private readonly IRepository<GameInfo> _gameRepo;
 
-        public CategoryService(CategoryRepository ctgRepo, GamesRepository gameRepo)
+        public CategoryService(IRepository<Category> ctgRepo, IRepository<GameInfo> gameRepo)
         {
             _ctgRepo = ctgRepo;
             _gameRepo = gameRepo;
         }
 
         public async Task<List<Category>> AllAsync() =>
-            await _ctgRepo.Where(_ => true);
+            await _ctgRepo.WhereAsync(_ => true);
 
         public async Task AddAsync(string name) =>
-            await _ctgRepo.Add(new Category(name));
+            await _ctgRepo.AddOneAsync(new Category(name));
 
         public async Task<bool> DeleteCategory(string name)
         {
             var updateFilter = new UpdateDefinitionBuilder<GameInfo>()
                                 .Pull(x => x.Categories, name);
 
-            var updateGames = await _gameRepo.UpdateManyAsync(updateFilter);
-            var res = await _ctgRepo.Delete(c => c.Name == name);
+            var updateGames = await _gameRepo.UpdateManyAsync(g => g.Categories.Contains(name),
+                                                              updateFilter);
+
+            var res = await _ctgRepo.DeleteOneAsync(c => c.Name == name);
             return res;
         }
     }

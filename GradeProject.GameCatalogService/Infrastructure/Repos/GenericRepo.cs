@@ -11,14 +11,15 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
     {
         private readonly IMongoCollection<T> _coll;
 
-        //public GenericRepo(MongoDbContext context, string collect)
-        //{
-        //    _coll = context.GetClollection<T>("");
-        //}
+        public GenericRepo(MongoDbContext context, string collectionName)
+        {
+            _coll = context.GetClollection<T>(collectionName);
+        }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
         {
             var count = filter == null ? await _coll.CountAsync(filter) : await _coll.CountAsync(_ => true);
+
             return Convert.ToInt32(count);
         }
 
@@ -36,17 +37,19 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
         public async Task AddOneAsync(T newGame) =>
             await _coll.InsertOneAsync(newGame);
 
-        public async Task<bool> UpdateOneAsync(UpdateDefinition<T> updateDefinition, Guid gameId)
+        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition, Guid gameId)
         {
-            var res = await _coll.UpdateOneAsync(u => u.Id == gameId,
-                                          updateDefinition);
+            var res = await _coll.UpdateOneAsync(filter,
+                                                 updateDefinition);
 
             return res.IsAcknowledged && res.ModifiedCount == 1;
         }
 
-        public async Task<bool> UpdateManyAsync(UpdateDefinition<T> updateDefinition)
+        public async Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition)
         {
-            var res = await _coll.UpdateManyAsync(_ => true, updateDefinition);
+            var res = await _coll.UpdateManyAsync(filter,
+                                                  updateDefinition);
+
             return res.IsAcknowledged && res.ModifiedCount > 0;
         }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Infrastructure.Repos
 {
-    interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         Task<int> CountAsync(Expression<Func<T, bool>> filter = null);
 
@@ -16,8 +16,8 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
 
         Task AddOneAsync(T newGame);
 
-        Task<bool> UpdateOneAsync(UpdateDefinition<T> updateDefinition, Guid gameId);
-        Task<bool> UpdateManyAsync(UpdateDefinition<T> updateDefinition);
+        Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition, Guid gameId);
+        Task<bool> UpdateManyAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition);
 
         Task<bool> DeleteOneAsync(Expression<Func<T, bool>> filter);
     }
