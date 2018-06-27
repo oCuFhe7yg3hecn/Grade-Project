@@ -17,7 +17,7 @@ namespace GradeProject.ProfileService.Infrastructure
 
         public UserRepository(MongoDbContext context)
         {
-            _users = context.Users;
+            _users = context.GetClollection<User>("Users");
         }
 
         public async Task<List<User>> GetUsers(Expression<Func<User, bool>> filter) =>
