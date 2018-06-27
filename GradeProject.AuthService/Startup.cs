@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GradeProject.AuthService
 {
+    //For reviewers : Поки що весь інмеморі, бо буду писати майже кастомний. Треба більше часу, а ревю вже близбко
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -50,7 +51,7 @@ namespace GradeProject.AuthService
             //    .AddTestUsers(IdentityConfig.GetUsers());
 
             services.AddIdentityServer()
-                         .AddDeveloperSigningCredential() /* TODO: REPLACE THIS WITH YOUR SIGNING */
+                         .AddDeveloperSigningCredential()
                          .AddInMemoryApiResources(IdentityConfig.GetApiResources())
                          .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                          .AddInMemoryClients(IdentityConfig.GetClients())
@@ -77,13 +78,6 @@ namespace GradeProject.AuthService
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
         }
     }
 }
