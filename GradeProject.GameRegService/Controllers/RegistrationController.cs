@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AutoMapper;
 using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Communication.Events;
 using GradeProject.GameRegService.Infrstructure;
@@ -20,11 +21,13 @@ namespace GradeProject.GameRegService.Controllers
     {
         private readonly IEventBus _eventBus;
         private readonly HttpClient _httpClient;
+        private readonly IMapper _mapper;
 
-        public RegistrationController(IEventBus eventBus)
+        public RegistrationController(IEventBus eventBus, IMapper mapper)
         {
             _eventBus = eventBus;
             _httpClient = new HttpClient();
+            _mapper = mapper;
         }
 
 
@@ -32,11 +35,11 @@ namespace GradeProject.GameRegService.Controllers
         public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
             var response = await _httpClient.GetStringAsync($"{gameUrl}/register-discover");
-            var responseObject = JsonConvert.DeserializeObject<GameInfo>(response);
+            var responseObject = JsonConvert.DeserializeObject<RegisterInfo>(response);
 
+            var gameInfo = _mapper.Map<GameInfo>(responseObject);
 
-
-            _eventBus.AddToProfileService(responseObject);
+            _eventBus.AddToProfileService(gameInfo);
             return Ok();
         }
 

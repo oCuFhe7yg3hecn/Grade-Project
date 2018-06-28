@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Models;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +28,7 @@ namespace GradeProject.GameRegService
         {
             services.AddMvc();
 
-            services.AddTransient<IEventBus, RabbitMqEventBus>();
+            services.AddAutoMapper();
 
             var rs = new RabbitMqEventBus();
 
