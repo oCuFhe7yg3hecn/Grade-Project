@@ -19,25 +19,24 @@ namespace GradeProject.GameRegService.Controllers
     public class RegistrationController : Controller
     {
         private readonly IEventBus _eventBus;
+        private readonly HttpClient _httpClient;
 
         public RegistrationController(IEventBus eventBus)
         {
             _eventBus = eventBus;
+            _httpClient = new HttpClient();
         }
 
 
         [HttpPost]
-        [Authorize(Roles = "developer")]
-        public async Task<IActionResult> RegisterGame(string gameUrl)
+        public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
-            var client = new HttpClient();
-            var registerInfoEndpoint = $"{gameUrl}/gradeproject-register-info";
-            var response = await client.GetStringAsync(registerInfoEndpoint);
-
+            var response = await _httpClient.GetStringAsync($"{gameUrl}/register-discover");
             var responseObject = JsonConvert.DeserializeObject<GameInfo>(response);
 
-            //await client.PostAsync(Api.GameCatalog.AddGame(), );
 
+
+            _eventBus.AddToProfileService(responseObject);
             return Ok();
         }
 

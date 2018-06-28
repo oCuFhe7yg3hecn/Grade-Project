@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using GradeProject.GameRegService.Communication;
+using GradeProject.GameRegService.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +12,24 @@ namespace GradeProject.GameRegService.Infrstructure
     public class RegistrationService
     {
         private readonly HttpClient _httpClient;
+        private readonly IEventBus _eventBus;
 
-        public RegistrationService(HttpClient httpClient)
+        public RegistrationService(HttpClient httpClient, IEventBus eventBus)
         {
             _httpClient = httpClient;
+            _eventBus = eventBus;
         }
 
-        //public async Task<bool> RegisterGame(GameRegisterModel model)
-        //{
-        //    var gameInfoResponse = await _httpClient.GetStringAsync(model.DocumentationUrl);
-        //    var gameInfo = JsonConvert.DeserializeAnonymousType<>(gameInfoResponse);
+        public async Task<bool> RegisterGame(GameRegisterModel model)
+        {
+            var gameInfoResponse = await _httpClient.GetStringAsync(model.DocumentationUrl);
+            var gameInfo = JsonConvert.DeserializeObject<GameInfo>(gameInfoResponse);
 
-        //    //Call RabitMQ to Catalog Service
+            //Add some game validation logic here
 
-        //    //Call RabitMQ to Auth Service
-        //}
+            _eventBus.AddToProfileService(gameInfo);
+
+            return true;
+        }
     }
 }

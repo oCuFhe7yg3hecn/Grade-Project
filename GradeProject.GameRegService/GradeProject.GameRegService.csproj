@@ -7,9 +7,7 @@
   <ItemGroup>
     <Compile Remove="Communication\Events\GameAddedIntegrationEvent.cs" />
     <Compile Remove="Communication\Events\IntegrationEvent.cs" />
-    <Compile Remove="Communication\IEventBus.cs" />
     <Compile Remove="Communication\IIntegrationEventHandler.cs" />
-    <Compile Remove="Communication\RabbitMQEventBus.cs" />
   </ItemGroup>
 
   <ItemGroup>

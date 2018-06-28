@@ -27,9 +27,9 @@ namespace GradeProject.GameRegService
         {
             services.AddMvc();
 
-            services.AddTransient<IEventBus, RabbitMqBus>();
+            services.AddTransient<IEventBus, RabbitMqEventBus>();
 
-            var rs = new RabbitMqBus();
+            var rs = new RabbitMqEventBus();
 
             services.Configure<RabbitBusOptions>(config => config.HostName = "");
         }
