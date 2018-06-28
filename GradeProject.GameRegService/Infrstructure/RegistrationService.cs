@@ -16,14 +16,14 @@ namespace GradeProject.GameRegService.Infrstructure
             _httpClient = httpClient;
         }
 
-        public async Task<bool> RegisterGame(GameRegisterModel model)
-        {
-            var gameInfoResponse = await _httpClient.GetStringAsync(model.DocumentationUrl);
-            var gameInfo = JsonConvert.DeserializeAnonymousType<>(gameInfoResponse);
+        //public async Task<bool> RegisterGame(GameRegisterModel model)
+        //{
+        //    var gameInfoResponse = await _httpClient.GetStringAsync(model.DocumentationUrl);
+        //    var gameInfo = JsonConvert.DeserializeAnonymousType<>(gameInfoResponse);
 
-            //Call RabitMQ to Catalog Service
+        //    //Call RabitMQ to Catalog Service
 
-            //Call RabitMQ to Auth Service
-        }
+        //    //Call RabitMQ to Auth Service
+        //}
     }
 }

@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/GradeProject.GameRegService/Communication/Events/GameAddedIntegrationEvent.cs
+/GradeProject.GameRegService/Communication/Events/IntegrationEvent.cs
+/GradeProject.GameRegService/Communication/IEventBus.cs
+/GradeProject.GameRegService/Communication/IIntegrationEventHandler.cs
+/GradeProject.GameRegService/Communication/RabbitMQEventBus.cs
