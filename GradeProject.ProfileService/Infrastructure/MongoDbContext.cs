@@ -12,12 +12,12 @@ namespace GradeProject.ProfileService.Infrastructure
     {
         private readonly IMongoDatabase _database;
 
-        public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
-
         public MongoDbContext(IOptions<MongoDbSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);
             if (client != null) { _database = client.GetDatabase(settings.Value.Database); }
         }
+
+        public IMongoCollection<T> GetClollection<T>(string collectionName) => _database.GetCollection<T>(collectionName);
     }
 }

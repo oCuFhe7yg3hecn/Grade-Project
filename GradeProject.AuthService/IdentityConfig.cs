@@ -61,41 +61,66 @@ namespace GradeProject.AuthService
 
                 new Client
                 {
-                    ClientId = "Platform.AngularClient",
-                    ClientName = "Angular Client",
-                    //ClientSecrets = { new Secret("angular-secret".Sha256()) },
+                    ClientId = "Platform.MVCClient",
+                    ClientName = "Platform MVC Client",
+                    ClientSecrets = { new Secret("mvc-client-secret".Sha256()) },
 
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowOfflineAccess = true,
-                    
-                    // === 'false' for trusted platform clients so the user will not have to accept the application
+
                     RequireConsent = false,
 
-                    RedirectUris = { "http://localhost:4200//auth-callback" }, // Url of the WebApp Client
-                    PostLogoutRedirectUris = { "http://localhost:4200/" }, // Url of the WebApp Client
-                    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
-
+                    RedirectUris = { "https://localhost:44300/signin-oidc" }, // Url of the WebApp Client
+                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" }, // Url of the WebApp Client
+                    
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "Platform.ProfileService"
                     },
-                },
-
-                new Client
-                {
-                    ClientId = "Platform.AdminConsoleClient",
-                    ClientName = "AdminConsole Client",
-                    ClientSecrets = { new Secret("adminconsole-secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    AllowedScopes =
-                    {
-                        "Platform.TodoApi"
-                    },
                 }
+
+                ////Angular Client
+                //new Client
+                //{
+                //    ClientId = "Platform.AngularClient",
+                //    ClientName = "Angular Client",
+                //    //ClientSecrets = { new Secret("angular-secret".Sha256()) },
+
+                //    AllowedGrantTypes = GrantTypes.Implicit,
+                //    AllowOfflineAccess = true,
+                    
+                //    // === 'false' for trusted platform clients so the user will not have to accept the application
+                //    RequireConsent = false,
+
+                //    RedirectUris = { "http://localhost:4200//auth-callback" }, // Url of the WebApp Client
+                //    PostLogoutRedirectUris = { "http://localhost:4200/" }, // Url of the WebApp Client
+                //    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
+
+                //    AllowedScopes =
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile,
+                //        "Platform.ProfileService"
+                //    },
+                //},
+
+                ////Admin Console Client
+                //new Client
+                //{
+                //    ClientId = "Platform.AdminConsoleClient",
+                //    ClientName = "AdminConsole Client",
+                //    ClientSecrets = { new Secret("adminconsole-secret".Sha256()) },
+
+                //    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                //    AllowedScopes =
+                //    {
+                //        "Platform.TodoApi"
+                //    },
+                //}
             };
         }
 

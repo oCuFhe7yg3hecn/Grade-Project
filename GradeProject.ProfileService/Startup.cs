@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.ProfileService.Infrastructure;
+using GradeProject.ProfileService.Infrastructure.Repos;
 using GradeProject.ProfileService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,51 +32,20 @@ namespace GradeProject.ProfileService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf
-                                                                    .AllowAnyOrigin()
-                                                                    .AllowAnyMethod()));
-
             services.AddMvc();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-            //Platform.ProfileService
-
             services.AddAuthentication("Bearer")
                     .AddIdentityServerAuthentication(options =>
                     {
-
-                        // === FOR DEMO ONLY
                         options.RequireHttpsMetadata = false;
                         // SET THIS TO true IN PRODUCTION!
 
                         options.Authority = "http://localhost:5000";
                         options.ApiName = "Platform.ProfileService";
-                        //options.ApiSecret = "profileService-secret";
                     });
 
-            //services.AddAut
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultScheme = "Cookies";
-            //    options.DefaultChallengeScheme = "oidc";
-            //})
-            //    .AddCookie("Cookies")
-            //    .AddOpenIdConnect("oidc", options =>
-            //    {
-            //        options.SignInScheme = "Cookies";
-
-            //        options.Authority = "http://localhost:5000";
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.ClientId = "mvc";
-            //        options.SaveTokens = true;
-            //    });
-
-            //services.AddMvc();
-
-            services.AddAuthentication();
 
             services.Configure<MongoDbSettings>(opts =>
             {
@@ -83,22 +53,14 @@ namespace GradeProject.ProfileService
                 opts.Database = Configuration["MongoDbSettings:Database"];
             });
 
+            //Added Automapper
             services.AddAutoMapper();
+            
+            AppContainer = RegisterDependencies(services);
 
-            var builder = new ContainerBuilder();
-
-            builder.Register(c => new MongoDbSettings());
-            builder.Populate(services);
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
-
-            builder.Register(c => new UserRepository(c.Resolve<MongoDbContext>()));
-
-            builder.Register(c => new UserService(c.Resolve<UserRepository>(), c.Resolve<IMapper>(), c.Resolve<DefaultAvatarsFactory>()));
-
-            //Helper Seervices
-            builder.Register(c => new DefaultAvatarsFactory());
-
-            AppContainer = builder.Build();
+            //Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
+                                                                            .AllowAnyMethod()));
 
             return new AutofacServiceProvider(this.AppContainer);
         }
@@ -111,12 +73,32 @@ namespace GradeProject.ProfileService
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseCors("AllowAll");
-
             app.UseStaticFiles();
             app.UseMvc();
+        }
+
+        private IContainer RegisterDependencies(IServiceCollection services) 
+        {
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+
+            //Context
+            builder.Register(c => new MongoDbSettings());
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+
+            //Repos
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
+            //Services
+            builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
+                                                  c.Resolve<IMapper>(), 
+                                                  c.Resolve<DefaultAvatarsFactory>()))
+                                                           .InstancePerLifetimeScope();
+
+            return builder.Build();
         }
     }
 }
