@@ -1,4 +1,5 @@
-﻿using GradeProject.GameRegService.Communication;
+﻿using AutoMapper;
+using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Models;
 using Newtonsoft.Json;
 using System;
@@ -9,21 +10,25 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameRegService.Infrstructure
 {
-    public class RegistrationService
+    public class RegistrationService : IRegistrationService
     {
         private readonly HttpClient _httpClient;
         private readonly IEventBus _eventBus;
+        private readonly IMapper _mapper;
 
-        public RegistrationService(HttpClient httpClient, IEventBus eventBus)
+        public RegistrationService(IEventBus eventBus, IMapper mapper)
         {
-            _httpClient = httpClient;
+            _mapper = mapper;
+            _httpClient = new HttpClient();
             _eventBus = eventBus;
         }
 
-        public async Task<bool> RegisterGame(GameRegisterModel model)
+        public async Task<bool> RegisterGame(string gameUrl)
         {
-            var gameInfoResponse = await _httpClient.GetStringAsync(model.DocumentationUrl);
-            var gameInfo = JsonConvert.DeserializeObject<GameInfo>(gameInfoResponse);
+            var response = await _httpClient.GetStringAsync($"{gameUrl}/register-discover");
+            var responseObject = JsonConvert.DeserializeObject<RegisterInfo>(response);
+
+            var gameInfo = _mapper.Map<GameInfo>(responseObject);
 
             //Add some game validation logic here
 
