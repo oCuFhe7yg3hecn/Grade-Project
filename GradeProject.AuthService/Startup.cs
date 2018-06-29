@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.AuthService.MongoInfrastructure;
+using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +57,28 @@ namespace GradeProject.AuthService
                          .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                          .AddInMemoryClients(IdentityConfig.GetClients())
                          .AddTestUsers(IdentityConfig.GetUsers());
+            services.AddAuthentication()
+                .AddGoogle("Google", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    options.ClientId = Configuration["GoogleProvider:ClientId"];
+                    options.ClientSecret = Configuration["GoogleProvider:ClientSecret"];
+                })
+                .AddFacebook(opts =>
+                {
+                    opts.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    opts.AppId = Configuration["FacebookProvider:AppId"];
+                    opts.AppSecret = Configuration["FacebookProvider:AppSecret"];
+                })
+                .AddTwitter(opts =>
+                {
+                    opts.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    opts.ConsumerKey = Configuration["TwitterProvider:ConsumerKey"];
+                    opts.ConsumerSecret = Configuration["TwitterProvider:ConsumerSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
