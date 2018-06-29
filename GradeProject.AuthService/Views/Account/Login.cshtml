@@ -1,17 +1,17 @@
 @model LoginViewModel
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
+<div class="container">
+    <div class="login-page">
+        <div class="page-header">
+            <h1>Login</h1>
+        </div>
 
-    @Html.Partial("_ValidationSummary")
+        @Html.Partial("_ValidationSummary")
 
-    <div class="row">
-
+        @*<div class="row">*@
         @if (Model.EnableLocalLogin)
         {
-            <div class="col-sm-6">
+            <div class="col-sm-7">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Local Login</h3>
@@ -52,7 +52,7 @@
 
         @if (Model.VisibleExternalProviders.Any())
         {
-            <div class="col-md-6 col-sm-6 external-providers">
+            <div class="col-md-4 col-sm-6 external-providers col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">External Login</h3>
@@ -85,4 +85,6 @@
             </div>
         }
     </div>
+    @*</div>*@
+
 </div>

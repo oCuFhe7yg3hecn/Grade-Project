@@ -1,14 +1,20 @@
 ﻿body {
-  margin-top: 65px;
+    margin-top: 65px;
+    background-color: #0070b2;
 }
+
+.navbar-inverse {
+    background-color: #004582;
+}
+
 .navbar-header {
-  position: relative;
-  top: -4px;
+    position: relative;
+    top: -4px;
 }
 .navbar-brand > .icon-banner {
-  position: relative;
-  top: -2px;
-  display: inline;
+    position: relative;
+    top: -2px;
+    display: inline;
 }
 .icon {
   position: relative;
@@ -79,4 +85,18 @@
 }
 .grants .grant li:last-child:after {
   content: '';
+}
+
+
+/*         Custom Css       */
+.login-page>.page-header>h1 {
+    color : #f8fafc;
+}
+
+.panel-default > .panel-heading {
+    background-color: #004582;
+}
+
+.navbar-brand {
+    color: #f8fafc;
 }
