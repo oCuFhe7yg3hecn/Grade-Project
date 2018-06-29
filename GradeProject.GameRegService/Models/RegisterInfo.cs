@@ -6,23 +6,18 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameRegService.Models
 {
-    public class GameInfo
+    public class RegisterInfo
     {
-        public GameInfo()
+        public RegisterInfo()
         {
-            Id = Guid.NewGuid();
             Tags = new List<string>();
             Categories = new List<string>();
             MultiMedias = new List<string>();
 
             CreatedAt = DateTime.Now;
-            RegistereAt = DateTime.Now;
             ProjectLinks = new Dictionary<string, string>();
             AvaliablePlatforms = new List<string>();
         }
-
-        //[BsonId]
-        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -46,11 +41,6 @@ namespace GradeProject.GameRegService.Models
 
         [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; }
-
-        [DataType(DataType.DateTime)]
-        public DateTime RegistereAt { get; set; }
-
-        public int PlayersCount { get; set; }
 
         public Dictionary<string, string> ProjectLinks { get; set; }
         public List<string> AvaliablePlatforms { get; set; }

@@ -1,4 +1,5 @@
 ﻿using GradeProject.GameCatalogService.Infrastructure.Repos;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using GradeProject.GameCatalogService.Models.Exceptions;
 using Microsoft.Extensions.Options;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Infrastructure
 {
-    public class GamesService
+    public class GamesService : IGameService
     {
         private readonly IRepository<GameInfo> _repo;
 
@@ -44,6 +45,8 @@ namespace GradeProject.GameCatalogService.Infrastructure
 
             return new PaginatedResponse<GameInfo>(opts.Page, opts.PageSize, itemsCount / opts.PageSize, games);
         }
+
+        public async Task AddGameAsync(GameInfo newGame) => await _repo.AddOneAsync(newGame);
 
     }
 }

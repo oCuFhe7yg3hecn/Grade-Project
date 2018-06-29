@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +15,12 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Games")]
     public class GamesController : Controller
     {
-        private readonly GamesService _gamesSvc;
+        private readonly IGameService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
 
-        public GamesController(GamesService gamesSvc, ILogger<GamesController> logger)
+        public GamesController(IGameService gamesSvc)
         {
             _gamesSvc = gamesSvc;
-            _logger = logger;
         }
 
         [HttpGet]

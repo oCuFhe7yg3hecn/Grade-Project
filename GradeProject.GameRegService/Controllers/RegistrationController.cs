@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AutoMapper;
+using GradeProject.GameRegService.Communication;
+using GradeProject.GameRegService.Communication.Events;
+using GradeProject.GameRegService.Infrstructure;
 using GradeProject.GameRegService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,17 +19,22 @@ namespace GradeProject.GameRegService.Controllers
     [Route("api/Registration")]
     public class RegistrationController : Controller
     {
+        private readonly IRegistrationService _regSvc;
+        private readonly HttpClient _httpClient;
+        private readonly IMapper _mapper;
+
+        public RegistrationController(IRegistrationService regSvc, IMapper mapper)
+        {
+            _regSvc = regSvc;
+            _httpClient = new HttpClient();
+            _mapper = mapper;
+        }
+
 
         [HttpPost]
-        [Authorize(Roles = "developer")]
-        public async Task<IActionResult> RegisterGame(string gameUrl)
+        public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
-            var client = new HttpClient();
-            var registerInfoEndpoint = $"{gameUrl}/gradeproject-register-info";
-            var response = await client.GetStringAsync(registerInfoEndpoint);
-
-            //var responseObject = JsonConvert.DeserializeObject<GameInfo>(response);
-
+            await _regSvc.RegisterGame(gameUrl);
             return Ok();
         }
 
