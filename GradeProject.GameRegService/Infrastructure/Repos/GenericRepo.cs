@@ -1,4 +1,7 @@
-﻿using MongoDB.Driver;
+﻿using GradeProject.GameRegService.Infrastructure;
+using GradeProject.ProfileService.Infrastructure.Repos;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +21,7 @@ namespace GradeProject.GameRegService.Infrstructure
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
         {
-            var count = filter == null ? await _coll.CountAsync(filter) : await _coll.CountAsync(_ => true);
+            var count = filter == null ? await _coll.CountDocumentsAsync(filter) : await _coll.CountDocumentsAsync(new BsonDocument());
 
             return Convert.ToInt32(count);
         }

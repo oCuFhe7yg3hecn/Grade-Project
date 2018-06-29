@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Models;
+using GradeProject.ProfileService.Infrastructure.Repos;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,17 @@ namespace GradeProject.GameRegService.Infrstructure
         private readonly HttpClient _httpClient;
         private readonly IEventBus _eventBus;
         private readonly IMapper _mapper;
+        private readonly IRepository<GameRegInfo> _gameInfoRepo;
 
-        public RegistrationService(IEventBus eventBus, IMapper mapper)
+        public RegistrationService(
+            IMapper mapper,
+            IEventBus eventBus,
+            IRepository<GameRegInfo> gameInfoRepo)
         {
             _mapper = mapper;
             _httpClient = new HttpClient();
             _eventBus = eventBus;
+            _gameInfoRepo = gameInfoRepo;
         }
 
         public async Task<bool> RegisterGame(string gameUrl)
@@ -30,7 +36,11 @@ namespace GradeProject.GameRegService.Infrstructure
 
             var gameInfo = _mapper.Map<GameInfo>(responseObject);
 
+            var gameRegInfo = _gameInfoRepo.WhereAsync(_ => true);
+
             //Add some game validation logic here
+
+            await _gameInfoRepo.AddOneAsync(new GameRegInfo());
 
             _eventBus.AddToProfileService(gameInfo);
 

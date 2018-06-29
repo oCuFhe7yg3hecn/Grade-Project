@@ -6,8 +6,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.GameRegService.Communication;
+using GradeProject.GameRegService.Infrastructure;
 using GradeProject.GameRegService.Infrstructure;
 using GradeProject.GameRegService.Models;
+using GradeProject.ProfileService.Infrastructure.Repos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,7 +39,12 @@ namespace GradeProject.GameRegService
 
             var rs = new RabbitMqEventBus();
 
-            services.Configure<RabbitBusOptions>(config => config.HostName = "");
+            services.Configure<MongoDbSettings>(conf =>
+            {
+                conf.Database = Configuration["MongoDbSettings:Database"];
+                conf.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
+            });
+
 
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
@@ -65,12 +72,20 @@ namespace GradeProject.GameRegService
             builder.Populate(services);
 
             //Utils
-
+            builder.Register(c => new MongoDbSettings());
             builder.Register(c => new RabbitMqEventBus()).As<IEventBus>();
 
-            //Services
+            //Context
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
 
-            builder.Register(c => new RegistrationService(c.Resolve<IEventBus>(), c.Resolve<IMapper>())).As<IRegistrationService>();
+            //Repos
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
+            //Services
+            builder.Register(c => new RegistrationService(c.Resolve<IMapper>(),
+                                                          c.Resolve<IEventBus>(),
+                                                          c.Resolve<IRepository<GameRegInfo>>(new NamedParameter("collectionName", "RegInfo"))))
+                                                                                                                                        .As<IRegistrationService>();
 
 
             return builder.Build();

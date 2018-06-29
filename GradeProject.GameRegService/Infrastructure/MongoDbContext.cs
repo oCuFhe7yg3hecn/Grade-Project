@@ -1,4 +1,4 @@
-﻿using GradeProject.ProfileService.Models;
+﻿using GradeProject.GameRegService.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
