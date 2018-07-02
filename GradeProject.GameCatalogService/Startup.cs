@@ -9,6 +9,8 @@ using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -37,6 +39,8 @@ namespace GradeProject.GameCatalogService
             {
                 opts.Filters.Add(typeof(ApiExceptionFilter));
             });
+
+            services.AddOData();
 
             //Add Authentication
             services.AddAuthentication("Bearer")
@@ -70,6 +74,14 @@ namespace GradeProject.GameCatalogService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<GameInfo>(nameof(GameInfo));
+            //Enabling OData routing.
+            app.UseMvc(routebuilder =>
+            {
+                routebuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+            });
 
             app.UseAuthentication();
 
