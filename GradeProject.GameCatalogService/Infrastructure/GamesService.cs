@@ -25,6 +25,13 @@ namespace GradeProject.GameCatalogService.Infrastructure
                                           pageOptions.Page);
         }
 
+        public async Task<List<GameInfo>> GetAllAsync()
+        {
+            return await _repo.WhereAsync(_ => true,
+                                          100,
+                                          1);
+        }
+
         public async Task<GameInfo> GetByIdAsync(string id) =>
             await _repo.SingleAsync(g => g.Id == Guid.Parse(id));
 

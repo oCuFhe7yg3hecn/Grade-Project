@@ -76,7 +76,15 @@ namespace GradeProject.GameCatalogService
             }
 
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<GameInfo>(nameof(GameInfo));
+            builder.EntitySet<GameInfo>("Games")
+                        .EntityType
+                        .Filter() // Allow for the $filter Command
+                        .Count() // Allow for the $count Command
+                        .Expand() // Allow for the $expand Command
+                        .OrderBy() // Allow for the $orderby Command
+                        .Page() // Allow for the $top and $skip Commands
+                        .Select() // Allow for the $select Command
+                        .Expand(); ;
             //Enabling OData routing.
             app.UseMvc(routebuilder =>
             {

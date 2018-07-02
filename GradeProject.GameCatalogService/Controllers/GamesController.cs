@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Models;
 using GradeProject.GameCatalogService.Models.Exceptions;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,7 +14,7 @@ namespace GradeProject.GameCatalogService.Controllers
 {
     [Produces("application/json")]
     [Route("api/Games")]
-    public class GamesController : Controller
+    public class GamesController : ODataController
     {
         private readonly GamesService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
@@ -24,10 +26,12 @@ namespace GradeProject.GameCatalogService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(PagingOptions pageOptions)
+        [EnableQuery]
+        //PagingOptions pageOptions
+        public async Task<IQueryable<GameInfo>> Get()
         {
-            var games = await _gamesSvc.GetAllAsync(pageOptions);
-            return Ok(games);
+            var games = await _gamesSvc.GetAllAsync();
+            return games.AsQueryable();
         }
 
         [HttpGet]
