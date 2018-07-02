@@ -16,9 +16,10 @@ namespace GradeProject.GameCatalogService.Infrastructure
         private readonly IMapper _mapper;
         private readonly IRepository<GameInfo> _repo;
 
-        public GamesService(IRepository<GameInfo> repo)
+        public GamesService(IRepository<GameInfo> repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<List<GameInfo>> GetAllAsync(PagingOptions pageOptions)

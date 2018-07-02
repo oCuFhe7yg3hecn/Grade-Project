@@ -90,7 +90,6 @@ namespace GradeProject.GameCatalogService
                         .OrderBy() // Allow for the $orderby Command
                         .Page() // Allow for the $top and $skip Commands
                         .Select() // Allow for the $select Command
-                        .HasMany(g => g.ProjectLinks)
                         .Expand();
             //Enabling OData routing.
             app.UseMvc(routebuilder =>
@@ -118,8 +117,9 @@ namespace GradeProject.GameCatalogService
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             //Services
-            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
-                                                                                                                                   .InstancePerLifetimeScope();
+            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")), 
+                                  c.Resolve<IMapper>()))
+                                                     .InstancePerLifetimeScope();
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
                                                       c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))

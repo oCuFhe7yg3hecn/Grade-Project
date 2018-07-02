@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.OData.Builder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace GradeProject.GameCatalogService.Models.DTO
 
         public int PlayersCount { get; set; }
 
+        [AutoExpand]
         public List<ProjectLink> ProjectLinks { get; set; }
         public List<string> AvaliablePlatforms { get; set; }
     }
