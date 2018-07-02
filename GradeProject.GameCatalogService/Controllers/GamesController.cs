@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Models;
+using GradeProject.GameCatalogService.Models.DTO;
 using GradeProject.GameCatalogService.Models.Exceptions;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ namespace GradeProject.GameCatalogService.Controllers
         [HttpGet]
         [EnableQuery]
         //PagingOptions pageOptions
-        public async Task<IQueryable<GameInfo>> Get()
+        public async Task<IQueryable<GameInfoDTO>> Get()
         {
             var games = await _gamesSvc.GetAllAsync();
             return games.AsQueryable();

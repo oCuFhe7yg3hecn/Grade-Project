@@ -17,7 +17,7 @@ namespace GradeProject.GameCatalogService.Models.DTO
 
             CreatedAt = DateTime.Now;
             RegistereAt = DateTime.Now;
-            ProjectLinks = new List<ProjectLink>()
+            ProjectLinks = new List<ProjectLink>();
             AvaliablePlatforms = new List<string>();
         }
 

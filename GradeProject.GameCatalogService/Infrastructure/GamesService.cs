@@ -1,5 +1,7 @@
-﻿using GradeProject.GameCatalogService.Infrastructure.Repos;
+﻿using AutoMapper;
+using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
+using GradeProject.GameCatalogService.Models.DTO;
 using GradeProject.GameCatalogService.Models.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
@@ -11,6 +13,7 @@ namespace GradeProject.GameCatalogService.Infrastructure
 {
     public class GamesService
     {
+        private readonly IMapper _mapper;
         private readonly IRepository<GameInfo> _repo;
 
         public GamesService(IRepository<GameInfo> repo)
@@ -25,11 +28,13 @@ namespace GradeProject.GameCatalogService.Infrastructure
                                           pageOptions.Page);
         }
 
-        public async Task<List<GameInfo>> GetAllAsync()
+        public async Task<List<GameInfoDTO>> GetAllAsync()
         {
-            return await _repo.WhereAsync(_ => true,
-                                          100,
-                                          1);
+            var games = await _repo.WhereAsync(_ => true, 100, 1);
+
+            return games
+                    .Select(item => _mapper.Map<GameInfoDTO>(item))
+                    .ToList();
         }
 
         public async Task<GameInfo> GetByIdAsync(string id) =>

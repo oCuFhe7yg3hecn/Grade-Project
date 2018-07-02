@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
+using GradeProject.GameCatalogService.Models.DTO;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +42,10 @@ namespace GradeProject.GameCatalogService
                 opts.Filters.Add(typeof(ApiExceptionFilter));
             });
 
+            //AutoMapper
+            services.AddAutoMapper();
+
+            //OData
             services.AddOData();
 
             //Add Authentication
@@ -76,7 +82,7 @@ namespace GradeProject.GameCatalogService
             }
 
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<GameInfo>("Games")
+            builder.EntitySet<GameInfoDTO>("Games")
                         .EntityType
                         .Filter() // Allow for the $filter Command
                         .Count() // Allow for the $count Command
@@ -84,7 +90,8 @@ namespace GradeProject.GameCatalogService
                         .OrderBy() // Allow for the $orderby Command
                         .Page() // Allow for the $top and $skip Commands
                         .Select() // Allow for the $select Command
-                        .Expand(); ;
+                        .HasMany(g => g.ProjectLinks)
+                        .Expand();
             //Enabling OData routing.
             app.UseMvc(routebuilder =>
             {
