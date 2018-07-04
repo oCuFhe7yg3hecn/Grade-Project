@@ -34,6 +34,8 @@ namespace GradeProject.GameRegService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
             services.AddMvc();
 
             services.AddAutoMapper();
@@ -74,8 +76,9 @@ namespace GradeProject.GameRegService
             builder.Populate(services);
 
             //Utils
-            builder.Register(c => new RabbitMqEventBus(c.Resolve<IOptions<RabbitMqConfig>>()))
-                                                                                     .As<IEventBus>();
+            builder.Register(c => new RabbitMqEventBus(c.Resolve<IOptions<RabbitMqConfig>>(),
+                                                       c.Resolve<ILogger<RabbitMqEventBus>>()))
+                                                                                        .As<IEventBus>();
 
             //Context
             builder.Register(c => new MongoDbSettings());
