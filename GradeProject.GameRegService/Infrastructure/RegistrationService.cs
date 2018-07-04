@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Models;
+using GradeProject.GameRegService.Utils;
 using GradeProject.ProfileService.Infrastructure.Repos;
 using Newtonsoft.Json;
 using System;
@@ -40,11 +41,7 @@ namespace GradeProject.GameRegService.Infrstructure
             var gameRegInfo = _gameInfoRepo.WhereAsync(_ => true);
 
             //Add some game validation logic here
-
-            await _gameInfoRepo.AddOneAsync(new GameRegInfo());
-
-            var bindata = Encoding.Default.GetBytes(JsonConvert.SerializeObject(gameInfo));
-
+            var bindata = ObjectConverter.ObjectToBytes(gameInfo);
             _eventBus.Publish(bindata);
 
             return true;

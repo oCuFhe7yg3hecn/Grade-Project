@@ -45,7 +45,7 @@ namespace GradeProject.GameRegService.Communication
                                   routingKey: _config.QueueRoutingKey,
                                   basicProperties: null,
                                   body: body);
-            _logger.LogInformation($"  [x] Event on {_config.Exchange} was sent to route ${_config.QueueRoutingKey} at {DateTime.Now};");
+            _logger.LogInformation($"  [x] Event on {_config.Exchange} was sent to route {_config.QueueRoutingKey} at {DateTime.Now};");
         }
     }
 
