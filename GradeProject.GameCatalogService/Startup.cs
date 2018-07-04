@@ -64,13 +64,6 @@ namespace GradeProject.GameCatalogService
                       options.ApiName = $"Platform.GameCatalogService";
                   });
 
-            //Configuration
-            services.Configure<MongoDbSettings>(opts =>
-            {
-                opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
-                opts.Database = Configuration["MongoDbSettings:Database"];
-            });
-
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
 
@@ -111,9 +104,8 @@ namespace GradeProject.GameCatalogService
 
             //Utils
 
-            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
-                                                  c.Resolve<GamesService>()))
-                                                                     .As<IEventBus>();
+            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>()))
+                                                                                 .As<IEventBus>();
 
             //Context
             builder.Register(c => new MongoDbSettings());
@@ -126,6 +118,7 @@ namespace GradeProject.GameCatalogService
 
             builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
                                   c.Resolve<IMapper>()))
+                                                     .As<IGamesService>()
                                                      .InstancePerLifetimeScope();
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),

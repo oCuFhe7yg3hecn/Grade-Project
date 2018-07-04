@@ -34,9 +34,8 @@ namespace GradeProject.GameCatalogService.Communication
         //Dependencies
         private readonly IGamesService _gameSvc;
 
-        public RabbitMqBus(IOptions<RabbitMqConfig> config, IGamesService gamesSvc)
+        public RabbitMqBus(IOptions<RabbitMqConfig> config)
         {
-            _gameSvc = gamesSvc;
 
             var connFactory = new ConnectionFactory() { HostName = config.Value.HostName };
             _connection = connFactory.CreateConnection();
@@ -58,17 +57,17 @@ namespace GradeProject.GameCatalogService.Communication
 
             //var gameRecieved = new GameRegisteredEventHandler();
 
-            //Game Regitered
-            var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += gameRecieved.Consumer_Received;
-            //consumer.Received += async (model, ea) =>
-            //{
-            //    var responseString = Encoding.Default.GetString(ea.Body);
-            //    var gameInfo = JsonConvert.DeserializeObject<GameInfo>(responseString);
-            //    await gameRecieved.Handle(gameInfo);
-            //    //_gameSvc.AddGameAsync(gameInfo);
-            //};
-            _channel.BasicConsume(_gameRegisteredQueue, true, consumer);
+            ////Game Regitered
+            //var consumer = new EventingBasicConsumer(_channel);
+            //consumer.Received += gameRecieved.Consumer_Received;
+            ////consumer.Received += async (model, ea) =>
+            ////{
+            ////    var responseString = Encoding.Default.GetString(ea.Body);
+            ////    var gameInfo = JsonConvert.DeserializeObject<GameInfo>(responseString);
+            ////    await gameRecieved.Handle(gameInfo);
+            ////    //_gameSvc.AddGameAsync(gameInfo);
+            ////};
+            //_channel.BasicConsume(_gameRegisteredQueue, true, consumer);
 
             //Some Another
         }

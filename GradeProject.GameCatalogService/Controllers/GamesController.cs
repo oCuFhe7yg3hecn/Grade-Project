@@ -18,12 +18,11 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Games")]
     public class GamesController : ODataController
     {
-        private readonly IGamesService _gamesService;
+        private readonly IGamesService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
 
-        public GamesController(IGamesService gamesService, GamesService gamesSvc, ILogger<GamesController> logger)
+        public GamesController(IGamesService gamesSvc, ILogger<GamesController> logger)
         {
-            _gamesService = gamesService;
             _gamesSvc = gamesSvc;
             _logger = logger;
         }
@@ -32,7 +31,7 @@ namespace GradeProject.GameCatalogService.Controllers
         [EnableQuery]
         public async Task<IQueryable<GameInfoDTO>> Get()
         {
-            var games = await _gamesService.GetAllAsync();
+            var games = await _gamesSvc.GetAllAsync();
             return games.AsQueryable();
         }
 

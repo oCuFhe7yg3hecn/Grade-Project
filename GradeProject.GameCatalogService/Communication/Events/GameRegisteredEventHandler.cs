@@ -23,7 +23,7 @@ namespace GradeProject.GameCatalogService.Communication.Events
 
         public async void Consumer_Received(object sender, BasicDeliverEventArgs e)
         {
-            var data = Encoding.Default.GetString(ea.Body);
+            var data = Encoding.Default.GetString(e.Body);
             var gameInfo = JsonConvert.DeserializeObject<GameInfo>(data);
             await _gameSvc.AddGameAsync(gameInfo);
         }
