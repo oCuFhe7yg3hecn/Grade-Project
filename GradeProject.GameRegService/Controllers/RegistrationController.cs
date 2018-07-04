@@ -33,8 +33,8 @@ namespace GradeProject.GameRegService.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
-            await _regSvc.RegisterGame(gameUrl);
-            return Ok();
+            if (await _regSvc.RegisterGame(gameUrl)) { return Ok(); }
+            return BadRequest("Something gone wrong");
         }
 
     }
