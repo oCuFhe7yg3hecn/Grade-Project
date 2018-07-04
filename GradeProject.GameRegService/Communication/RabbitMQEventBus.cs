@@ -23,38 +23,25 @@ namespace GradeProject.GameRegService.Communication
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private readonly string _replyQueueName;
-        private readonly EventingBasicConsumer _consumer;
-        private readonly IBasicProperties _props;
-        private readonly ILogger<RabbitMqEventBus> _logger;
+        private RabbitMqConfig _config;
 
-        private readonly string _gameRegisteredQueue;
+        private readonly ILogger<RabbitMqEventBus> _logger;
 
         public RabbitMqEventBus(IOptions<RabbitMqConfig> config)
         {
-            //_logger = logger;
+            _config = config.Value;
 
-            var connFactory = new ConnectionFactory() { HostName = "localhost" };
+            var connFactory = new ConnectionFactory() { HostName = _config.HostName };
             _connection = connFactory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare("GameRegisterExcchange", "direct");
-
-            RegisterEventHandlers();
+            _channel.ExchangeDeclare(_config.Exchange, "direct");
         }
 
-        public void RegisterEventHandlers()
+        public void Publish(byte[] body)
         {
-            //_channel.BasicConsume(queueName, false, consumer);
-        }
-
-        public void AddToProfileService(GameInfo game)
-        {
-            var data = JsonConvert.SerializeObject(game);
-            var body = Encoding.Default.GetBytes(data);
-
-            _channel.BasicPublish(exchange: "GameRegisterExcchange",
-                                  routingKey: "GameRegistered",
+            _channel.BasicPublish(exchange: _config.Exchange,
+                                  routingKey: _config.QueueRoutingKey,
                                   basicProperties: null,
                                   body: body);
         }

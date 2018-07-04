@@ -5,7 +5,7 @@ namespace GradeProject.GameRegService.Communication
 {
     public interface IEventBus
     {
-        void AddToProfileService(GameInfo game);
+        void Publish(byte[] body);
     }
 
 

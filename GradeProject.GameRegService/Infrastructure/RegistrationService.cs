@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace GradeProject.GameRegService.Infrstructure
@@ -42,7 +43,9 @@ namespace GradeProject.GameRegService.Infrstructure
 
             await _gameInfoRepo.AddOneAsync(new GameRegInfo());
 
-            _eventBus.AddToProfileService(gameInfo);
+            var bindata = Encoding.Default.GetBytes(JsonConvert.SerializeObject(gameInfo));
+
+            _eventBus.Publish(bindata);
 
             return true;
         }
