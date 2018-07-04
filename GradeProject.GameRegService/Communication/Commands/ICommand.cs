@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.GameRegService.Communication.Events
+namespace GradeProject.GameRegService.Communication.Commands
 {
-    public abstract class IntegrationEvent
+    public interface ICommand
     {
     }
 }
