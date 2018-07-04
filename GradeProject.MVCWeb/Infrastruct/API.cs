@@ -9,7 +9,7 @@ namespace GradeProject.MVCWeb.Infrastruct
     {
         public static class GamesService
         {
-            public static string GetGames(string baseUri, int take = 5, int page = 1) => $"{baseUri}/games/?PageSize={take}&Page={page}";
+            public static string GetGames(string baseUri, int top = 5) => $"{baseUri}/odata/Games?$top={top}";
         }                                                                                           
     }
 }

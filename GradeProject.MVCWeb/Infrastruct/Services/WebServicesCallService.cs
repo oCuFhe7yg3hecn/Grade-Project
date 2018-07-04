@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GradeProject.MVCWeb.Models;
+using GradeProject.MVCWeb.Models.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,10 +18,12 @@ namespace GradeProject.MVCWeb.Infrastruct
             _httpClient = new HttpClient();
         }
 
-        public async List<Games> GetTopGames(int number)
+        public async Task<List<Games.GameDTO>> GetTopGames(int number)
         {
-            var requestUri = API.GamesService.GetGames("", number);
-            return await _httpClient.GetStringAsync(requestUri)
+            var requestUri = API.GamesService.GetGames("http://localhost:54554", number);
+            var response = await _httpClient.GetStringAsync(requestUri);
+            var oData = JsonConvert.DeserializeObject<ODataResponse<Games.GameDTO>>(response);
+            return oData.Value.ToList();
         }
     }
 }

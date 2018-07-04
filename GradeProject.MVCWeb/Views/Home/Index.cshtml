@@ -1,8 +1,116 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<GradeProject.MVCWeb.Models.Services.Games.GameDTO>
+
+@{ ViewData["Title"] = "Home Page"; }
+
+
+@section Styles{
+    <link type="text/css" rel="stylesheet" href="~/css/Index.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/responsive.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/style.css" />
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+<!-- ***** Welcome Area Start ***** -->
+<section class="welcome_area clearfix" id="home" style="background-image: url(../../wwwroot/images/bg-img/welcome-bg.png)">
+    <div class="hero-slides owl-carousel">
+        <!-- Single Hero Slides -->
+        <div class="single-hero-slide d-flex align-items-end justify-content-center">
+            <div class="hero-slide-content text-center">
+                <h2>A Clean and Modern Template</h2>
+                <h4>Get your freebie template now!</h4>
+                <img class="slide-img" src="images/bg-img/device.png" alt="">
+            </div>
+        </div>
+        <!-- Single Hero Slides -->
+        <div class="single-hero-slide d-flex align-items-end justify-content-center">
+            <div class="hero-slide-content text-center">
+                <h2>A Clean and Modern Template</h2>
+                <h4>Get your freebie template now!</h4>
+                <img class="slide-img" src="images/bg-img/device.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Welcome Area End ***** -->
+<!-- Page Content -->
+<!-- <div class="container">
+
+    <!-- Jumbotron Header -->
+@*<header class="jumbotron my-4">
+        <h1 class="display-3">A Warm Welcome!</h1>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+        <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+    </header>*@
+
+<!-- Page Features -->
+@*<div class="row text-center">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Card title</h4>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+<!-- /.row -->
+@*</div>*@
+<!-- /.container -->
+<!-- Footer -->
+<!-- <footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+
+<!-- <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -63,9 +171,8 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div>
-
-<div class="row">
+</div> -->
+<!--<div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
         <ul>
@@ -103,4 +210,4 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
         </ul>
     </div>
-</div>
+</div> -->

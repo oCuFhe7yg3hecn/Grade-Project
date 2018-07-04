@@ -19,7 +19,7 @@ namespace GradeProject.MVCWeb.Models.Services
 
                 CreatedAt = DateTime.Now;
                 RegistereAt = DateTime.Now;
-                ProjectLinks = new Dictionary<string, string>();
+                ProjectLinks = new List<ProjectLink>();
                 AvaliablePlatforms = new List<string>();
             }
 
@@ -53,7 +53,7 @@ namespace GradeProject.MVCWeb.Models.Services
 
             public int PlayersCount { get; set; }
 
-            public Dictionary<string, string> ProjectLinks { get; set; }
+            public List<ProjectLink> ProjectLinks { get; set; }
             public List<string> AvaliablePlatforms { get; set; }
         }
     }
