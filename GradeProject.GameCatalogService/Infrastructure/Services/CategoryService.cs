@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Infrastructure.Repos
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category> _ctgRepo;
         private readonly IRepository<GameInfo> _gameRepo;
