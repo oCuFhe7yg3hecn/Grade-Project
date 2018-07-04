@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GradeProject.ProfileService.Infrastructure.Repos;
+using GradeProject.ProfileService.Infrastructure.Services;
 using GradeProject.ProfileService.Models;
 using GradeProject.ProfileService.Models.DTO;
 using MongoDB.Driver;
@@ -10,17 +11,15 @@ using System.Threading.Tasks;
 
 namespace GradeProject.ProfileService.Infrastructure
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
         private readonly IMapper _mapper;
-        private readonly DefaultAvatarsFactory _avatarsFactory;
 
-        public UserService(IRepository<User> userRepository, IMapper mapper, DefaultAvatarsFactory avatarsFactory)
+        public UserService(IRepository<User> userRepository, IMapper mapper)
         {
             this._userRepository = userRepository;
             _mapper = mapper;
-            _avatarsFactory = avatarsFactory;
         }
 
         public async Task<List<User>> GetUsersAsync() =>
@@ -32,7 +31,6 @@ namespace GradeProject.ProfileService.Infrastructure
         public async Task CreateUser(UserInsertDTO newUser)
         {
             var user = _mapper.Map<User>(newUser);
-            user.ImageURL = _avatarsFactory.GetRandomAvatar(user.Gender);
             await _userRepository.AddOneAsync(user);
         }
 

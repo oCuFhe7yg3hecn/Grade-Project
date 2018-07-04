@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GradeProject.ProfileService.Infrastructure;
+using GradeProject.ProfileService.Infrastructure.Services;
 using GradeProject.ProfileService.Models;
 using GradeProject.ProfileService.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -17,24 +18,16 @@ namespace GradeProject.ProfileService.Controllers
     [Route("api/Users")]
     public class UsersController : Controller
     {
-        private readonly UserService _userSvc;
+        private readonly IUserService _userSvc;
 
-        public UsersController(UserService userServie)
+        public UsersController(IUserService userServie)
         {
             _userSvc = userServie;
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public IActionResult GetCalims()
-        //{
-        //    return new JsonResult(User.Claims.Select(x => new { x.Type, x.Value }));
-        //}
-
         // GET: api/User
         [HttpGet]
         [EnableCors("AllowAll")]
-        [Authorize]
         public async Task<List<User>> GetAsync() => await _userSvc.GetUsersAsync();
 
         // GET: api/User/5
@@ -53,9 +46,7 @@ namespace GradeProject.ProfileService.Controllers
             return NoContent();
         }
 
-        // PUT: api/User/5
-        //TODO : Change it by checking the users exists
-        //--------------------------------------------
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody]UserInsertDTO user)
         {

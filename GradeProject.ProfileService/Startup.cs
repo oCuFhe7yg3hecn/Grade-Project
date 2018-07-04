@@ -9,6 +9,7 @@ using AutoMapper;
 using GradeProject.ProfileService.Config;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Infrastructure.Repos;
+using GradeProject.ProfileService.Infrastructure.Services;
 using GradeProject.ProfileService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -92,9 +93,9 @@ namespace GradeProject.ProfileService
 
             //Services
             builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
-                                                  c.Resolve<IMapper>(), 
-                                                  c.Resolve<DefaultAvatarsFactory>()))
-                                                           .InstancePerLifetimeScope();
+                                                  c.Resolve<IMapper>()))
+                                                                 .As<IUserService>()
+                                                                 .InstancePerLifetimeScope();
 
             return builder.Build();
         }
