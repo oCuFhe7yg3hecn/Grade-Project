@@ -29,7 +29,6 @@ namespace GradeProject.GameCatalogService.Filters
                 var apiExc = context.Exception as ApiException;
                 context.Exception = null;
                 apiError.Message = apiExc.Message;
-                apiError.Errors = apiExc.Errors;
 
                 context.HttpContext.Response.StatusCode = apiExc.StatusCode;
             }

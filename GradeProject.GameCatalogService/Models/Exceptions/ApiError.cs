@@ -8,7 +8,6 @@ namespace GradeProject.GameCatalogService.Filters
     {
         public string Message { get; set; }
         public string Details { get; set; }
-        public ValidationErrorCollection Errors { get; set; }
 
         public ApiError()
         {
