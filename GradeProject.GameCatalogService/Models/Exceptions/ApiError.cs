@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Linq;
 
 namespace GradeProject.GameCatalogService.Filters
 {
-    internal class ApiError
+    internal class ApiError : Exception
     {
         public string Message { get; set; }
         public string Details { get; set; }

@@ -15,5 +15,6 @@ namespace GradeProject.GameCatalogService.Infrastructure.Services
 
         Task<PaginatedResponse<GameInfo>> GetByCategoriesAsync(List<string> categories, PagingOptions opts);
 
+        Task AddGameAsync(GameInfo newGame);
     }
 }

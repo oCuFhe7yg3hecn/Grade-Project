@@ -6,6 +6,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.GameCatalogService.Communication;
+using GradeProject.GameCatalogService.Communication.CommandHandlers;
+using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
@@ -38,7 +40,6 @@ namespace GradeProject.GameCatalogService
         public IContainer AppContainer { get; set; }
         private IEventBus _rabbitMQ;
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -67,7 +68,11 @@ namespace GradeProject.GameCatalogService
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
 
-            _rabbitMQ = AppContainer.Resolve<IEventBus>();
+            var commandBus = AppContainer.Resolve<ICommandBus>();
+            commandBus.DependencyResolver = AppContainer;
+            
+            _rabbitMQ = AppContainer.Resolve<IEventBus>(new TypedParameter(typeof(ICommandBus), commandBus));
+
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -98,14 +103,18 @@ namespace GradeProject.GameCatalogService
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
 
-
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             //Utils
 
-            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>()))
-                                                                                 .As<IEventBus>();
+            builder.Register(c => new CommandBus())
+                                            .As<ICommandBus>()
+                                            .SingleInstance();
+
+            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
+                                                  c.Resolve<ICommandBus>()))
+                                                                       .As<IEventBus>();
 
             //Context
             builder.Register(c => new MongoDbSettings());
@@ -117,14 +126,17 @@ namespace GradeProject.GameCatalogService
             //Services
 
             builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
-                                  c.Resolve<IMapper>()))
-                                                     .As<IGamesService>()
-                                                     .InstancePerLifetimeScope();
+                                                   c.Resolve<IMapper>()))
+                                                                      .As<IGamesService>()
+                                                                      .InstancePerLifetimeScope();
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
                                                       c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
                                                                                                                                    .InstancePerLifetimeScope();
 
+            //CommandHandlers
+            builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<IGamesService>()))
+                                                                        .As<ICommandHandler<RegisterGameCommand>>();
 
             return builder.Build();
         }

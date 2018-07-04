@@ -1,4 +1,4 @@
-﻿using GradeProject.GameCatalogService.Communication.Events;
+﻿using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
@@ -24,18 +24,23 @@ namespace GradeProject.GameCatalogService.Communication
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
+        private readonly EventingBasicConsumer _consumer;
+
         //private readonly string _replyQueueName;
-        //private readonly EventingBasicConsumer _consumer;
         //private readonly IBasicProperties _props;
 
         //Gueues
         private readonly string _gameRegisteredQueue;
 
         //Dependencies
-        private readonly IGamesService _gameSvc;
+        private readonly ICommandBus _commandBus;
 
-        public RabbitMqBus(IOptions<RabbitMqConfig> config)
+        //CommandsList
+        public List<ICommand> Commands { get; set; }
+
+        public RabbitMqBus(IOptions<RabbitMqConfig> config, ICommandBus commandBus)
         {
+            _commandBus = commandBus;
 
             var connFactory = new ConnectionFactory() { HostName = config.Value.HostName };
             _connection = connFactory.CreateConnection();
@@ -47,35 +52,36 @@ namespace GradeProject.GameCatalogService.Communication
 
             _channel.QueueBind(_gameRegisteredQueue, config.Value.Exchange, config.Value.QueueRoutingKey);
 
-            RegisterConsumers();
+            _consumer = new EventingBasicConsumer(_channel);
 
+            RegisterConsumers();
         }
 
         public void RegisterConsumers()
         {
-            //EventHandlers
+            //Dependinc on number of consumers
+            _consumer.Received += async (model, ea) =>
+            {
+                var gameString = Encoding.Default.GetString(ea.Body);
+                var gameInfo = JsonConvert.DeserializeObject<GameInfo>(gameString);
 
-            //var gameRecieved = new GameRegisteredEventHandler();
+                await _commandBus.SubmitAsync(new RegisterGameCommand(gameInfo));
+            };
 
-            ////Game Regitered
-            //var consumer = new EventingBasicConsumer(_channel);
-            //consumer.Received += gameRecieved.Consumer_Received;
-            ////consumer.Received += async (model, ea) =>
-            ////{
-            ////    var responseString = Encoding.Default.GetString(ea.Body);
-            ////    var gameInfo = JsonConvert.DeserializeObject<GameInfo>(responseString);
-            ////    await gameRecieved.Handle(gameInfo);
-            ////    //_gameSvc.AddGameAsync(gameInfo);
-            ////};
-            //_channel.BasicConsume(_gameRegisteredQueue, true, consumer);
-
-            //Some Another
+            _channel.BasicConsume(_gameRegisteredQueue, true, _consumer);
         }
 
-        public void Register(string queueName, EventingBasicConsumer consumer)
+        public void Register(string routingKey, RegisterGameCommand command)
         {
-            consumer.Model = _channel;
-            _channel.BasicConsume(queueName, false, consumer);
+            //If it get complex I will add some routingKey switch
+            _consumer.Received += async (model, ea) =>
+             {
+                 var gameString = Encoding.Default.GetString(ea.Body);
+                 var gameInfo = JsonConvert.DeserializeObject<GameInfo>(gameString);
+
+                 command.GameInfo = gameInfo;
+                 await _commandBus.SubmitAsync(command);
+             };
         }
 
         public void Publish(string queueName, string data)
