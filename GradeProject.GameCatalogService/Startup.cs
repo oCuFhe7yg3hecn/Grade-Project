@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using GradeProject.GameCatalogService.Communication;
+using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
@@ -34,6 +36,8 @@ namespace GradeProject.GameCatalogService
         public IConfiguration Configuration { get; }
 
         public IContainer AppContainer { get; set; }
+        private IEventBus _rabbitMQ;
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -70,7 +74,7 @@ namespace GradeProject.GameCatalogService
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
 
-            var rabbitMq = AppContainer.Resolve<IEventBus>();
+            _rabbitMQ = AppContainer.Resolve<IEventBus>();
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -84,35 +88,31 @@ namespace GradeProject.GameCatalogService
                 app.UseDeveloperExceptionPage();
             }
 
-            var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<GameInfoDTO>("Games")
-                        .EntityType
-                        .Filter() // Allow for the $filter Command
-                        .Count() // Allow for the $count Command
-                        .Expand() // Allow for the $expand Command
-                        .OrderBy() // Allow for the $orderby Command
-                        .Page() // Allow for the $top and $skip Commands
-                        .Select() // Allow for the $select Command
-                        .Expand();
-            //Enabling OData routing.
+            app.UseAuthentication();
+
             app.UseMvc(routebuilder =>
             {
-                routebuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+                //Enabling OData routing.
+                routebuilder.MapODataServiceRoute("ODataRoutes", "odata", ODataConfig.GetBuilder().GetEdmModel());
             });
-
-            app.UseAuthentication();
 
             app.UseMvc();
         }
 
         private IContainer RegisterDependencies(IServiceCollection services)
         {
+            //Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
+
+            services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
+
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             //Utils
 
-            builder.Register(c => new RabbitMqBus(c.Resolve<IGameService>()))
+            builder.Register(c => new RabbitMqBus(c.Resolve<GamesService>()))
                                                                         .As<IEventBus>();
 
             //Context
@@ -120,8 +120,6 @@ namespace GradeProject.GameCatalogService
             builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
 
             //Repos
-            //builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
-            //builder.Register(c => new CategoryRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             //Services

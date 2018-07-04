@@ -1,4 +1,5 @@
-﻿using GradeProject.GameCatalogService.Infrastructure.Services;
+﻿using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -11,21 +12,20 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Communication.Events
 {
-    public class GameRegisteredConsumer : EventingBasicConsumer
+    public class GameRegisteredEventHandler
     {
-        private readonly IGameService _gameSvc;
+        private readonly GamesService _gameSvc;
 
-        public GameRegisteredConsumer(IModel model, IGameService gameService) : base(model)
+        public GameRegisteredEventHandler(IModel model, GamesService gameService)
         {
             _gameSvc = gameService;
-            this.Received += Handle;
         }
 
-        private void Handle(object sender, BasicDeliverEventArgs ea)
+        public async void Consumer_Received(object sender, BasicDeliverEventArgs e)
         {
             var data = Encoding.Default.GetString(ea.Body);
             var gameInfo = JsonConvert.DeserializeObject<GameInfo>(data);
-            _gameSvc.AddGameAsync(gameInfo);
+            await _gameSvc.AddGameAsync(gameInfo);
         }
     }
 }

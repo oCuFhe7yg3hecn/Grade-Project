@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using GradeProject.GameCatalogService.Models.DTO;
 using GradeProject.GameCatalogService.Models.Exceptions;
@@ -17,20 +18,22 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Games")]
     public class GamesController : ODataController
     {
-        private readonly IGameService _gamesSvc;
+        private readonly IGamesService _gamesService;
+        private readonly GamesService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
 
-        public GamesController(IGameService gamesSvc)
+        public GamesController(IGamesService gamesService, GamesService gamesSvc, ILogger<GamesController> logger)
         {
+            _gamesService = gamesService;
             _gamesSvc = gamesSvc;
+            _logger = logger;
         }
 
         [HttpGet]
         [EnableQuery]
-        //PagingOptions pageOptions
         public async Task<IQueryable<GameInfoDTO>> Get()
         {
-            var games = await _gamesSvc.GetAllAsync();
+            var games = await _gamesService.GetAllAsync();
             return games.AsQueryable();
         }
 

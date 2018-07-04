@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.GameCatalogService.Infrastructure
+namespace GradeProject.GameCatalogService.Infrastructure.Services
 {
-    public class GamesService : IGameService
+    public class GamesService : IGamesService
     {
         private readonly IMapper _mapper;
         private readonly IRepository<GameInfo> _repo;
@@ -22,20 +22,10 @@ namespace GradeProject.GameCatalogService.Infrastructure
             _mapper = mapper;
         }
 
-        public async Task<List<GameInfo>> GetAllAsync(PagingOptions pageOptions)
-        {
-            return await _repo.WhereAsync(_ => true,
-                                          pageOptions.PageSize,
-                                          pageOptions.Page);
-        }
-
         public async Task<List<GameInfoDTO>> GetAllAsync()
         {
-            var games = await _repo.WhereAsync(_ => true, 100, 1);
-
-            return games
-                    .Select(item => _mapper.Map<GameInfoDTO>(item))
-                    .ToList();
+            var games = await _repo.AllAsync();
+            return games.Select(g => _mapper.Map<GameInfoDTO>(g)).ToList();
         }
 
         public async Task<GameInfo> GetByIdAsync(string id) =>

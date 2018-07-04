@@ -1,14 +1,13 @@
-﻿using GradeProject.GameCatalogService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using GradeProject.GameCatalogService.Models;
+using GradeProject.GameCatalogService.Models.DTO;
 
 namespace GradeProject.GameCatalogService.Infrastructure.Services
 {
-    public interface IGameService
+    public interface IGamesService
     {
-        Task<List<GameInfo>> GetAllAsync(PagingOptions pageOptions);
+        Task<List<GameInfoDTO>> GetAllAsync();
 
         Task<GameInfo> GetByIdAsync(string id);
 
@@ -16,6 +15,5 @@ namespace GradeProject.GameCatalogService.Infrastructure.Services
 
         Task<PaginatedResponse<GameInfo>> GetByCategoriesAsync(List<string> categories, PagingOptions opts);
 
-        Task AddGameAsync(GameInfo games);
     }
 }

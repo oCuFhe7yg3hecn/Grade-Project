@@ -1,4 +1,6 @@
 ﻿using GradeProject.GameCatalogService.Communication.Events;
+using GradeProject.GameCatalogService.Configurations;
+using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using Newtonsoft.Json;
@@ -29,21 +31,21 @@ namespace GradeProject.GameCatalogService.Communication
         private readonly string _gameRegisteredQueue;
 
         //Dependencies
-        private readonly IGameService _gameSvc;
+        private readonly GamesService _gameSvc;
 
-        public RabbitMqBus(IGameService gameSvc)
+        public RabbitMqBus(RabbitMqConfig config, GameRegisteredEventHandler())
         {
             _gameSvc = gameSvc;
 
-            var connFactory = new ConnectionFactory() { HostName = "localhost" };
+            var connFactory = new ConnectionFactory() { HostName = config.HostName };
             _connection = connFactory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare("GameRegisterExcchange", "direct");
+            _channel.ExchangeDeclare(config.Exchange, "direct");
 
             _gameRegisteredQueue = _channel.QueueDeclare().QueueName;
 
-            _channel.QueueBind(_gameRegisteredQueue, "GameRegisterExcchange", "GameRegistered");
+            _channel.QueueBind(_gameRegisteredQueue, config.Exchange, config.QueueRoutingKey);
 
             RegisterConsumers();
 
@@ -51,16 +53,20 @@ namespace GradeProject.GameCatalogService.Communication
 
         public void RegisterConsumers()
         {
-            //Поки що так, потім буде якійсь спеціалізований підхід
+            //EventHandlers
+
+            //var gameRecieved = new GameRegisteredEventHandler();
 
             //Game Regitered
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
-            {
-                var responseString = Encoding.Default.GetString(ea.Body);
-                var gameInfo = JsonConvert.DeserializeObject<GameInfo>(responseString);
-                _gameSvc.AddGameAsync(gameInfo);
-            };
+            consumer.Received += gameRecieved.Consumer_Received;
+            //consumer.Received += async (model, ea) =>
+            //{
+            //    var responseString = Encoding.Default.GetString(ea.Body);
+            //    var gameInfo = JsonConvert.DeserializeObject<GameInfo>(responseString);
+            //    await gameRecieved.Handle(gameInfo);
+            //    //_gameSvc.AddGameAsync(gameInfo);
+            //};
             _channel.BasicConsume(_gameRegisteredQueue, true, consumer);
 
             //Some Another
