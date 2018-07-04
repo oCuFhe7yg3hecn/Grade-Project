@@ -6,6 +6,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.GameRegService.Communication;
+using GradeProject.GameRegService.Config;
 using GradeProject.GameRegService.Infrastructure;
 using GradeProject.GameRegService.Infrstructure;
 using GradeProject.GameRegService.Models;
@@ -37,8 +38,6 @@ namespace GradeProject.GameRegService
 
             services.AddAutoMapper();
 
-            var rs = new RabbitMqEventBus();
-
             services.Configure<MongoDbSettings>(conf =>
             {
                 conf.Database = Configuration["MongoDbSettings:Database"];
@@ -68,14 +67,18 @@ namespace GradeProject.GameRegService
 
         private IContainer RegisterDependencies(IServiceCollection services)
         {
+            //Configuration
+            services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             //Utils
-            builder.Register(c => new MongoDbSettings());
-            builder.Register(c => new RabbitMqEventBus()).As<IEventBus>();
+            builder.Register(c => new RabbitMqEventBus(c.Resolve<IOptions<RabbitMqConfig>>()))
+                                                                                     .As<IEventBus>();
 
             //Context
+            builder.Register(c => new MongoDbSettings());
             builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
 
             //Repos

@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using GradeProject.GameRegService.Communication;
-using GradeProject.GameRegService.Communication.Events;
 using GradeProject.GameRegService.Infrstructure;
 using GradeProject.GameRegService.Models;
 using Microsoft.AspNetCore.Authorization;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameRegService.Communication.Commands;
 using GradeProject.GameRegService.Communication.CommandHandlers;
-using GradeProject.GameRegService.Filters;
+//using GradeProject.GameRegService.Filters;
 
 namespace GradeProject.GameRegService.Communication
 {
@@ -23,7 +23,7 @@ namespace GradeProject.GameRegService.Communication
             {
                 var commandHandler = DependencyResolver.Resolve<ICommandHandler<TCommand>>();
                 if (commandHandler != null) { await commandHandler.ExecuteAsync(command); }
-                else { throw new ApiError("There no specified command handler for this command."); }
+                //else { throw new ApiError("There no specified command handler for this command."); }
             }
         }
     }
