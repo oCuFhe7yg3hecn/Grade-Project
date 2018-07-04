@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using GradeProject.GameCatalogService.Communication;
+using AutoMapper;
 using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
+using GradeProject.GameCatalogService.Models.DTO;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -40,6 +43,11 @@ namespace GradeProject.GameCatalogService
                 opts.Filters.Add(typeof(ApiExceptionFilter));
             });
 
+            //AutoMapper
+            services.AddAutoMapper();
+
+            //OData
+            services.AddOData();
 
             //Add Authentication
             services.AddAuthentication("Bearer")
@@ -76,6 +84,22 @@ namespace GradeProject.GameCatalogService
                 app.UseDeveloperExceptionPage();
             }
 
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<GameInfoDTO>("Games")
+                        .EntityType
+                        .Filter() // Allow for the $filter Command
+                        .Count() // Allow for the $count Command
+                        .Expand() // Allow for the $expand Command
+                        .OrderBy() // Allow for the $orderby Command
+                        .Page() // Allow for the $top and $skip Commands
+                        .Select() // Allow for the $select Command
+                        .Expand();
+            //Enabling OData routing.
+            app.UseMvc(routebuilder =>
+            {
+                routebuilder.MapODataServiceRoute("ODataRoutes", "odata", builder.GetEdmModel());
+            });
+
             app.UseAuthentication();
 
             app.UseMvc();
@@ -101,9 +125,10 @@ namespace GradeProject.GameCatalogService
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             //Services
-            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
-                                                                                                                                   .As<IGameService>()
-                                                                                                                                   .InstancePerLifetimeScope();
+
+            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
+                                  c.Resolve<IMapper>()))
+                                                     .InstancePerLifetimeScope();
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
                                                       c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
