@@ -19,7 +19,6 @@ namespace GradeProject.GameCatalogService.Controllers
     public class GamesController : ODataController
     {
         private readonly IGamesService _gamesService;
-        private readonly GamesService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
 
         public GamesController(IGamesService gamesService, GamesService gamesSvc, ILogger<GamesController> logger)

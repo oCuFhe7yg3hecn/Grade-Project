@@ -10,6 +10,5 @@ namespace GradeProject.GameCatalogService.Configurations
         public string HostName { get; set; }
         public string Exchange { get; set; }
         public string QueueRoutingKey { get; set; }
-
     }
 }

@@ -3,6 +3,7 @@ using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -23,29 +24,29 @@ namespace GradeProject.GameCatalogService.Communication
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private readonly string _replyQueueName;
-        private readonly EventingBasicConsumer _consumer;
-        private readonly IBasicProperties _props;
+        //private readonly string _replyQueueName;
+        //private readonly EventingBasicConsumer _consumer;
+        //private readonly IBasicProperties _props;
 
         //Gueues
         private readonly string _gameRegisteredQueue;
 
         //Dependencies
-        private readonly GamesService _gameSvc;
+        private readonly IGamesService _gameSvc;
 
-        public RabbitMqBus(RabbitMqConfig config, GameRegisteredEventHandler())
+        public RabbitMqBus(IOptions<RabbitMqConfig> config, IGamesService gamesSvc)
         {
-            _gameSvc = gameSvc;
+            _gameSvc = gamesSvc;
 
-            var connFactory = new ConnectionFactory() { HostName = config.HostName };
+            var connFactory = new ConnectionFactory() { HostName = config.Value.HostName };
             _connection = connFactory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(config.Exchange, "direct");
+            _channel.ExchangeDeclare(config.Value.Exchange, "direct");
 
             _gameRegisteredQueue = _channel.QueueDeclare().QueueName;
 
-            _channel.QueueBind(_gameRegisteredQueue, config.Exchange, config.QueueRoutingKey);
+            _channel.QueueBind(_gameRegisteredQueue, config.Value.Exchange, config.Value.QueueRoutingKey);
 
             RegisterConsumers();
 

@@ -103,7 +103,6 @@ namespace GradeProject.GameCatalogService
         {
             //Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
-
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
 
 
@@ -112,8 +111,9 @@ namespace GradeProject.GameCatalogService
 
             //Utils
 
-            builder.Register(c => new RabbitMqBus(c.Resolve<GamesService>()))
-                                                                        .As<IEventBus>();
+            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
+                                                  c.Resolve<GamesService>()))
+                                                                     .As<IEventBus>();
 
             //Context
             builder.Register(c => new MongoDbSettings());
