@@ -30,6 +30,7 @@ namespace GradeProject.GameRegService
         public IConfiguration Configuration { get; }
 
         public IContainer AppContainer { get; set; }
+        private IEventBus _rabbitMq;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -40,17 +41,10 @@ namespace GradeProject.GameRegService
 
             services.AddAutoMapper();
 
-            services.Configure<MongoDbSettings>(conf =>
-            {
-                conf.Database = Configuration["MongoDbSettings:Database"];
-                conf.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
-            });
-
-
-            //REgister Dependencies
+            //Rrgister Dependencies
             AppContainer = RegisterDependencies(services);
 
-            var rabbitMq = AppContainer.Resolve<IEventBus>();
+            _rabbitMq = AppContainer.Resolve<IEventBus>();
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -70,6 +64,7 @@ namespace GradeProject.GameRegService
         private IContainer RegisterDependencies(IServiceCollection services)
         {
             //Configuration
+            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
 
             var builder = new ContainerBuilder();
