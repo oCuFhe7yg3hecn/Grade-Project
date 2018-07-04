@@ -13,16 +13,14 @@ namespace GradeProject.GameCatalogService.Infrastructure
     {
         private readonly IMongoDatabase _database;
 
-        public IMongoCollection<GameInfo> Games => _database.GetCollection<GameInfo>("GamesData");
-
-        public IMongoCollection<Category> Categories => _database.GetCollection<Category>("Categories");
-
         public MongoDbContext(IOptions<MongoDbSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);
             if (client != null) { _database = client.GetDatabase(settings.Value.Database); }
             Seed(_database);
         }
+
+        public IMongoCollection<T> GetClollection<T>(string collectionName) => _database.GetCollection<T>(collectionName);
 
         public void Seed(IMongoDatabase _db)
         {
@@ -104,9 +102,6 @@ namespace GradeProject.GameCatalogService.Infrastructure
                 });
             }
         }
-
-        public IMongoCollection<T> GetClollection<T>(string collectionName) => _database.GetCollection<T>(collectionName);
-
 
     }
 }
