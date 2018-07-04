@@ -38,8 +38,6 @@ namespace GradeProject.GameRegService.Infrstructure
 
             var gameInfo = _mapper.Map<GameInfo>(responseObject);
 
-            var gameRegInfo = _gameInfoRepo.WhereAsync(_ => true);
-
             //Add some game validation logic here
             var bindata = ObjectConverter.ObjectToBytes(gameInfo);
             _eventBus.Publish(bindata);
