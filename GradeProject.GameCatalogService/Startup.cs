@@ -107,14 +107,17 @@ namespace GradeProject.GameCatalogService
 
             builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
                                                   c.Resolve<ICommandBus>()))
-                                                                       .As<IEventBus>();
+                                                                       .As<IEventBus>()
+                                                                       .SingleInstance();
 
             //Context
             builder.Register(c => new MongoDbSettings());
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()))
+                                                                    .InstancePerLifetimeScope();
 
             //Repos
-            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>))
+                                                                    .InstancePerLifetimeScope();
 
             //Services
             builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
@@ -129,7 +132,8 @@ namespace GradeProject.GameCatalogService
 
             //CommandHandlers
             builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<IGamesService>()))
-                                                                        .As<ICommandHandler<RegisterGameCommand>>();
+                                                                        .As<ICommandHandler<RegisterGameCommand>>()
+                                                                        .SingleInstance();
 
             return builder.Build();
         }
