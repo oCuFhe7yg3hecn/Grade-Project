@@ -15,28 +15,20 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Communication
 {
-    public enum Queues
-    {
-        gameRegService_testQueue
-    }
-
     public class RabbitMqBus : IEventBus
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly EventingBasicConsumer _consumer;
 
-        //private readonly string _replyQueueName;
-        //private readonly IBasicProperties _props;
-
         //Gueues
         private readonly string _gameRegisteredQueue;
 
+        //private readonly string _replyQueueName;
+        //private readonly IBasicProperties _props;
+
         //Dependencies
         private readonly ICommandBus _commandBus;
-
-        //CommandsList
-        public List<ICommand> Commands { get; set; }
 
         public RabbitMqBus(IOptions<RabbitMqConfig> config, ICommandBus commandBus)
         {
@@ -74,6 +66,7 @@ namespace GradeProject.GameCatalogService.Communication
         public void Register(string routingKey, RegisterGameCommand command)
         {
             //If it get complex I will add some routingKey switch
+            // and work with ICommand
             _consumer.Received += async (model, ea) =>
              {
                  var gameString = Encoding.Default.GetString(ea.Body);

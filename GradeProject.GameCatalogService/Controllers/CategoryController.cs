@@ -16,13 +16,13 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
-        private readonly GamesService _gameSvc;
-        private readonly CategoryService _categorygSvc;
+        private readonly IGamesService _gameSvc;
+        private readonly ICategoryService _categorygSvc;
         private readonly ILogger<CategoryController> _logger;
 
         public CategoryController(
-            GamesService gameSvc,
-            CategoryService ctgRepo,
+            IGamesService gameSvc,
+            ICategoryService ctgRepo,
             ILogger<CategoryController> logger)
         {
             _gameSvc = gameSvc;

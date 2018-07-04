@@ -22,9 +22,6 @@ namespace GradeProject.GameCatalogService.Communication.CommandHandlers
             _gameSvc = gameService;
         }
 
-        public async Task ExecuteAsync(RegisterGameCommand command)
-        {
-            await _gameSvc.AddGameAsync(command.GameInfo);
-        }
+        public async Task ExecuteAsync(RegisterGameCommand command) => await _gameSvc.AddGameAsync(command.GameInfo);
     }
 }

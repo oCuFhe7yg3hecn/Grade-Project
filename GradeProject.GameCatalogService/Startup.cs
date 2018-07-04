@@ -1,30 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.GameCatalogService.Communication;
 using GradeProject.GameCatalogService.Communication.CommandHandlers;
 using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Configurations;
-using GradeProject.GameCatalogService.Controllers;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
-using GradeProject.GameCatalogService.Models.DTO;
-using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace GradeProject.GameCatalogService
 {
@@ -38,7 +30,8 @@ namespace GradeProject.GameCatalogService
         public IConfiguration Configuration { get; }
 
         public IContainer AppContainer { get; set; }
-        private IEventBus _rabbitMQ;
+        private IEventBus _rabbitMq;
+        private ICommandBus _commandBus;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -68,10 +61,10 @@ namespace GradeProject.GameCatalogService
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
 
-            var commandBus = AppContainer.Resolve<ICommandBus>();
-            commandBus.DependencyResolver = AppContainer;
+            _commandBus = AppContainer.Resolve<ICommandBus>();
+            _commandBus.DependencyResolver = AppContainer;
             
-            _rabbitMQ = AppContainer.Resolve<IEventBus>(new TypedParameter(typeof(ICommandBus), commandBus));
+            _rabbitMq = AppContainer.Resolve<IEventBus>(new TypedParameter(typeof(ICommandBus), _commandBus));
 
 
             return new AutofacServiceProvider(this.AppContainer);
@@ -124,7 +117,6 @@ namespace GradeProject.GameCatalogService
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             //Services
-
             builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
                                                    c.Resolve<IMapper>()))
                                                                       .As<IGamesService>()
@@ -132,6 +124,7 @@ namespace GradeProject.GameCatalogService
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
                                                       c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
+                                                                                                                                   .As<ICategoryService>()
                                                                                                                                    .InstancePerLifetimeScope();
 
             //CommandHandlers

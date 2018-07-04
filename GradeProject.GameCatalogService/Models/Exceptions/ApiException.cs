@@ -17,8 +17,8 @@ namespace GradeProject.GameCatalogService.Models.Exceptions
         }
 
         public ApiException(string message,
-                            int statusCode = 500
-            ) : base(message)
+                    int statusCode = 500
+        ) : base(message)
         {
             StatusCode = statusCode;
         }
