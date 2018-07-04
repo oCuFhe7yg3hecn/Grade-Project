@@ -27,9 +27,10 @@ namespace GradeProject.GameRegService.Communication
 
         private readonly ILogger<RabbitMqEventBus> _logger;
 
-        public RabbitMqEventBus(IOptions<RabbitMqConfig> config)
+        public RabbitMqEventBus(IOptions<RabbitMqConfig> config, ILogger<RabbitMqEventBus> logger)
         {
             _config = config.Value;
+            _logger = logger;
 
             var connFactory = new ConnectionFactory() { HostName = _config.HostName };
             _connection = connFactory.CreateConnection();
@@ -44,6 +45,7 @@ namespace GradeProject.GameRegService.Communication
                                   routingKey: _config.QueueRoutingKey,
                                   basicProperties: null,
                                   body: body);
+            _logger.LogInformation($"  [x] Event on {_config.Exchange} was sent to route {_config.QueueRoutingKey} at {DateTime.Now};");
         }
     }
 
