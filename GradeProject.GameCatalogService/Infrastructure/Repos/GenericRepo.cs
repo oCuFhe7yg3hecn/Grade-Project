@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
 
             return Convert.ToInt32(count);
         }
+
+        public async Task<List<T>> AllAsync() => await _coll.Find(new BsonDocument()).ToListAsync();
 
         public async Task<T> SingleAsync(Expression<Func<T, bool>> filter) =>
             await _coll.Find(filter).FirstAsync();

@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using GradeProject.GameCatalogService.Controllers;
+using AutoMapper;
+using GradeProject.GameCatalogService.Communication;
+using GradeProject.GameCatalogService.Communication.CommandHandlers;
+using GradeProject.GameCatalogService.Communication.Commands;
+using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace GradeProject.GameCatalogService
 {
@@ -29,6 +30,8 @@ namespace GradeProject.GameCatalogService
         public IConfiguration Configuration { get; }
 
         public IContainer AppContainer { get; set; }
+        private IEventBus _rabbitMq;
+        private ICommandBus _commandBus;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -37,6 +40,12 @@ namespace GradeProject.GameCatalogService
             {
                 opts.Filters.Add(typeof(ApiExceptionFilter));
             });
+
+            //AutoMapper
+            services.AddAutoMapper();
+
+            //OData
+            services.AddOData();
 
             //Add Authentication
             services.AddAuthentication("Bearer")
@@ -49,15 +58,14 @@ namespace GradeProject.GameCatalogService
                       options.ApiName = $"Platform.GameCatalogService";
                   });
 
-            //Configuration
-            services.Configure<MongoDbSettings>(opts =>
-            {
-                opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
-                opts.Database = Configuration["MongoDbSettings:Database"];
-            });
-
             //REgister Dependencies
             AppContainer = RegisterDependencies(services);
+
+            _commandBus = AppContainer.Resolve<ICommandBus>();
+            _commandBus.DependencyResolver = AppContainer;
+            
+            _rabbitMq = AppContainer.Resolve<IEventBus>(new TypedParameter(typeof(ICommandBus), _commandBus));
+
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -73,30 +81,59 @@ namespace GradeProject.GameCatalogService
 
             app.UseAuthentication();
 
+            app.UseMvc(routebuilder =>
+            {
+                //Enabling OData routing.
+                routebuilder.MapODataServiceRoute("ODataRoutes", "odata", ODataConfig.GetBuilder().GetEdmModel());
+            });
+
             app.UseMvc();
         }
 
         private IContainer RegisterDependencies(IServiceCollection services)
         {
+            //Configurations
+            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
+            services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
+            //Utils
+
+            builder.Register(c => new CommandBus())
+                                            .As<ICommandBus>()
+                                            .SingleInstance();
+
+            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
+                                                  c.Resolve<ICommandBus>()))
+                                                                       .As<IEventBus>()
+                                                                       .SingleInstance();
+
             //Context
             builder.Register(c => new MongoDbSettings());
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()))
+                                                                    .InstancePerLifetimeScope();
 
             //Repos
-            //builder.Register(c => new GamesRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
-            //builder.Register(c => new CategoryRepository(c.Resolve<MongoDbContext>())).InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>))
+                                                                    .InstancePerLifetimeScope();
 
             //Services
-            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
-                                                                                                                                   .InstancePerLifetimeScope();
+            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
+                                                   c.Resolve<IMapper>()))
+                                                                      .As<IGamesService>()
+                                                                      .InstancePerLifetimeScope();
 
             builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
                                                       c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
+                                                                                                                                   .As<ICategoryService>()
                                                                                                                                    .InstancePerLifetimeScope();
+
+            //CommandHandlers
+            builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<IGamesService>()))
+                                                                        .As<ICommandHandler<RegisterGameCommand>>()
+                                                                        .SingleInstance();
 
             return builder.Build();
         }

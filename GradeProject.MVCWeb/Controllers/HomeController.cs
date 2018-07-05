@@ -5,14 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GradeProject.MVCWeb.Models;
+using GradeProject.MVCWeb.Infrastruct;
 
 namespace GradeProject.MVCWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private WebServicesCallService _webService;
+
+        public HomeController(WebServicesCallService webService)
         {
-            return View();
+            _webService = webService;
+        }
+
+        public async Task <IActionResult> Index()
+        {
+            var games = await _webService.GetTopGames(10);
+            return View(games);
         }
 
         public IActionResult About()

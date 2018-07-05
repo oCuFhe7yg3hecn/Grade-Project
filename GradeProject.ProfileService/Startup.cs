@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using GradeProject.ProfileService.Config;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Infrastructure.Repos;
+using GradeProject.ProfileService.Infrastructure.Services;
 using GradeProject.ProfileService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,13 +48,6 @@ namespace GradeProject.ProfileService
                         options.ApiName = "Platform.ProfileService";
                     });
 
-
-            services.Configure<MongoDbSettings>(opts =>
-            {
-                opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
-                opts.Database = Configuration["MongoDbSettings:Database"];
-            });
-
             //Added Automapper
             services.AddAutoMapper();
             
@@ -82,6 +77,10 @@ namespace GradeProject.ProfileService
 
         private IContainer RegisterDependencies(IServiceCollection services) 
         {
+            //Configuration
+            services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
+            services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMqConfig"));
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
@@ -94,9 +93,9 @@ namespace GradeProject.ProfileService
 
             //Services
             builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
-                                                  c.Resolve<IMapper>(), 
-                                                  c.Resolve<DefaultAvatarsFactory>()))
-                                                           .InstancePerLifetimeScope();
+                                                  c.Resolve<IMapper>()))
+                                                                 .As<IUserService>()
+                                                                 .InstancePerLifetimeScope();
 
             return builder.Build();
         }

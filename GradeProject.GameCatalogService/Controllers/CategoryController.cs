@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
+using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,13 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
-        private readonly GamesService _gameSvc;
-        private readonly CategoryService _categorygSvc;
+        private readonly IGamesService _gameSvc;
+        private readonly ICategoryService _categorygSvc;
         private readonly ILogger<CategoryController> _logger;
 
         public CategoryController(
-            GamesService gameSvc, 
-            CategoryService ctgRepo, 
+            IGamesService gameSvc,
+            ICategoryService ctgRepo,
             ILogger<CategoryController> logger)
         {
             _gameSvc = gameSvc;
