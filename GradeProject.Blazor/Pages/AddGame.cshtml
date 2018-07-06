@@ -24,6 +24,5 @@
 
     public async void Add() { 
         await Http.SendJsonAsync(HttpMethod.Post, "http://localhost:50271/api/Registration", gameUrl);
-        Console.WriteLine("Sended Request");
     }
 }

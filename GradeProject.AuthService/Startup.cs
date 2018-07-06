@@ -57,6 +57,7 @@ namespace GradeProject.AuthService
                          .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
                          .AddInMemoryClients(IdentityConfig.GetClients())
                          .AddTestUsers(IdentityConfig.GetUsers());
+
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {

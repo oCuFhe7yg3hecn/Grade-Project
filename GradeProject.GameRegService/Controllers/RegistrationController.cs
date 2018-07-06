@@ -35,6 +35,7 @@ namespace GradeProject.GameRegService.Controllers
         [EnableCors("AllowAll")]
         public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
+            var claims = User.Claims.ToList();
             if (await _regSvc.RegisterGame(gameUrl)) { return Ok(); }
             return BadRequest("Something gone wrong");
         }

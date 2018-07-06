@@ -17,7 +17,8 @@ namespace GradeProject.AuthService
         {
             return new List<ApiResource>
             {
-                new ApiResource("Platform.ProfileService", "ProfileService")
+                new ApiResource("Platform.ProfileService", "ProfileService"),
+                new ApiResource("Platform.GameRegService", "GameRegService")
             };
         }
 
@@ -29,7 +30,7 @@ namespace GradeProject.AuthService
                 new IdentityResources.Profile(),
             };
         }
-
+    
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
@@ -39,7 +40,7 @@ namespace GradeProject.AuthService
                 {
                     ClientId = "External.WebApp",
                     ClientName = "External WebApp",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientSecrets = { new Secret("secret") },
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowOfflineAccess = true,
