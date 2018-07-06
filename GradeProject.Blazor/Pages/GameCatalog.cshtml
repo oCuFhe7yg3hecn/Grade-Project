@@ -13,9 +13,16 @@
         <div class="card">
             <img src="@game.CoverImageURL" alt="John" style="width:100%">
             <h1>@game.Name</h1>
+            <p>Tags : <small> 
+                @foreach(var tag in game.Tags){ <span>@tag </span> }
+            </small></p>
             <small>@game.Description</small>
             <p>@game.Authority</p>
-           <p> <a href="@game.GameUrl"><button>Contact</button></a></p>
+            <p>Categories : <small> 
+                @foreach(var category in game.Categories){ <span>@category </span> }
+            </small>
+            </p>
+           <p> <a href="@game.GameUrl"><button>Play</button></a></p>
         </div>
     }
 }
@@ -28,7 +35,8 @@
 
    protected override async Task OnInitAsync()
     {
-        var response = await Http.GetJsonAsync<ODataResponse>("http://localhost:54554/odata/Games");
+        var oDataGamesUrl = "http://localhost:54554/odata/Games?$select=Id,Name,CoverImageURL,Tags,Description,Authority,Categories";
+        var response = await Http.GetJsonAsync<ODataResponse>(oDataGamesUrl);
         Games = response.value;
         Console.WriteLine(response);
     }
@@ -38,6 +46,7 @@
         public Game[] value {get; set;}
     }
 
+    //TODO : Remove unused
     class Game{
         public Guid Id { get; set; }
 
