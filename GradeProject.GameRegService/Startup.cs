@@ -41,6 +41,11 @@ namespace GradeProject.GameRegService
 
             services.AddAutoMapper();
 
+            //Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
+                                                                            .AllowAnyMethod()
+                                                                            .AllowAnyHeader()));
+
             //Rrgister Dependencies
             AppContainer = RegisterDependencies(services);
 
@@ -57,6 +62,8 @@ namespace GradeProject.GameRegService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseMvc();
         }

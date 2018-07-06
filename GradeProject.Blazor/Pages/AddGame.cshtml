@@ -19,7 +19,11 @@
 
    protected override async Task OnInitAsync()
     {
+        Console.WriteLine("On Init");
     }
 
-    public async void Add() => await Http.SendJsonAsync(HttpMethod.Post, "http://localhost:50271/api/Registration", gameUrl);
+    public async void Add() { 
+        await Http.SendJsonAsync(HttpMethod.Post, "http://localhost:50271/api/Registration", gameUrl);
+        Console.WriteLine("Sended Request");
+    }
 }

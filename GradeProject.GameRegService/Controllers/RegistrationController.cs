@@ -8,6 +8,7 @@ using GradeProject.GameRegService.Communication;
 using GradeProject.GameRegService.Infrstructure;
 using GradeProject.GameRegService.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -31,6 +32,7 @@ namespace GradeProject.GameRegService.Controllers
 
 
         [HttpPost]
+        [EnableCors("AllowAll")]
         public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
         {
             if (await _regSvc.RegisterGame(gameUrl)) { return Ok(); }
