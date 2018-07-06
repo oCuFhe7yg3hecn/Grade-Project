@@ -3,20 +3,39 @@
 
 <h2>Hello from Games Catalog Page</h2>
 
+<p>Game List : </p>
+
+<div class="gameList">
+
+@if(Games != null){
+    @foreach(var game in Games){
+
+        <div class="card">
+            <img src="@game.CoverImageURL" alt="John" style="width:100%">
+            <h1>@game.Name</h1>
+            <small>@game.Description</small>
+            <p>@game.Authority</p>
+           <p> <a href="@game.GameUrl"><button>Contact</button></a></p>
+        </div>
+    }
+}
+
+</div>
+
 @functions{
 
    Game[] Games;
 
    protected override async Task OnInitAsync()
     {
-        var response = await Http.GetJsonAsync<>("http://localhost:54554/odata/Games");
-        Console.Write(response);
+        var response = await Http.GetJsonAsync<ODataResponse>("http://localhost:54554/odata/Games");
         Games = response.value;
+        Console.WriteLine(response);
     }
 
     class ODataResponse{
-        public string @odata.context;
-        public Game[] value;
+        public string context {get; set;}
+        public Game[] value {get; set;}
     }
 
     class Game{

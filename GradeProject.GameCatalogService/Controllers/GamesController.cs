@@ -11,6 +11,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Cors;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -29,6 +30,7 @@ namespace GradeProject.GameCatalogService.Controllers
 
         [HttpGet]
         [EnableQuery]
+        [EnableCors("AllowAll")]
         public async Task<IQueryable<GameInfoDTO>> Get()
         {
             var games = await _gamesSvc.GetAllAsync();

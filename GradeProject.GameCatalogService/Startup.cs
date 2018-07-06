@@ -47,6 +47,11 @@ namespace GradeProject.GameCatalogService
             //OData
             services.AddOData();
 
+            //Cors
+            //Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
+                                                                            .AllowAnyMethod()));
+
             //Add Authentication
             services.AddAuthentication("Bearer")
                   .AddIdentityServerAuthentication(options =>
@@ -80,6 +85,8 @@ namespace GradeProject.GameCatalogService
             }
 
             app.UseAuthentication();
+
+            app.UseCors("AllowAll");
 
             app.UseMvc(routebuilder =>
             {
