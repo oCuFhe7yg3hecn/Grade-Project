@@ -1,0 +1,50 @@
+﻿@page "/games"
+@inject HttpClient Http
+
+<h2>Hello from Games Catalog Page</h2>
+
+@functions{
+
+   Game[] Games;
+
+   protected override async Task OnInitAsync()
+    {
+        var response = await Http.GetJsonAsync<>("http://localhost:54554/odata/Games");
+        Console.Write(response);
+        Games = response.value;
+    }
+
+    class ODataResponse{
+        public string @odata.context;
+        public Game[] value;
+    }
+
+    class Game{
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string Version { get; set; }
+
+        public List<string> Categories { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public string CoverImageURL { get; set; }
+        public List<string> MultiMedias { get; set; }
+
+        public string GameUrl { get; set; }
+
+        public string Authority { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime RegistereAt { get; set; }
+
+        public int PlayersCount { get; set; }
+
+        public List<string> AvaliablePlatforms { get; set; }
+    }
+}
