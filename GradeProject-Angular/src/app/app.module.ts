@@ -10,6 +10,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { RouterModule, Routes } from '@angular/router';
 import { TestDashboardComponent } from './test-dashboard/test-dashboard.component';
 import { TestTableComponent } from './test-table/test-table.component';
+import { MaterialsImportModule } from './materials-import/materials-import.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TestTableComponent } from './test-table/test-table.component';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MaterialsImportModule
   ],
   providers: [],
   bootstrap: [AppComponent]

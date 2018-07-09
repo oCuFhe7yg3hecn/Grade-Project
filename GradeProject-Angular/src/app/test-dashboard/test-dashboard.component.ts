@@ -10,10 +10,11 @@ import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/l
 export class TestDashboardComponent {
   /** Based on the screen size, switch from standard to one column per row */
   cards = [
-  { title: 'Card 1', cols: 1, rows: 1 },
-  { title: 'Card 2', cols: 1, rows: 1 },
-  { title: 'Card 3', cols: 1, rows: 1 },
-  { title: 'Card 4', cols: 1, rows: 1 }];
+    { title: 'Card 1', cols: 2, rows: 1 },
+    { title: 'Card 2', cols: 1, rows: 1 },
+    { title: 'Card 3', cols: 1, rows: 1 },
+    { title: 'Card 4', cols: 1, rows: 1 },
+    { title: 'Card 4', cols: 1, rows: 2 }];
   
   // this.breakpointObserver.observe(Breakpoints.Handset).pipe(
   //   map(({ matches }) => {
@@ -25,10 +26,10 @@ export class TestDashboardComponent {
   //     }
 
   //     return [
-  //       { title: 'Card 1', cols: 2, rows: 1 },
-  //       { title: 'Card 2', cols: 1, rows: 1 },
-  //       { title: 'Card 3', cols: 1, rows: 2 },
-  //       { title: 'Card 4', cols: 1, rows: 1 }
+        // { title: 'Card 1', cols: 2, rows: 1 },
+        // { title: 'Card 2', cols: 1, rows: 1 },
+        // { title: 'Card 3', cols: 1, rows: 2 },
+        // { title: 'Card 4', cols: 1, rows: 1 }
   //     ];
   //   })
   // );
