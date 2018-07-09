@@ -12,6 +12,7 @@ import { TestTableComponent } from './test-table/test-table.component';
 import { MaterialsImportModule } from './materials-import/materials-import.module';
 import { ItemsDashboardComponent } from './items-dashboard/items-dashboard.component';
 import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
+import { routes } from './Routes';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MaterialsImportModule
+    MaterialsImportModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

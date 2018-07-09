@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GamesCatalogComponent implements OnInit {
 
+  public Genre:string="Genre";
+
   constructor() { }
 
   ngOnInit() {
