@@ -33,7 +33,7 @@
 
    protected override async Task OnInitAsync()
     {
-        var oDataGamesUrl = "http://localhost:54554/odata/Games?$select=Id,Name,CoverImageURL,Tags,Description,Authority,Categories";
+        var oDataGamesUrl = "http://localhost:54554/odata/Games?$select=Id,Name,CoverImageURL,Tags,Description,Authority,Categories,GameUrl";
         var response = await Http.GetJsonAsync<ODataResponse>(oDataGamesUrl);
         Games = response.value;
         Console.WriteLine(response);
