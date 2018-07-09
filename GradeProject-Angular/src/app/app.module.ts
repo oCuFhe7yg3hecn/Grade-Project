@@ -11,13 +11,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { TestTableComponent } from './test-table/test-table.component';
 import { MaterialsImportModule } from './materials-import/materials-import.module';
 import { ItemsDashboardComponent } from './items-dashboard/items-dashboard.component';
+import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     TestTableComponent,
-    ItemsDashboardComponent
+    ItemsDashboardComponent,
+    GamesCatalogComponent
   ],
   imports: [
     BrowserModule,
