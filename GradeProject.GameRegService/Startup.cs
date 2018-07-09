@@ -40,6 +40,23 @@ namespace GradeProject.GameRegService
             services.AddMvc();
 
             services.AddAutoMapper();
+            
+
+            //services.AddAuthentication("Bearer")
+            //    .AddCookie()
+            //       .AddIdentityServerAuthentication(options =>
+            //       {
+            //           options.RequireHttpsMetadata = false;
+            //            // SET THIS TO true IN PRODUCTION!
+
+            //            options.Authority = "http://localhost:5000";
+            //           options.ApiName = "Platform.GameRegService";
+            //       });
+
+            //Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
+                                                                            .AllowAnyMethod()
+                                                                            .AllowAnyHeader()));
 
             //Rrgister Dependencies
             AppContainer = RegisterDependencies(services);
@@ -57,6 +74,10 @@ namespace GradeProject.GameRegService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
+
+            app.UseCors("AllowAll");
 
             app.UseMvc();
         }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -29,6 +30,7 @@ namespace GradeProject.GameCatalogService.Controllers
         }
 
         [HttpGet]
+        //[Authorize]
         [EnableQuery]
         [EnableCors("AllowAll")]
         public async Task<IQueryable<GameInfoDTO>> Get()

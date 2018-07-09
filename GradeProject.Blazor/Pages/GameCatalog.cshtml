@@ -1,9 +1,7 @@
 ﻿@page "/games"
 @inject HttpClient Http
 
-<h2>Hello from Games Catalog Page</h2>
-
-<p>Game List : </p>
+<h2>Games Catalog</h2>
 
 <div class="gameList">
 
@@ -35,7 +33,7 @@
 
    protected override async Task OnInitAsync()
     {
-        var oDataGamesUrl = "http://localhost:54554/odata/Games?$select=Id,Name,CoverImageURL,Tags,Description,Authority,Categories";
+        var oDataGamesUrl = "http://localhost:54554/odata/Games?$select=Id,Name,CoverImageURL,Tags,Description,Authority,Categories,GameUrl";
         var response = await Http.GetJsonAsync<ODataResponse>(oDataGamesUrl);
         Games = response.value;
         Console.WriteLine(response);

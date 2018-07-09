@@ -1,0 +1,28 @@
+@page "/add-game"
+@inject HttpClient Http
+
+<h2>Hello from Add Games Page</h2>
+
+<div class="row">
+
+<form action="" method="POST">
+    <label for="gameUrl">Game url</label>
+    <input name="gameUrl" type="text" bind="gameUrl" />
+    <input type="button" onclick=@Add>Submit</input>
+</form>
+
+</div>
+
+@functions{
+
+   string gameUrl;
+
+   protected override async Task OnInitAsync()
+    {
+        Console.WriteLine("On Init");
+    }
+
+    public async void Add() { 
+        await Http.SendJsonAsync(HttpMethod.Post, "http://localhost:50271/api/Registration", gameUrl);
+    }
+}
