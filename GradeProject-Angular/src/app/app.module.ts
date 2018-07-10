@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormField } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 import { RouterModule, Routes } from '@angular/router';
 import { TestTableComponent } from './test-table/test-table.component';
@@ -40,7 +40,8 @@ import { routes } from './Routes';
     MatPaginatorModule,
     MatSortModule,
     MaterialsImportModule,
-    MatFormField,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
