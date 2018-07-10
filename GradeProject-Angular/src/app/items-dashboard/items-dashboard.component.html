@@ -14,8 +14,8 @@
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
-        <img *ngIf='card.imageUrl' class="card-image" mat-card-image src="{{card.imageUrl}}" alt="Card Image">
-        <mat-card-content class="dashboard-card-content">
+        <img *ngIf='card.imageUrl' class="card-image" mat-card-image [src]='card.imageUrl}}' alt="Card Image">
+        <mat-card-content class="dashboard-card-content"></mat-card-content>
           <div>{{card.Content}}</div>
         </mat-card-content>
       </mat-card>
