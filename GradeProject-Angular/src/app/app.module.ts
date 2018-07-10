@@ -14,6 +14,7 @@ import { MaterialsImportModule } from './materials-import/materials-import.modul
 import { ItemsDashboardComponent } from './items-dashboard/items-dashboard.component';
 import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
 import { routes } from './Routes';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { routes } from './Routes';
     MaterialsImportModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

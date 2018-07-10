@@ -1,7 +1,6 @@
 import { GamesService } from "./../Services/games-service.service";
 import { Component, OnInit } from "@angular/core";
 import { GameInfo } from "../Models/GamesInfo";
-import { MatInputModule } from "@angular/material";
 
 @Component({
   selector: "app-games-catalog",
@@ -11,14 +10,22 @@ import { MatInputModule } from "@angular/material";
 export class GamesCatalogComponent implements OnInit {
   public Genre: string = "Genre";
   public Games: GameInfo[];
+  public nameFilter : string;
 
   constructor(private gamesSvc: GamesService) {}
 
+  searchByName(){
+    // this.Games = [];
+    this.gamesSvc.GetByName(this.nameFilter).subscribe(res => this.Games = res.value);
+  }
+
+
   ngOnInit() {
+    //Should send cards Absolutely
     this.gamesSvc.GetGamesByGenre().subscribe(res => {
       this.Games = res.value;
-      this.Games.push(new GameInfo("Added Game"));
       console.log(this.Games);
     });
   }
 }
+ 

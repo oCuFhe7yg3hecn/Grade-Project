@@ -1,5 +1,6 @@
+import { DataSource } from '@angular/cdk/collections';
 import { GameInfo } from './../Models/GamesInfo';
-import { Component, Inject, Injectable, OnInit, Input, OnChanges } from "@angular/core";
+import { Component, Inject, Injectable, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from "@angular/core";
 import {
   Breakpoints,
   BreakpointState,
@@ -14,14 +15,14 @@ import {
 export class ItemsDashboardComponent implements OnInit, OnChanges {
   /** Based on the screen size, switch from standard to one column per row */
   cards = [
-    { title: '', cols: 2, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 2, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
-    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' }
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 2, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '', visible: true }
   ];
 
   @Input() DataSrc: GameInfo[];
@@ -31,15 +32,33 @@ export class ItemsDashboardComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
+
+
   populateCards(): void{
+    this.cards.forEach(card => {
+      card.title = '';
+      card.imageUrl = '';
+      card.content = '';
+      card.visible = false;
+    });
     for(let i=0; i<this.DataSrc.length; i++){
       this.cards[i].title = this.DataSrc[i].Name;
       this.cards[i].content = this.DataSrc[i].Description;
       this.cards[i].imageUrl = this.DataSrc[i].CoverImageURL;
+      this.cards[i].visible = true;
     }
   }
 
-  ngOnChanges(){
+  ngOnChanges(changes: SimpleChanges){
+    // Try it later
+    // const dataSourceChange: SimpleChange = changes.DataSrc;
+    // console.log('previous : ', dataSourceChange.previousValue);
+    // console.log('current : ', dataSourceChange.currentValue);
+
+    // var newIds = dataSourceChange.currentValue.map(x => x.Id)
+    // this.cards = [];
+    // console.log('new Ids : ', newIds);
+    // // this.DataSrc = dataSourceChange.currentValue;
     this.populateCards();
   }
 }

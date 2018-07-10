@@ -1,7 +1,7 @@
 <div class="grid-container">
   <mat-grid-list cols="3" rowHeight="350px">
     <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" *ngIf='card.visible'>
         <mat-card-header>
           <mat-card-title>
             {{card.title}}
@@ -14,8 +14,8 @@
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
-        <img *ngIf='card.imageUrl' class="card-image" mat-card-image [src]='card.imageUrl}}' alt="Card Image">
-        <mat-card-content class="dashboard-card-content"></mat-card-content>
+        <img *ngIf='card.imageUrl' class="card-image" mat-card-image [src]='card.imageUrl' alt="Card Image">
+        <mat-card-content class="dashboard-card-content">
           <div>{{card.Content}}</div>
         </mat-card-content>
       </mat-card>
