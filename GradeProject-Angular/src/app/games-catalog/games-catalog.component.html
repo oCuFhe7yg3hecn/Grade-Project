@@ -1,2 +1,9 @@
 <h1>{{Genre}}</h1>
-<app-items-dashboard></app-items-dashboard>
+
+<mat-form-field class="example-full-width">
+    <input matInput placeholder="Favorite food" value="Sushi">
+</mat-form-field>
+
+<div *ngIf='Games'>
+<app-items-dashboard [DataSrc]='Games'></app-items-dashboard>
+</div>

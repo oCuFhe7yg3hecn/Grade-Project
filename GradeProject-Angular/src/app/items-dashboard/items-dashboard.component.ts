@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { map } from "rxjs/operators";
+import { GameInfo } from './../Models/GamesInfo';
+import { Component, Inject, Injectable, OnInit, Input } from "@angular/core";
 import {
   Breakpoints,
   BreakpointState,
@@ -11,15 +11,28 @@ import {
   templateUrl: "./items-dashboard.component.html",
   styleUrls: ["./items-dashboard.component.css"]
 })
-export class ItemsDashboardComponent {
+export class ItemsDashboardComponent implements OnInit {
   /** Based on the screen size, switch from standard to one column per row */
   cards = [
-    { title: "Pacman", cols: 2, rows: 1, Content: "" },
-    { title: "Card 2", cols: 1, rows: 1, Content: "" },
-    { title: "Card 3", cols: 1, rows: 1, Content: "" },
-    { title: "Card 4", cols: 1, rows: 1, Content: "" },
-    { title: "Card 4", cols: 1, rows: 1, Content: "" }
+    { title: '', cols: 2, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 2, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' },
+    { title: '', cols: 1, rows: 1, content: '', imageUrl: '' }
   ];
 
+  @Input() DataSrc: GameInfo[];
+
   constructor(private breakpointObserver: BreakpointObserver) {}
+
+  ngOnInit() {
+    for(let i=0; i<this.DataSrc.length; i++){
+      this.cards[i].title = this.DataSrc[i].Name;
+      this.cards[i].content = this.DataSrc[i].Description;
+      this.cards[i].imageUrl = this.DataSrc[i].CoverImageURL;
+    }
+  }
 }
