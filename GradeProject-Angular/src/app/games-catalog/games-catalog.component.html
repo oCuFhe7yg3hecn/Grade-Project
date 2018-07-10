@@ -1,5 +1,4 @@
 <h1>{{Genre}}</h1>
-
 <form class="example-form">
     <label>Search : </label>
     <mat-form-field class="example-full-width">
@@ -11,7 +10,11 @@
     </mat-form-field>
 </form>
 
-<div *ngIf='Games'>
+<div class="NotFoundDiv" *ngIf='Games.length==0' >
+    Nothing found
+</div>
+
+<div *ngIf='Games.length>0'>
     <app-items-dashboard [DataSrc]='Games'></app-items-dashboard>
 </div>
 
