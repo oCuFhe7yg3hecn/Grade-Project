@@ -92,7 +92,7 @@ namespace GradeProject.ProfileService
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             //Services
-            builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
+            builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")),
                                                   c.Resolve<IMapper>()))
                                                                  .As<IUserService>()
                                                                  .InstancePerLifetimeScope();
