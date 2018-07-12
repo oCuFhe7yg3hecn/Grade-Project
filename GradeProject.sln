@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameRegService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{FB436A7B-BC21-4C81-8313-0804414B7C59}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.Blazor", "GradeProject.Blazor\GradeProject.Blazor.csproj", "{9EC8444A-D12D-4512-A82D-C95D1189F776}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{D98D35DD-D272-4FA9-87CC-0CA5E6359C24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}"
@@ -22,6 +20,27 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Reg Service", "Game Reg Service", "{F73C6966-2A80-48E3-AA37-108845064131}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{70E6B0F8-1CAC-4358-A04C-6B245B81119B}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Angular", "GradeProject-Angular\", "{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53086"
+		Debug.AspNetCompiler.PhysicalPath = "GradeProject-Angular\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53086\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53086"
+		Release.AspNetCompiler.PhysicalPath = "GradeProject-Angular\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53086\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53086"
+		SlnRelativePath = "GradeProject-Angular\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +64,10 @@ Global
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9EC8444A-D12D-4512-A82D-C95D1189F776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EC8444A-D12D-4512-A82D-C95D1189F776}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EC8444A-D12D-4512-A82D-C95D1189F776}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EC8444A-D12D-4512-A82D-C95D1189F776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +77,7 @@ Global
 		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4} = {5A147F73-0027-47E1-980B-89302641247A}
 		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0} = {F73C6966-2A80-48E3-AA37-108845064131}
 		{FB436A7B-BC21-4C81-8313-0804414B7C59} = {70E6B0F8-1CAC-4358-A04C-6B245B81119B}
-		{9EC8444A-D12D-4512-A82D-C95D1189F776} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}
