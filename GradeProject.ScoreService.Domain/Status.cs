@@ -7,6 +7,12 @@ namespace GradeProject.ScoreService.Domain
 {
     public class Status
     {
+        public Status()
+        {
+            Id = Guid.NewGuid();
+            Users = new List<UserStatus>();
+        }
+
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }

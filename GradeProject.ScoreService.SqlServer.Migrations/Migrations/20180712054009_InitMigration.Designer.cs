@@ -10,6 +10,12 @@ using System;
 
 namespace GradeProject.ScoreService.SqlServer.Migrations.Migrations
 {
+    public enum SqlServerValueGenerationStrategy
+    {
+        IdentityColumn,
+        SequenceHiLo
+    }
+
     [DbContext(typeof(ScoresContext))]
     [Migration("20180712054009_InitMigration")]
     partial class InitMigration
