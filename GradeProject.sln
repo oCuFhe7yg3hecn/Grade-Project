@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoreService.PostgreSQL.Migrations", "GradeProject.ScoreService.PostgreSQL.Migrations\GradeProject.ScoreService.PostgreSQL.Migrations.csproj", "{A77AC78E-A57D-4504-87C6-93280519B359}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoresService.Repo.Interfaces", "GradeProject.ScoresService.Repo.Interfaces\GradeProject.ScoresService.Repo.Interfaces.csproj", "{A579EA0F-04BB-498A-AE7A-47A30847093E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{A77AC78E-A57D-4504-87C6-93280519B359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A77AC78E-A57D-4504-87C6-93280519B359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A77AC78E-A57D-4504-87C6-93280519B359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +109,7 @@ Global
 		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 		{A77AC78E-A57D-4504-87C6-93280519B359} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
+		{A579EA0F-04BB-498A-AE7A-47A30847093E} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}
