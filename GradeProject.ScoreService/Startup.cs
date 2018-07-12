@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GradeProject.ScoreServie.Infrastructure.SqlServer;
+using GradeProject.ScoreService.Infrastrucutre.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +27,9 @@ namespace GradeProject.ScoreService
         {
             services.AddDbContext<ScoresContext>(opts =>
             {
-                opts.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
+                opts.UseSqlServer(Configuration.GetConnectionString("PostgreSQLConnection"),
                                   conf =>
-                                         conf.MigrationsAssembly("GradeProject.ScoreService.SqlServer.Migrations"));
+                                         conf.MigrationsAssembly("GradeProject.ScoreService.PostgreSQL.Migrations"));
             });
 
             services.AddMvc()

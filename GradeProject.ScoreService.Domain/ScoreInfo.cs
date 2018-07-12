@@ -9,7 +9,7 @@ namespace GradeProject.ScoreService.Domain
     {
         public ScoreInfo()
         {
-            Id = Guid.NewGuid();
+            //Id = Guid.NewGuid();
             GameId = Guid.NewGuid();
             LastUpdate = DateTime.Now;
 
