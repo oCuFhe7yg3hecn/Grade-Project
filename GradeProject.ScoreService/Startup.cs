@@ -27,7 +27,9 @@ namespace GradeProject.ScoreService
         {
             services.AddDbContext<ScoresContext>(opts =>
             {
-                opts.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"));
+                opts.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"),
+                                  conf => 
+                                         conf.MigrationsAssembly("GradeProject.ScoreService.SqlServer.Migrations"));
             });
 
             services.AddMvc();

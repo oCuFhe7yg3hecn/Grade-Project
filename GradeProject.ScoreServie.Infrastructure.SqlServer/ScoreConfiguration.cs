@@ -11,6 +11,7 @@ namespace GradeProject.ScoreServie.Infrastructure.SqlServer
     {
         public void Configure(EntityTypeBuilder<ScoreInfo> builder)
         {
+            builder.HasKey(s => s.Id);
             builder.Property(s => s.GameName).IsRequired();
             builder.Property(s => s.LastUpdate).IsRequired();
             builder.Property(s => s.Score).IsRequired();
