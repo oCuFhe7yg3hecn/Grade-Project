@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GradeProject.ScoresService.Repo.Interfaces
 {
@@ -12,7 +13,7 @@ namespace GradeProject.ScoresService.Repo.Interfaces
         Task<T> SingleAsync(Expression<Func<T, bool>> filter);
         Task<List<T>> WhereAsync(Expression<Func<T, bool>> filter, int count = 10, int page = 1);
 
-        Task AddOneAsync(T newGame);
+        Task AddOneAsync(T newEntity);
 
         Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, T entiy);
 

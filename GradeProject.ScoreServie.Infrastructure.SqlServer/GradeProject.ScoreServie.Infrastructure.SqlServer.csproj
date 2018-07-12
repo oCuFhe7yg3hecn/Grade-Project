@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GradeProject.ScoreService.Domain\GradeProject.ScoreService.Domain.csproj" />
+    <ProjectReference Include="..\GradeProject.ScoresService.Repo.Interfaces\GradeProject.ScoresService.Repo.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
