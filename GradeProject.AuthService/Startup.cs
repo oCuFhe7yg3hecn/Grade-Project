@@ -6,6 +6,7 @@ using GradeProject.AuthService.MongoInfrastructure;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,6 +44,31 @@ namespace GradeProject.AuthService
 
             services.AddMvc();
 
+            services.AddDbContext<MyCtx>(opts =>
+            {
+                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddTestUsers(IdentityConfig.GetUsers())
+                // this adds the config data from DB (clients, resources)
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                })
+                // this adds the operational data from DB (codes, tokens, consents)
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                    options.TokenCleanupInterval = 30;
+                });
+
             //services.AddIdentityServer()
             //    .AddDeveloperSigningCredential()
             //    .AddMongoRepository()
@@ -51,12 +77,12 @@ namespace GradeProject.AuthService
             //    .AddClients()
             //    .AddTestUsers(IdentityConfig.GetUsers());
 
-            services.AddIdentityServer()
-                         .AddDeveloperSigningCredential()
-                         .AddInMemoryApiResources(IdentityConfig.GetApiResources())
-                         .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
-                         .AddInMemoryClients(IdentityConfig.GetClients())
-                         .AddTestUsers(IdentityConfig.GetUsers());
+            //services.AddIdentityServer()
+            //             .AddDeveloperSigningCredential()
+            //             .AddInMemoryApiResources(IdentityConfig.GetApiResources())
+            //             .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
+            //             .AddInMemoryClients(IdentityConfig.GetClients())
+            //             .AddTestUsers(IdentityConfig.GetUsers());
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
