@@ -44,9 +44,10 @@ namespace GradeProject.AuthService
 
             services.AddMvc();
 
-            services.AddDbContext<MyCtx>(opts =>
+            services.AddDbContext<UsersContext>(opts =>
             {
-                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), conf => 
+                                                                                                  conf.MigrationsAssembly("GradeProject.AuthService.Migrations"));
             });
 
             services.AddIdentityServer()
@@ -56,33 +57,20 @@ namespace GradeProject.AuthService
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opts =>
+                                                                                                            opts.MigrationsAssembly("GradeProject.AuthService.Migrations"));
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opts =>
+                                                                                                            opts.MigrationsAssembly("GradeProject.AuthService.Migrations"));
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
                 });
-
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddMongoRepository()
-            //    .AddIdentityApiResources()
-            //    .AddPersistedGrants()
-            //    .AddClients()
-            //    .AddTestUsers(IdentityConfig.GetUsers());
-
-            //services.AddIdentityServer()
-            //             .AddDeveloperSigningCredential()
-            //             .AddInMemoryApiResources(IdentityConfig.GetApiResources())
-            //             .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
-            //             .AddInMemoryClients(IdentityConfig.GetClients())
-            //             .AddTestUsers(IdentityConfig.GetUsers());
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
