@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;

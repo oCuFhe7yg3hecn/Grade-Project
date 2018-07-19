@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.AuthService.Models.Accout
+namespace GradeProject.AuthService.Models.Account
 {
     public class UserLoginPassword
     {

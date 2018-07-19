@@ -5,6 +5,7 @@
 using AutoMapper;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
