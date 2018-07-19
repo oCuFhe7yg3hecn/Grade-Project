@@ -44,6 +44,7 @@ namespace GradeProject.ProfileService
                         options.RequireHttpsMetadata = false;
                         // SET THIS TO true IN PRODUCTION!
 
+                        options.ApiSecret = "secret";
                         options.Authority = "http://localhost:5000";
                         options.ApiName = "Platform.ProfileService";
                     });

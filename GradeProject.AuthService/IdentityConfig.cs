@@ -35,27 +35,27 @@ namespace GradeProject.AuthService
         {
             return new List<Client>
             {
-
                 new Client
                 {
-                    ClientId = "Games.Battlesships",
+                    ClientId = "Games.Battleships",
                     ClientName = "Battleships",
-                    ClientSecrets = { new Secret("secret") },
+                    ClientSecrets = { new Secret("secret".Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowOfflineAccess = true,
 
                     RequireConsent = true,
 
-                    RedirectUris = { "https://localhost:44310//signin-oidc" }, 
-                    PostLogoutRedirectUris = { "https://localhost:44310//signout-callback-oidc" },
+                    RedirectUris = { "https://localhost:44310/signin-oidc" }, 
+                    PostLogoutRedirectUris = { "https://localhost:44310/signout-callback-oidc" },
                     
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
                         "Platform.ProfileService"
+                        //IdentityServerConstants.StandardScopes.OfflineAccess,
+                        //"Platform.ProfileService"
                     },
                 },
 
