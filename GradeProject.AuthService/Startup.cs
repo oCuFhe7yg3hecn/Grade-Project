@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.MongoInfrastructure;
@@ -29,6 +30,8 @@ namespace GradeProject.AuthService
         {
             services.AddMvc();
 
+            RegisterServices(services);
+
             services.Configure<MongoDbSettings>(opts =>
             {
                 opts.Database = Configuration["MongoDbSettings:Database"];
@@ -39,6 +42,8 @@ namespace GradeProject.AuthService
             {
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddAutoMapper();
 
             // Idnetity Server  Register
             services.AddIdentityService(Configuration);

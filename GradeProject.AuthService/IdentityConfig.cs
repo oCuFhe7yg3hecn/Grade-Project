@@ -38,18 +38,17 @@ namespace GradeProject.AuthService
 
                 new Client
                 {
-                    ClientId = "External.WebApp",
-                    ClientName = "External WebApp",
+                    ClientId = "Games.Battlesships",
+                    ClientName = "Battleships",
                     ClientSecrets = { new Secret("secret") },
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowOfflineAccess = true,
 
-                    // === 'true' for external applications so the user have to authorize the external webapp
                     RequireConsent = true,
 
-                    RedirectUris = { "https://localhost:44300/signin-oidc" }, // Url of the WebApp Client
-                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" }, // Url of the WebApp Client
+                    RedirectUris = { "https://localhost:44310//signin-oidc" }, 
+                    PostLogoutRedirectUris = { "https://localhost:44310//signout-callback-oidc" },
                     
                     AllowedScopes =
                     {
@@ -60,66 +59,26 @@ namespace GradeProject.AuthService
                     },
                 },
 
-                new Client
-                {
-                    ClientId = "Platform.MVCClient",
-                    ClientName = "Platform MVC Client",
-                    ClientSecrets = { new Secret("mvc-client-secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowOfflineAccess = true,
-
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://localhost:44300/signin-oidc" }, // Url of the WebApp Client
-                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" }, // Url of the WebApp Client
-                    
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "Platform.ProfileService"
-                    },
-                }
-
-                ////Angular Client
                 //new Client
                 //{
-                //    ClientId = "Platform.AngularClient",
-                //    ClientName = "Angular Client",
-                //    //ClientSecrets = { new Secret("angular-secret".Sha256()) },
+                //    ClientId = "Platform.MVCClient",
+                //    ClientName = "Platform MVC Client",
+                //    ClientSecrets = { new Secret("mvc-client-secret".Sha256()) },
 
-                //    AllowedGrantTypes = GrantTypes.Implicit,
+                //    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                 //    AllowOfflineAccess = true,
-                    
-                //    // === 'false' for trusted platform clients so the user will not have to accept the application
+
                 //    RequireConsent = false,
 
-                //    RedirectUris = { "http://localhost:4200//auth-callback" }, // Url of the WebApp Client
-                //    PostLogoutRedirectUris = { "http://localhost:4200/" }, // Url of the WebApp Client
-                //    AllowedCorsOrigins = new List<string> { "http://localhost:4200" },
-
+                //    RedirectUris = { "https://localhost:44300/signin-oidc" }, // Url of the WebApp Client
+                //    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" }, // Url of the WebApp Client
+                    
                 //    AllowedScopes =
                 //    {
                 //        IdentityServerConstants.StandardScopes.OpenId,
                 //        IdentityServerConstants.StandardScopes.Profile,
+                //        IdentityServerConstants.StandardScopes.OfflineAccess,
                 //        "Platform.ProfileService"
-                //    },
-                //},
-
-                ////Admin Console Client
-                //new Client
-                //{
-                //    ClientId = "Platform.AdminConsoleClient",
-                //    ClientName = "AdminConsole Client",
-                //    ClientSecrets = { new Secret("adminconsole-secret".Sha256()) },
-
-                //    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                //    AllowedScopes =
-                //    {
-                //        "Platform.TodoApi"
                 //    },
                 //}
             };
@@ -140,6 +99,18 @@ namespace GradeProject.AuthService
                         new Claim("name", "Bob"),
                         new Claim("nickname", "User_Bob"),
                         new Claim("website", "https://www.BobAtWeb.com"),
+                    }
+                },
+                 new TestUser
+                {
+                    SubjectId = "2",
+                    Username = "alice",
+                    Password = "password",
+
+                    Claims = new List<Claim>
+                    {
+                        new Claim("name", "Alice"),
+                        new Claim("nickname", "User_Alice"),
                     }
                 }
             };

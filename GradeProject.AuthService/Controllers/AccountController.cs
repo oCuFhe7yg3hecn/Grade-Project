@@ -45,7 +45,7 @@ namespace GradeProject.AuthService.Controllers
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IUserRepository users = null)
+            IUserRepository users)
         {
             _users = users;
 
@@ -115,9 +115,9 @@ namespace GradeProject.AuthService.Controllers
             if (ModelState.IsValid)
             {
                 // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                if (_users.ValidateCredentials(model.Email, model.Password))
                 {
-                    var user = _users.FindByUsername(model.Username);
+                    var user = _users.FindByEmail(model.Email);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId.ToString(), user.Username));
 
                     // only set explicit expiration here if user chooses "remember me". 
@@ -164,7 +164,7 @@ namespace GradeProject.AuthService.Controllers
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials"));
                 ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -257,7 +257,7 @@ namespace GradeProject.AuthService.Controllers
                 {
                     EnableLocalLogin = false,
                     ReturnUrl = returnUrl,
-                    Username = context?.LoginHint,
+                    Email = context?.LoginHint,
                     ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
             }
@@ -294,7 +294,7 @@ namespace GradeProject.AuthService.Controllers
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                Username = context?.LoginHint,
+                Email = context?.LoginHint,
                 ExternalProviders = providers.ToArray()
             };
         }
@@ -302,7 +302,7 @@ namespace GradeProject.AuthService.Controllers
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            vm.Username = model.Username;
+            vm.Email = model.Email;
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }

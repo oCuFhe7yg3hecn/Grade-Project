@@ -14,7 +14,7 @@ namespace GradeProject.AuthService.Models
 
         [MinLength(5, ErrorMessage = "User name must be at least 5 to 25 symbols.")]
         [MaxLength(25, ErrorMessage = "User name must be at least 5 to 25 symbols.")]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         [MinLength(7, ErrorMessage = "Password must be at least 7 to 15 symbols.")]

@@ -13,7 +13,6 @@ namespace GradeProject.AuthService.Extensions
     {
         public static void AddIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
-            var connString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
@@ -29,7 +28,7 @@ namespace GradeProject.AuthService.Extensions
                     options.ConfigureDbContext = builder =>
                         builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), opts => opts.MigrationsAssembly("GradeProject.AuthService"));
 
-                    // this enables automatic token cleanup. this is optional.
+                    // this enables automatic token cleanup
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
                 });

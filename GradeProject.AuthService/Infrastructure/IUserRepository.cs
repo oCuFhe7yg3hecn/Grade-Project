@@ -12,7 +12,7 @@ namespace GradeProject.AuthService.Infrastructure
 
         User FindBySubjectId(string subjectId);
 
-        User FindByUsername(string username);
+        User FindByEmail(string email);
 
         void RegisterUser(User user);
     }
