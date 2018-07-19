@@ -4,14 +4,17 @@ using GradeProject.AuthService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using static GradeProject.AuthService.Migrations.UsersContext;
 
-namespace GradeProject.AuthService.Migrations.Migrations.Users
+namespace GradeProject.AuthService.Migrations.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    partial class UsersContextModelSnapshot : ModelSnapshot
+    [Migration("20180719061122_UsersDateTimeAndDataTypes")]
+    partial class UsersDateTimeAndDataTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,11 +26,18 @@ namespace GradeProject.AuthService.Migrations.Migrations.Users
                     b.Property<Guid>("SubjectId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired();
 
-                    b.Property<string>("Username");
+                    b.Property<DateTime>("RegisteredAt");
+
+                    b.Property<string>("Username")
+                        .IsRequired();
 
                     b.HasKey("SubjectId");
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GradeProject.AuthService.Migrations.Migrations.Users
+namespace GradeProject.AuthService.Migrations.Migrations
 {
-    public partial class InitUsers : Migration
+    public partial class UsersDateTimeAndDataTypes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,10 @@ namespace GradeProject.AuthService.Migrations.Migrations.Users
                 columns: table => new
                 {
                     SubjectId = table.Column<Guid>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    RegisteredAt = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

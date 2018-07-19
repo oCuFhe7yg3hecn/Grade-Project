@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace GradeProject.AuthService.Migrations.Migrations
+namespace GradeProject.AuthService.Migrations.PersistedGrantDb
 {
-    public partial class InitPersistantGrant : Migration
+    public partial class InitPresistentGrants : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

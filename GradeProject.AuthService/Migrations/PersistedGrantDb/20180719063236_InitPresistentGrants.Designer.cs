@@ -7,17 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace GradeProject.AuthService.Migrations.Migrations
+namespace GradeProject.AuthService.Migrations.PersistedGrantDb
 {
-    public enum SqlServerValueGenerationStrategy
-    {
-        IdentityColumn,
-        SequenceHiLo
-    }
-
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20180718184247_InitPersistantGrant")]
-    partial class InitPersistantGrant
+    [Migration("20180719063236_InitPresistentGrants")]
+    partial class InitPresistentGrants
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -2,6 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using AutoMapper;
+using GradeProject.AuthService.Infrastructure;
+using GradeProject.AuthService.Models;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -29,27 +32,29 @@ namespace GradeProject.AuthService.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly TestUserStore _users;
+        private readonly IUserRepository _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly IMapper _mapper;
 
         public AccountController(
+            IMapper mapper,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            TestUserStore users = null)
+            IUserRepository users = null)
         {
-            // if the TestUserStore is not in DI, then we'll just use the global users collection
-            // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-            _users = users ?? new TestUserStore(TestUsers.Users);
+            _users = users;
 
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -113,7 +118,7 @@ namespace GradeProject.AuthService.Controllers
                 if (_users.ValidateCredentials(model.Username, model.Password))
                 {
                     var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId.ToString(), user.Username));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -128,7 +133,7 @@ namespace GradeProject.AuthService.Controllers
                     };
 
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+                    await HttpContext.SignInAsync(user.SubjectId.ToString(), user.Username, props);
 
                     if (context != null)
                     {
@@ -222,7 +227,22 @@ namespace GradeProject.AuthService.Controllers
             return View("LoggedOut", vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(UserRegisterModel model)
+        {
+            if (!String.Equals(model.Password, model.PasswordConfirm)) { return BadRequest("Password doenst match"); }
+            var user = _mapper.Map<User>(model);
+            _users.RegisterUser(user);
+
+            return RedirectToAction(nameof(this.Login));
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */

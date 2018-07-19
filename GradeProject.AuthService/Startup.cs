@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeProject.AuthService.Extensions;
+using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.MongoInfrastructure;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
@@ -25,53 +27,23 @@ namespace GradeProject.AuthService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
             services.Configure<MongoDbSettings>(opts =>
             {
                 opts.Database = Configuration["MongoDbSettings:Database"];
                 opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
             });
 
-            services.AddTransient<MongoDbSettings>();
-            services.AddTransient<MongoDbContext>();
-
-
-            services.AddCors(opts => opts.AddPolicy("AllowAll", builder =>
-             {
-                 builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-             }));
-
-            services.AddMvc();
-
             services.AddDbContext<UsersContext>(opts =>
             {
-                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), conf => 
-                                                                                                  conf.MigrationsAssembly("GradeProject.AuthService.Migrations"));
+                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddTestUsers(IdentityConfig.GetUsers())
-                // this adds the config data from DB (clients, resources)
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opts =>
-                                                                                                            opts.MigrationsAssembly("GradeProject.AuthService.Migrations"));
-                })
-                // this adds the operational data from DB (codes, tokens, consents)
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opts =>
-                                                                                                            opts.MigrationsAssembly("GradeProject.AuthService.Migrations"));
+            // Idnetity Server  Register
+            services.AddIdentityService(Configuration);
 
-                    // this enables automatic token cleanup. this is optional.
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30;
-                });
-
+            // External Providers
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {
@@ -94,6 +66,14 @@ namespace GradeProject.AuthService
                     opts.ConsumerKey = Configuration["TwitterProvider:ConsumerKey"];
                     opts.ConsumerSecret = Configuration["TwitterProvider:ConsumerSecret"];
                 });
+
+            // Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +96,14 @@ namespace GradeProject.AuthService
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
+        }
+
+        public void RegisterServices(IServiceCollection services)
+        {
+            services.AddTransient<MongoDbSettings>();
+            services.AddTransient<MongoDbContext>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
