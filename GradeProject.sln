@@ -42,8 +42,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Angular", "Gra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.AuthService.Migrations", "GradeProject.AuthService.Migrations\GradeProject.AuthService.Migrations.csproj", "{04ADEA5F-C965-49C0-B179-32B60686F171}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,10 +68,6 @@ Global
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04ADEA5F-C965-49C0-B179-32B60686F171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04ADEA5F-C965-49C0-B179-32B60686F171}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04ADEA5F-C965-49C0-B179-32B60686F171}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04ADEA5F-C965-49C0-B179-32B60686F171}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,7 +78,6 @@ Global
 		{FB436A7B-BC21-4C81-8313-0804414B7C59} = {70E6B0F8-1CAC-4358-A04C-6B245B81119B}
 		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50} = {D98D35DD-D272-4FA9-87CC-0CA5E6359C24}
-		{04ADEA5F-C965-49C0-B179-32B60686F171} = {D98D35DD-D272-4FA9-87CC-0CA5E6359C24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}
