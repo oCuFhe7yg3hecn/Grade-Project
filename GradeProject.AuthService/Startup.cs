@@ -109,6 +109,7 @@ namespace GradeProject.AuthService
             services.AddTransient<MongoDbContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IClientService, ClientService>();
         }
     }
 }
