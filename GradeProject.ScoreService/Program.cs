@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using GradeProject.ScoreService.Infrastrucutre.PostgreSQL;
-using GradeProject.ScoreServie.Infrastructure.PostgreSQL;
-using GradeProject.ScoreServie.Infrastructure.PostgreSQL.Configurations;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,13 +17,13 @@ namespace GradeProject.ScoreService
         {
             var host = BuildWebHost(args);
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var context = services.GetService<ScoresContext>();
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    var context = services.GetService<ScoresContext>();
 
-                Seeder.Seed(context);
-            }
+            //    Seeder.Seed(context);
+            //}
 
             host.Run();
         }

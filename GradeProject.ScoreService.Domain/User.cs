@@ -5,19 +5,16 @@ using System.Text;
 
 namespace GradeProject.ScoreService.Domain
 {
-    public class User
+    public class User : BaseEntity
     {
         public User()
         {
-            UserId = Guid.NewGuid();
             StatusId = Guid.NewGuid();
 
             Status = new List<UserStatus>();
             ScoreInfo = new List<ScoreInfo>();
         }
 
-        [Key]
-        public Guid UserId { get; set; }
         public double Total { get; set; }
         public Guid StatusId { get; set; }
 

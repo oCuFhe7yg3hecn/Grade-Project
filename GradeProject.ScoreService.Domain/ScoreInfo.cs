@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GradeProject.ScoreService.Domain
 {
-    public class ScoreInfo
+    public class ScoreInfo : BaseEntity
     {
         public ScoreInfo()
         {
@@ -16,7 +16,6 @@ namespace GradeProject.ScoreService.Domain
             User = new User();
         }
 
-        public Guid Id { get; set; }
         public Guid GameId { get; set; }
         public string GameName { get; set; }
         public DateTime LastUpdate { get; set; }

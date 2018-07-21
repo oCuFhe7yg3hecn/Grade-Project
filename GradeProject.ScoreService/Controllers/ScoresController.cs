@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GradeProject.ScoreServie.Infrastructure.SqlServer;
+using GradeProject.ScoreService.Domain;
+using GradeProject.ScoreService.Infrastructure.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,19 +14,17 @@ namespace GradeProject.ScoreService.Controllers
     [Route("api/Scores")]
     public class ScoresController : Controller
     {
-        private readonly ScoresContext _context;
+        private readonly IRepository<User> _userRepo;
 
-        public ScoresController(ScoresContext context)
+        public ScoresController(IRepository<User> userRepo)
         {
-            _context = context;
+            _userRepo = userRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Users
-                                    .Include(u => u.ScoreInfo)
-                                    .ToListAsync());
+            return Ok(await _userRepo.WhereAsync(_ => true));
         }
 
 

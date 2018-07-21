@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GradeProject.ScoreService.Domain
 {
-    public class Status
+    public class Status : BaseEntity
     {
         public Status()
         {
@@ -13,8 +13,6 @@ namespace GradeProject.ScoreService.Domain
             Users = new List<UserStatus>();
         }
 
-        [Key]
-        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public List<UserStatus> Users { get; set; }

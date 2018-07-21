@@ -27,17 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Score Service", "Score Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService.Domain", "GradeProject.ScoreService.Domain\GradeProject.ScoreService.Domain.csproj", "{678FA1A7-7B84-47A0-B38F-48AF4A2C93C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreServie.Infrastructure.SqlServer", "GradeProject.ScoreServie.Infrastructure.SqlServer\GradeProject.ScoreServie.Infrastructure.SqlServer.csproj", "{8A40A052-3470-4765-8BBE-5917FFD56E10}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService", "GradeProject.ScoreService\GradeProject.ScoreService.csproj", "{C6FFE91F-3987-4466-BD33-827D15ADB6CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService.SqlServer.Migrations", "GradeProject.ScoreService.SqlServer.Migrations\GradeProject.ScoreService.SqlServer.Migrations.csproj", "{BB33E2BF-67FD-465F-B4C5-9757386BF4DE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService.Infrastrucutre.PostgreSQL", "GradeProject.ScoreService.Infrastrucutre.PostgreSQL\GradeProject.ScoreService.Infrastrucutre.PostgreSQL.csproj", "{C5D30F30-F1B9-46CF-8F76-A253444F2B8B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoreService.PostgreSQL.Migrations", "GradeProject.ScoreService.PostgreSQL.Migrations\GradeProject.ScoreService.PostgreSQL.Migrations.csproj", "{A77AC78E-A57D-4504-87C6-93280519B359}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoresService.Repo.Interfaces", "GradeProject.ScoresService.Repo.Interfaces\GradeProject.ScoresService.Repo.Interfaces.csproj", "{A579EA0F-04BB-498A-AE7A-47A30847093E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoresService.Repo.Interfaces", "GradeProject.ScoresService.Repo.Interfaces\GradeProject.ScoresService.Repo.Interfaces.csproj", "{A579EA0F-04BB-498A-AE7A-47A30847093E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,26 +61,10 @@ Global
 		{678FA1A7-7B84-47A0-B38F-48AF4A2C93C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{678FA1A7-7B84-47A0-B38F-48AF4A2C93C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{678FA1A7-7B84-47A0-B38F-48AF4A2C93C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A40A052-3470-4765-8BBE-5917FFD56E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A40A052-3470-4765-8BBE-5917FFD56E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A40A052-3470-4765-8BBE-5917FFD56E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A40A052-3470-4765-8BBE-5917FFD56E10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6FFE91F-3987-4466-BD33-827D15ADB6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6FFE91F-3987-4466-BD33-827D15ADB6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6FFE91F-3987-4466-BD33-827D15ADB6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6FFE91F-3987-4466-BD33-827D15ADB6CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A77AC78E-A57D-4504-87C6-93280519B359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A77AC78E-A57D-4504-87C6-93280519B359}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A77AC78E-A57D-4504-87C6-93280519B359}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A77AC78E-A57D-4504-87C6-93280519B359}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A579EA0F-04BB-498A-AE7A-47A30847093E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -104,11 +80,7 @@ Global
 		{FB436A7B-BC21-4C81-8313-0804414B7C59} = {70E6B0F8-1CAC-4358-A04C-6B245B81119B}
 		{9EC8444A-D12D-4512-A82D-C95D1189F776} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
 		{678FA1A7-7B84-47A0-B38F-48AF4A2C93C4} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
-		{8A40A052-3470-4765-8BBE-5917FFD56E10} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 		{C6FFE91F-3987-4466-BD33-827D15ADB6CB} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
-		{BB33E2BF-67FD-465F-B4C5-9757386BF4DE} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
-		{C5D30F30-F1B9-46CF-8F76-A253444F2B8B} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
-		{A77AC78E-A57D-4504-87C6-93280519B359} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 		{A579EA0F-04BB-498A-AE7A-47A30847093E} = {1FC0BE11-4B00-4BB0-BFE0-6B2909B5753C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
