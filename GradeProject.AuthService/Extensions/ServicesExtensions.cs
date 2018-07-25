@@ -32,6 +32,9 @@ namespace GradeProject.AuthService.Extensions
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
                 });
+                //.AddClientStore<CustomClientStore>();
+                //.AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
+                //.AddInMemoryClients(IdentityConfig.GetClients());
         }
     }
 }

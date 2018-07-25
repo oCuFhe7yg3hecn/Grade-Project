@@ -19,4 +19,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Apis\" />
+    <Folder Include="wwwroot\images\Clients\" />
+  </ItemGroup>
+
 </Project>

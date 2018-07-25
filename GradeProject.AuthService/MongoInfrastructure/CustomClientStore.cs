@@ -1,24 +1,30 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using GradeProject.AuthService.MongoInfrastructure.Repositories;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Models;
+using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.Stores;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace GradeProject.AuthService
 {
     internal class CustomClientStore : IClientStore
     {
-        protected IRepository _dbRepository;
+        protected ConfigurationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CustomClientStore(IRepository repository)
+        public CustomClientStore(ConfigurationDbContext context)
         {
-            _dbRepository = repository;
+            _context = context;
         }
 
-        public Task<Client> FindClientByIdAsync(string clientId)
+        public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            var client = _dbRepository.Single<Client>(c => c.ClientId == clientId);
-
-            return Task.FromResult(client);
+            return new Client();
+            // await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == clientId);
+            //return 
         }
     }
 }

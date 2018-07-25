@@ -16,6 +16,8 @@ namespace GradeProject.AuthService.Infrastructure
         {
             _context = context;
             _hasher = new PasswordHasher<User>();
+            //var usr = new User() { Email = "Bob@mail.com", Password = "password", IsActive = true, SubjectId = Guid.NewGuid(), RegisteredAt = DateTime.Now, Username = "Bob" };
+
         }
 
         public bool ValidateCredentials(string username, string password)

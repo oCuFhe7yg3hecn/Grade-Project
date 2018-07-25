@@ -129,3 +129,14 @@
 .navbar-brand {
   color: #f8fafc;
 }
+
+.form-group-client-image .inputs{
+    display: flex;
+    flex-direction: row;
+}
+
+#client-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}

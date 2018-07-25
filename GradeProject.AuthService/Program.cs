@@ -23,14 +23,14 @@ namespace GradeProject.AuthService
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
-                context.Clients.Remove(context.Clients.FirstOrDefault());
-                context.SaveChanges();
+                //context.Clients.Remove(context.Clients.FirstOrDefault());
+                //context.SaveChanges();
 
 
-                foreach (var client in IdentityConfig.GetClients())
-                {
-                    context.Clients.Add(client.ToEntity());
-                }
+                //foreach (var client in IdentityConfig.GetClients())
+                //{
+                //    context.Clients.Add(client.ToEntity());
+                //}
                 context.SaveChanges();
             }
 

@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using GradeProject.AuthService.Models.Clients;
+using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
@@ -20,18 +21,27 @@ namespace GradeProject.AuthService.Infrastructure
             _context = context;
         }
 
-        public void AddClient(Client newClient)
+        public void AddClient(Client client)
         {
-            newClient.AllowedGrantTypes = GrantTypes.HybridAndClientCredentials;
-            newClient.AllowedScopes = new List<string>(){
-                IdentityServerConstants.StandardScopes.OpenId,
-                IdentityServerConstants.StandardScopes.Profile,
-                "Platform.ProfileService"
-            };
-            newClient.AllowOfflineAccess = true;
+          
 
-            _context.Clients.Add(newClient.ToEntity());
+            _context.Add(client.ToEntity());
             _context.SaveChanges();
         }
+
+
+        //newClient.AllowedGrantTypes = GrantTypes.Implicit;
+        //newClient.AllowedScopes = new List<string>(){
+        //    IdentityServerConstants.StandardScopes.OpenId,
+        //    IdentityServerConstants.StandardScopes.Profile,
+        //    //"Platform.ProfileService"
+        //};
+        //newClient.AllowOfflineAccess = true;
+
+        ////var res = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        ////var test = IdentityServerConstants.SignoutScheme;
+
+        //_context.Clients.Add(newClient.ToEntity());
+        //_context.SaveChanges();
     }
 }

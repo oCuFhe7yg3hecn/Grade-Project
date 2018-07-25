@@ -30,25 +30,47 @@ namespace GradeProject.AuthService
                 new IdentityResources.Profile(),
             };
         }
-    
+
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
             {
-                new Client
+                new Client()
                 {
-                    ClientId = "Games.Battleships",
-                    ClientName = "Battleships",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientId = "postman",
+                    ClientName = "Postman Client",
+                    ClientSecrets = { new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequireConsent = false,
+                    AllowAccessTokensViaBrowser = true,
 
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    AllowOfflineAccess = true,
+
+                    RedirectUris = { "https://www.getpostman.com/oauth2/callback" },
+                    PostLogoutRedirectUris = { "https://www.getpostman.com" },
+                    EnableLocalLogin = true,
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                    },
+                },
+                new Client()
+                {
+                    ClientId = "26fad7e9-995c-4b6b-9d16-cc2ca93d19cf",
+                    ClientName = "Battleships",
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
                     AllowOfflineAccess = true,
 
                     RequireConsent = true,
 
-                    RedirectUris = { "https://localhost:44310/signin-oidc" }, 
-                    PostLogoutRedirectUris = { "https://localhost:44310/signout-callback-oidc" },
-                    
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { "http://localhost:4200" },
+                    PostLogoutRedirectUris = { "http://localhost:4200" },
+
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
