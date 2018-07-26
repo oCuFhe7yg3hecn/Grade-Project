@@ -15,7 +15,6 @@ namespace GradeProject.AuthService.Mappings
         {
             CreateMap<ClientInsertModel, Client>()
                 .ForMember(dest => dest.LogoUri, src => src.Ignore())
-                .ForMember(dest => dest.AllowedGrantTypes, src => src.UseValue(GrantTypes.Implicit))
                 .ForMember(dest => dest.AllowOfflineAccess, src => src.UseValue(true))
                 .ForMember(dest => dest.RequireConsent, src => src.UseValue(true))
                 .ForMember(dest => dest.AllowAccessTokensViaBrowser, src => src.UseValue(true))

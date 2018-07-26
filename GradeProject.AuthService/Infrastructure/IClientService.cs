@@ -9,6 +9,6 @@ namespace GradeProject.AuthService.Infrastructure
 {
     public interface IClientService
     {
-        void AddClient(Client clientDto);
+        void AddClient(ClientInsertModel clientDto);
     }
 }

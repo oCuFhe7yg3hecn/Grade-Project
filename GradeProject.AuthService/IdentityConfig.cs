@@ -58,6 +58,22 @@ namespace GradeProject.AuthService
                 },
                 new Client()
                 {
+                    ClientId = "client",
+
+                    // no interactive user, use the clientid/secret for authentication
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    // secret for authentication
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    // scopes that client has access to
+                    AllowedScopes = { "Platform.ProfileService" }
+                },
+                new Client()
+                {
                     ClientId = "26fad7e9-995c-4b6b-9d16-cc2ca93d19cf",
                     ClientName = "Battleships",
 

@@ -32,9 +32,15 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View(new ClientInsertModel() { Type = "application" });
         }
 
 
@@ -42,16 +48,18 @@ namespace GradeProject.AuthService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ClientInsertModel clientDto)
         {
-            var client = _mapper.Map<Client>(clientDto);
+            //Якщо тут по якійсь причині кліжнт не буде зареєстрований, тоді це фото має видалятися.
+            //Потім дороблю
+            if (clientDto.Type.Equals("oauth-client"))
+            {
+                var fileName = $"images/Clients/{Guid.NewGuid()}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
+                await _filesSvc.SaveFile(fileName, clientDto.ClientLogo);
+                clientDto.LogoUri = fileName;
+            }
 
-            var fileName = $"images/Clients/{clientDto.ClientId}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
-            await _filesSvc.SaveFile(fileName, clientDto.ClientLogo);
-            clientDto.LogoUri = fileName;
+            _clientSvc.AddClient(clientDto);
 
-
-            _clientSvc.AddClient(client);
-
-            return RedirectToAction(nameof(HomeController.Index));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

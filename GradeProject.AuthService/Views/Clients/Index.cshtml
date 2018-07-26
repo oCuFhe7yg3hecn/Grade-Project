@@ -18,26 +18,6 @@
                     <input asp-for="ClientId" class="form-control" value="@Guid.NewGuid().ToString()" />
                     <span asp-validation-for="ClientId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ClientSecret" class="control-label"></label>
-                    <input asp-for="ClientSecret" class="form-control" value="@Guid.NewGuid().ToString()" />
-                    <span asp-validation-for="ClientSecret" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ClientName" class="control-label"></label>
-                    <input asp-for="ClientName" class="form-control" />
-                    <span asp-validation-for="ClientName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApiName" class="control-label"></label>
-                    <input asp-for="ApiName" class="form-control" />
-                    <span asp-validation-for="ApiName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApiSecret" class="control-label"></label>
-                    <input type="password" asp-for="ApiSecret" class="form-control" />
-                    <span asp-validation-for="ApiSecret" class="text-danger"></span>
-                </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
