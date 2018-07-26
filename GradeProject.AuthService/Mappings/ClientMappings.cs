@@ -27,7 +27,9 @@ namespace GradeProject.AuthService.Mappings
                                                                                                          .Select(x => x.Trim())
                                                                                                          .ToList()))
 
-                .ForMember(dest => dest.AllowedScopes, opts => opts.UseValue(new List<string>() { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile }));
+                .ForMember(dest => dest.AllowedScopes, opts => opts.UseValue(new List<string>() { IdentityServerConstants.StandardScopes.OpenId,
+                                                                                                  IdentityServerConstants.StandardScopes.Profile,
+                                                                                                  $"aud-{Guid.NewGuid().ToString()}" }));
 
             //CreateMap<ClientInsertModel, ApiResource>()
             //    .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.ApiName))

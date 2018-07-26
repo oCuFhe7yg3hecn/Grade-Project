@@ -63,19 +63,22 @@ namespace GradeProject.AuthService
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowOfflineAccess = true,
+                    ClientSecrets = {new Secret("secret".Sha256()) },
+
 
                     RequireConsent = true,
 
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris = { "http://localhost:4200" },
+                    RedirectUris = { "http://localhost:4200", "http://localhost:44310" },
                     PostLogoutRedirectUris = { "http://localhost:4200" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "Platform.ProfileService"
+                        "Platform.ProfileService",
+
                         //IdentityServerConstants.StandardScopes.OfflineAccess,
                         //"Platform.ProfileService"
                     },

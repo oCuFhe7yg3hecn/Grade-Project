@@ -31,10 +31,10 @@ namespace GradeProject.AuthService.Extensions
                     // this enables automatic token cleanup
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
-                });
-                //.AddClientStore<CustomClientStore>();
-                //.AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
-                //.AddInMemoryClients(IdentityConfig.GetClients());
+                }).AddInMemoryClients(IdentityConfig.GetClients());
+            //.AddClientStore<CustomClientStore>();
+            //.AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
+
         }
     }
 }
