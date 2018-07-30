@@ -4,11 +4,16 @@
     ViewData["Title"] = "Add";
 }
 
-<h2>Add</h2>
+<div class="wrapper">
+    <h2>Add</h2>
 
-<h4>ClientInsertModel</h4>
-<hr />
-<div class="row">
+    <p>
+        Choose your type :
+        @Html.ActionLink("oauth-client", "Add", "Clients", new { type = "oauth-client" }, null) |
+        @Html.ActionLink("application", "Add", "Clients", new { type = "application" }, null)
+    </p>
+    <h4>ClientInsertModel</h4>
+    <hr />
     <form asp-action="Add" enctype="multipart/form-data">
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,37 +42,46 @@
                     <label class="control-label">Image</label>
                     <div class="inputs">
                         <input id="image-selector" type="file" name="ClientLogo" />
-                        <img id="client-image" src="#" alt="your image" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="ClientUri" class="control-label"></label>
-                        <input asp-for="ClientUri" class="form-control" />
-                        <span asp-validation-for="ClientUri" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="RedirectUris" class="control-label"></label>
-                        <input asp-for="RedirectUris" class="form-control" />
-                        <span asp-validation-for="RedirectUris" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PostLogoutUris" class="control-label"></label>
-                        <input asp-for="PostLogoutUris" class="form-control" />
-                        <span asp-validation-for="PostLogoutUris" class="text-danger"></span>
+                        <img id="client-image" src="/icon.png" alt="your image" />
                     </div>
                 </div>
             }
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+        <div class="col-lg-6">
+            @if (Model.Type.Equals("oauth-client"))
+            {
+                <div class="form-group">
+                    <label asp-for="ClientUri" class="control-label"></label>
+                    <input asp-for="ClientUri" class="form-control" />
+                    <span asp-validation-for="ClientUri" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RedirectUris" class="control-label"></label>
+                    <input asp-for="RedirectUris" class="form-control" />
+                    <span asp-validation-for="RedirectUris" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostLogoutUris" class="control-label"></label>
+                    <input asp-for="PostLogoutUris" class="form-control" />
+                    <span asp-validation-for="PostLogoutUris" class="text-danger"></span>
+                </div>
+            }
+        </div>
+        <div class="form-group col-md-12">
+            <div>
+                <a asp-action="Index">Back Clients</a>
             </div>
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
     </form>
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+<style>
+    .wrapper {
+        margin-top: 55px;
+    }
+</style>
 
 <script type="text/javascript">
 

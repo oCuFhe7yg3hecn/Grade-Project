@@ -38,9 +38,9 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Add(string type="oauth-client")
         {
-            return View(new ClientInsertModel() { Type = "application" });
+            return View(new ClientInsertModel() { Type = type });
         }
 
 
