@@ -14,7 +14,130 @@
     </p>
     <h4>ClientInsertModel</h4>
     <hr />
+
     <form asp-action="Add" enctype="multipart/form-data">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="Type" value="@Model.Type" />
+            @*<div class="form-group">
+            <label asp-for="ClientId" class="control-label"></label>
+            <input asp-for="ClientId" class="form-control" value="client-@Guid.NewGuid()" />
+            <span asp-validation-for="ClientId" class="text-danger"></span>
+        </div>*@
+            @if (!Model.Type.Equals("oauth-client"))
+            {
+                <div class="form-group">
+                    <label asp-for="ClientSecret" class="control-label"></label>
+                    <input asp-for="ClientSecret" class="form-control" value="secret-@Guid.NewGuid()" />
+                    <span asp-validation-for="ClientSecret" class="text-danger"></span>
+                </div>
+            }
+            @if (Model.Type.Equals("oauth-client"))
+            {
+                <div class="form-group form-group-client-image">
+                    <label class="control-label">Image</label>
+                    <div class="inputs">
+                        <img id="client-image" src="http://docs.identityserver.io/en/release/_images/logo.png" alt="your image" />
+                        @*<input id="image-selector" type="file" name="ClientLogo" />*@
+                    </div>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                    <input class="mdl-textfield__input" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Display Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input">
+                    <textarea class="mdl-textfield__input" type="text" cols="5" id="sample3"></textarea>
+                    <label class="mdl-textfield__label" for="sample3">Description</label>
+                </div>
+            }
+        </div>
+        <div class="col-lg-6">
+            @if (Model.Type.Equals("oauth-client"))
+            {                
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input">
+                    <textarea class="mdl-textfield__input" type="text" id="sample3"></textarea>
+                    <label class="mdl-textfield__label" for="sample3">Redirect Uris</label>
+                </div>
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input">
+                        <textarea class="mdl-textfield__input" type="text" id="sample3"></textarea>
+                        <label class="mdl-textfield__label" for="sample3">Post Logout Uris</label>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="form-group col-md-12">
+            <div>
+                <a asp-action="Index">Back Clients</a>
+            </div>
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </form>
+
+    @*<form action="/" method="post" class="form-app-register">
+            <div class="col-md-6">
+                <div class="oauth-clien-credentials">
+                    <label>ClientKey : </label>
+                    <label>client-@Guid.NewGuid()</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Client Name</label>
+                </div>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="sample3">
+                <label class="mdl-textfield__label" for="sample3">Client Info Uri</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5"></textarea>
+                <label class="mdl-textfield__label" for="sample5">Redierct Uris</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows="3" id="sample5"></textarea>
+                <label class="mdl-textfield__label" for="sample5">Post Logout Uris</label>
+            </div>
+        </form>*@
+
+
+    <style>
+        .form-label-clientId {
+            width: 100%;
+        }
+
+        .oauth-clien-credentials {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .form-app-register {
+            color: black;
+            width: 100%;
+            /*display: flex;
+                flex-direction: column;
+                align-items: center;*/
+        }
+
+        .form-label-simple {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .mdl-textfield__label {
+            margin-bottom: 0px;
+        }
+
+        .mdl-textfield__label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+
+    @*<form asp-action="Add" enctype="multipart/form-data">
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="Type" value="@Model.Type" />
@@ -73,7 +196,7 @@
             </div>
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
-    </form>
+    </form>*@
 
 </div>
 
@@ -106,7 +229,6 @@
     }
 
     $("#image-selector").change(function () {
-
         readURL(this);
 
     });

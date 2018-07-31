@@ -11,9 +11,10 @@ using System;
 namespace GradeProject.AuthService.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    partial class UsersContextModelSnapshot : ModelSnapshot
+    [Migration("20180731110653_UserClientCommunication")]
+    partial class UserClientCommunication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,6 +44,25 @@ namespace GradeProject.AuthService.Migrations
                     b.HasKey("SubjectId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("GradeProject.AuthService.Models.UserClient", b =>
+                {
+                    b.Property<Guid>("UserId");
+
+                    b.Property<Guid>("ClientId");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserClient");
+                });
+
+            modelBuilder.Entity("GradeProject.AuthService.Models.UserClient", b =>
+                {
+                    b.HasOne("GradeProject.AuthService.Models.User", "User")
+                        .WithMany("Clients")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

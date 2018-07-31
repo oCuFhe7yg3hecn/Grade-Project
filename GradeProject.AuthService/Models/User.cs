@@ -50,6 +50,14 @@ namespace GradeProject.AuthService.Models
         public bool IsActive { get; set; }
         //
         // Summary:
+        //     Gets or sets if the user is developer.
+        [Required]
+        public bool IsDeveloper { get; set; }
+
+        public List<UserClient> Clients { get; set; }
+
+        //
+        // Summary:
         //     Gets or sets the provider name.
         //public string ProviderName { get; set; }
         ////
