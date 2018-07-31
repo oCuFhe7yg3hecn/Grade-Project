@@ -11,9 +11,10 @@ using System;
 namespace GradeProject.AuthService.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    partial class UsersContextModelSnapshot : ModelSnapshot
+    [Migration("20180731124339_UserClient")]
+    partial class UserClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +51,7 @@ namespace GradeProject.AuthService.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClientId")
-                        .IsRequired();
+                    b.Property<Guid>("ClientId");
 
                     b.Property<Guid>("UserId");
 

@@ -12,12 +12,9 @@ namespace GradeProject.AuthService.Models.Clients
         {
         }
 
-        public string ClientId { get; set; }
         public string ClientName { get; set; }
-        public string ClientSecret { get; set; }
         public IFormFile ClientLogo { get; set; }
         public string LogoUri { get; set; }
-
 
         public string Type { get; set; }
         public string ClientUri { get; set; }

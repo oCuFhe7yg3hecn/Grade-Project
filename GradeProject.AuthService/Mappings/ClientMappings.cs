@@ -14,21 +14,17 @@ namespace GradeProject.AuthService.Mappings
         public ClientMappings()
         {
             CreateMap<ClientInsertModel, Client>()
+                .ForMember(dest => dest.ClientId, opts => opts.UseValue($"client-{Guid.NewGuid()}"))
+                .ForMember(dest => dest.ClientName, opts => opts.MapFrom(src => src.ClientName))
                 .ForMember(dest => dest.LogoUri, src => src.Ignore())
                 .ForMember(dest => dest.AllowOfflineAccess, src => src.UseValue(true))
                 .ForMember(dest => dest.RequireConsent, src => src.UseValue(true))
-                .ForMember(dest => dest.AllowAccessTokensViaBrowser, src => src.UseValue(true))
 
-                .ForMember(dest => dest.RedirectUris, opts => opts.ResolveUsing(src => src.RedirectUris.Split(",")
-                                                                                                        .Select(x => x.Trim())
-                                                                                                        .ToList()))
-                .ForMember(dest => dest.PostLogoutRedirectUris, opts => opts.ResolveUsing(src => src.PostLogoutUris.Split(",")
-                                                                                                         .Select(x => x.Trim())
-                                                                                                         .ToList()))
+                .ForMember(dest => dest.RedirectUris, opts => opts.Ignore())
+                .ForMember(dest => dest.PostLogoutRedirectUris, opts => opts.Ignore())
 
                 .ForMember(dest => dest.AllowedScopes, opts => opts.UseValue(new List<string>() { IdentityServerConstants.StandardScopes.OpenId,
-                                                                                                  IdentityServerConstants.StandardScopes.Profile,
-                                                                                                  $"aud-{Guid.NewGuid().ToString()}" }));
+                                                                                                  IdentityServerConstants.StandardScopes.Profile}));
 
             //CreateMap<ClientInsertModel, ApiResource>()
             //    .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.ApiName))

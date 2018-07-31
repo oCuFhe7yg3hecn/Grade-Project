@@ -13,6 +13,7 @@ namespace GradeProject.AuthService.Models
         {
             SubjectId = Guid.NewGuid();
             RegisteredAt = DateTime.Now;
+            Clients = new List<UserClient>();
         }
 
         //

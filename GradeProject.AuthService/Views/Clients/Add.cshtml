@@ -15,16 +15,16 @@
     <h4>ClientInsertModel</h4>
     <hr />
 
-    <form asp-action="Add" enctype="multipart/form-data">
+    @*<form asp-action="Add" enctype="multipart/form-data">
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="Type" value="@Model.Type" />
+            <input type="hidden" name="Type" value="@Model.Type" />*@
             @*<div class="form-group">
             <label asp-for="ClientId" class="control-label"></label>
             <input asp-for="ClientId" class="form-control" value="client-@Guid.NewGuid()" />
             <span asp-validation-for="ClientId" class="text-danger"></span>
         </div>*@
-            @if (!Model.Type.Equals("oauth-client"))
+            @*@if (!Model.Type.Equals("oauth-client"))
             {
                 <div class="form-group">
                     <label asp-for="ClientSecret" class="control-label"></label>
@@ -38,11 +38,11 @@
                     <label class="control-label">Image</label>
                     <div class="inputs">
                         <img id="client-image" src="http://docs.identityserver.io/en/release/_images/logo.png" alt="your image" />
-                        @*<input id="image-selector" type="file" name="ClientLogo" />*@
+                        <input id="image-selector" type="file" name="ClientLogo" />
                     </div>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
-                    <input class="mdl-textfield__input" type="text" id="sample3">
+                    <input class="mdl-textfield__input" name="ClientName" type="text" id="sample3">
                     <label class="mdl-textfield__label" for="sample3">Display Name</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input">
@@ -55,7 +55,7 @@
             @if (Model.Type.Equals("oauth-client"))
             {                
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input">
-                    <textarea class="mdl-textfield__input" type="text" id="sample3"></textarea>
+                    <textarea class="mdl-textfield__input" name="RedirectUris" type="text" id="sample3"></textarea>
                     <label class="mdl-textfield__label" for="sample3">Redirect Uris</label>
                 </div>
                 <div class="form-group">
@@ -72,7 +72,7 @@
             </div>
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
-    </form>
+    </form>*@
 
     @*<form action="/" method="post" class="form-app-register">
             <div class="col-md-6">
@@ -137,35 +137,35 @@
         }
     </style>
 
-    @*<form asp-action="Add" enctype="multipart/form-data">
+    <form asp-action="Add" enctype="multipart/form-data">
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="Type" value="@Model.Type" />
+            @*<div class="form-group">
+            <label asp-for="ClientId" class="control-label"></label>
+            <input asp-for="ClientId" class="form-control" value="@Guid.NewGuid()" />
+            <span asp-validation-for="ClientId" class="text-danger"></span>
+        </div>
+        @if (!Model.Type.Equals("oauth-client"))
+        {
             <div class="form-group">
-                <label asp-for="ClientId" class="control-label"></label>
-                <input asp-for="ClientId" class="form-control" value="client-@Guid.NewGuid()" />
-                <span asp-validation-for="ClientId" class="text-danger"></span>
+                <label asp-for="ClientSecret" class="control-label"></label>
+                <input asp-for="ClientSecret" class="form-control" value="secret-@Guid.NewGuid()" />
+                <span asp-validation-for="ClientSecret" class="text-danger"></span>
             </div>
-            @if (!Model.Type.Equals("oauth-client"))
-            {
-                <div class="form-group">
-                    <label asp-for="ClientSecret" class="control-label"></label>
-                    <input asp-for="ClientSecret" class="form-control" value="secret-@Guid.NewGuid()" />
-                    <span asp-validation-for="ClientSecret" class="text-danger"></span>
-                </div>
-            }
+        }*@
+            <div class="form-group">
+                <label asp-for="ClientName" class="control-label"></label>
+                <input asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
             @if (Model.Type.Equals("oauth-client"))
             {
-                <div class="form-group">
-                    <label asp-for="ClientName" class="control-label"></label>
-                    <input asp-for="ClientName" class="form-control" />
-                    <span asp-validation-for="ClientName" class="text-danger"></span>
-                </div>
                 <div class="form-group form-group-client-image">
                     <label class="control-label">Image</label>
                     <div class="inputs">
                         <input id="image-selector" type="file" name="ClientLogo" />
-                        <img id="client-image" src="/icon.png" alt="your image" />
+                        <img id="client-image" src="http://docs.identityserver.io/en/release/_images/logo.png" alt="your image" />
                     </div>
                 </div>
             }
@@ -196,7 +196,7 @@
             </div>
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
-    </form>*@
+    </form>
 
 </div>
 

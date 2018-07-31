@@ -38,6 +38,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Angular", "Gra
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "53086"
 		SlnRelativePath = "GradeProject-Angular\"
+		StartServerOnDebug = "false"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}"

@@ -10,10 +10,12 @@ namespace GradeProject.AuthService.Models
     public class UserClient
     {
         [Key]
+        public Guid Id { get; set; }
+
         public Guid UserId { get; set; }
         public User User { get; set; }
 
         [Required]
-        public Guid ClientId { get; set; }
+        public string ClientId { get; set; }
     }
 }

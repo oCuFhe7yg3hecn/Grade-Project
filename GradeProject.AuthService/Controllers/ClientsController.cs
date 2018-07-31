@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using IdentityServer4.Models;
 using System.IO;
 using IdentityServer4;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeProject.AuthService.Controllers
 {
@@ -38,6 +40,7 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add(string type="oauth-client")
         {
             return View(new ClientInsertModel() { Type = type });
@@ -46,10 +49,9 @@ namespace GradeProject.AuthService.Controllers
 
         //Add granual authorization
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(ClientInsertModel clientDto)
         {
-            //Якщо тут по якійсь причині кліжнт не буде зареєстрований, тоді це фото має видалятися.
-            //Потім дороблю
             if (clientDto.Type.Equals("oauth-client"))
             {
                 var fileName = $"images/Clients/{Guid.NewGuid()}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
@@ -57,7 +59,9 @@ namespace GradeProject.AuthService.Controllers
                 clientDto.LogoUri = fileName;
             }
 
-            _clientSvc.AddClient(clientDto);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+
+            _clientSvc.AddClient(clientDto, Guid.Parse(userId));
 
             return RedirectToAction(nameof(Index));
         }
