@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using System.IO;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -20,13 +22,22 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Games")]
     public class GamesController : ODataController
     {
-        private readonly IGamesService _gamesSvc;
+        private readonly ICatalogService _gamesSvc;
         private readonly ILogger<GamesController> _logger;
+        private readonly IFilesSaveService _fileSaveSvc;
+        private readonly IMapper _mapper;
 
-        public GamesController(IGamesService gamesSvc, ILogger<GamesController> logger)
+        public GamesController(
+            ICatalogService gamesSvc,
+            ILogger<GamesController> logger,
+            IMapper mapper,
+            IFilesSaveService fileSaveSvc
+            )
         {
             _gamesSvc = gamesSvc;
             _logger = logger;
+            _mapper = mapper;
+            _fileSaveSvc = fileSaveSvc;
         }
 
         [HttpGet]
@@ -45,6 +56,37 @@ namespace GradeProject.GameCatalogService.Controllers
         {
             var game = await _gamesSvc.GetByIdAsync(id);
             return Ok(game);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddGame([FromBody]GameRegisterModel newGame)
+        {
+            if(!ModelState.IsValid) { return BadRequest("Invalid Model"); }
+            var gameInfo = _mapper.Map<GameInfo>(newGame);
+
+            if (newGame.CoverImageUrl != null)
+            {
+                var fileName = $"images/Games/Covers/{Guid.NewGuid()}{Path.GetExtension(newGame.CoverImageUrl.FileName)}";
+                await _fileSaveSvc.SaveFile(fileName, newGame.CoverImageUrl);
+                gameInfo.CoverImageURL = fileName;
+            }
+
+
+            if (newGame.MultimediaFiles != null && newGame.MultimediaFiles.Count != 0)
+            {
+                foreach (var image in newGame.MultimediaFiles)
+                {
+                    var imageFileName = $"images/Games/{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
+                    await _fileSaveSvc.SaveFile(imageFileName, image);
+                    gameInfo.MultiMedias.Add(imageFileName);
+                }
+            }
+
+            await _gamesSvc.RegisterGameAsync(gameInfo);
+
+            return Ok();
+
         }
 
         // Into tags Controller

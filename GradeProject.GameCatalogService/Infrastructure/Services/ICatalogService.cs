@@ -5,7 +5,7 @@ using GradeProject.GameCatalogService.Models.DTO;
 
 namespace GradeProject.GameCatalogService.Infrastructure.Services
 {
-    public interface IGamesService
+    public interface ICatalogService
     {
         Task<List<GameInfoDTO>> GetAllAsync();
 
@@ -15,6 +15,6 @@ namespace GradeProject.GameCatalogService.Infrastructure.Services
 
         Task<PaginatedResponse<GameInfo>> GetByCategoriesAsync(List<string> categories, PagingOptions opts);
 
-        Task AddGameAsync(GameInfo newGame);
+        Task RegisterGameAsync(GameInfo newGame);
     }
 }
