@@ -67,7 +67,7 @@ namespace GradeProject.ScoreService
 
             var mongoSettings = sp.GetService<IOptions<MongoDbSettings>>();
 
-            var builder = new ContainerBuilder();dwadwad
+            var builder = new ContainerBuilder();
 
             //Context
             builder.RegisterInstance(mongoSettings.Value).SingleInstance();
