@@ -15,13 +15,14 @@ namespace GradeProject.GameCatalogService.Communication.CommandHandlers
 {
     public class GameRegisteredCommandHandler : ICommandHandler<RegisterGameCommand>
     {
-        private readonly IGamesService _gameSvc;
+        private readonly ICatalogService _catalogSvc;
 
-        public GameRegisteredCommandHandler(IGamesService gameService)
+        public GameRegisteredCommandHandler(ICatalogService catalogSvc)
         {
-            _gameSvc = gameService;
+            _catalogSvc = catalogSvc;
         }
 
-        public async Task ExecuteAsync(RegisterGameCommand command) => await _gameSvc.AddGameAsync(command.GameInfo);
+        //public async Task ExecuteAsync(RegisterGameCommand command) => await _gameSvc.AddGameAsync(command.GameInfo);
+        public async Task ExecuteAsync(RegisterGameCommand command) => await Task.FromResult(0);
     }
 }

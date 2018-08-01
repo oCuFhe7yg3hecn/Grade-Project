@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Infrastructure.Services
 {
-    public class GamesService : IGamesService
+    public class CatalogService : ICatalogService
     {
         private readonly IMapper _mapper;
         private readonly IRepository<GameInfo> _repo;
 
-        public GamesService(IRepository<GameInfo> repo, IMapper mapper)
+        public CatalogService(IRepository<GameInfo> repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -48,7 +48,7 @@ namespace GradeProject.GameCatalogService.Infrastructure.Services
             return new PaginatedResponse<GameInfo>(opts.Page, opts.PageSize, itemsCount / opts.PageSize, games);
         }
 
-        public async Task AddGameAsync(GameInfo newGame) => await _repo.AddOneAsync(newGame);
+        public async Task RegisterGameAsync(GameInfo newGame) => await _repo.AddOneAsync(newGame);
 
     }
 }
