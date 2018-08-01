@@ -33,10 +33,10 @@ namespace GradeProject.GameRegService.Controllers
 
         [HttpPost]
         [EnableCors("AllowAll")]
-        public async Task<IActionResult> RegisterGame([FromBody]string gameUrl)
+        public async Task<IActionResult> RegisterGame()
         {
             var claims = User.Claims.ToList();
-            if (await _regSvc.RegisterGame(gameUrl)) { return Ok(); }
+            if (await _regSvc.RegisterGame("")) { return Ok(); }
             return BadRequest("Something gone wrong");
         }
 

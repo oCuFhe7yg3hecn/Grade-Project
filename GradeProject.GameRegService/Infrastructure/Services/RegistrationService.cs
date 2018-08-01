@@ -33,10 +33,12 @@ namespace GradeProject.GameRegService.Infrstructure
 
         public async Task<bool> RegisterGame(string gameUrl)
         {
-            var response = await _httpClient.GetStringAsync($"{gameUrl}/register-discover");
-            var responseObject = JsonConvert.DeserializeObject<RegisterInfo>(response);
+            //var response = await _httpClient.GetStringAsync($"{gameUrl}/register-discover");
+            //var responseObject = JsonConvert.DeserializeObject<RegisterInfo>(response);
 
-            var gameInfo = _mapper.Map<GameInfo>(responseObject);
+            //var gameInfo = _mapper.Map<GameInfo>(responseObject);
+
+            var gameInfo = new GameInfo() { Name = "Test new Rabbit Mq" };
 
             //Add some game validation logic here
             var bindata = ObjectConverter.ObjectToBytes(gameInfo);

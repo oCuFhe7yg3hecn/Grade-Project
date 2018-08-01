@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using GradeProject.CommandBusInterfaces;
+using GradeProject.GameCatalogService;
 using GradeProject.GameCatalogService.Communication;
 using GradeProject.GameCatalogService.Communication.CommandHandlers;
 using GradeProject.GameCatalogService.Communication.Commands;
@@ -30,7 +32,7 @@ namespace GradeProject.GameCatalogService
         public IConfiguration Configuration { get; }
 
         public IContainer AppContainer { get; set; }
-        private IEventBus _rabbitMq;
+        private IRabbitMqManager _rabbitMq;
         private ICommandBus _commandBus;
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -67,10 +69,9 @@ namespace GradeProject.GameCatalogService
             AppContainer = RegisterDependencies(services);
 
             _commandBus = AppContainer.Resolve<ICommandBus>();
-            _commandBus.DependencyResolver = AppContainer;
-            
-            _rabbitMq = AppContainer.Resolve<IEventBus>(new TypedParameter(typeof(ICommandBus), _commandBus));
 
+
+            _rabbitMq = AppContainer.Resolve<IRabbitMqManager>();
 
             return new AutofacServiceProvider(this.AppContainer);
 
@@ -108,13 +109,13 @@ namespace GradeProject.GameCatalogService
 
             //Utils
 
-            builder.Register(c => new CommandBus())
-                                            .As<ICommandBus>()
+            builder.Register(c => new CommandBus(c.Resolve<IComponentContext>()))
+                                            .AsImplementedInterfaces()
                                             .SingleInstance();
 
-            builder.Register(c => new RabbitMqBus(c.Resolve<IOptions<RabbitMqConfig>>(),
-                                                  c.Resolve<ICommandBus>()))
-                                                                       .As<IEventBus>()
+            builder.Register(c => new RabbitMqManager(c.Resolve<IOptions<RabbitMqConfig>>(),
+                                                     c.Resolve<ICommandBus>()))
+                                                                       .AsImplementedInterfaces()
                                                                        .SingleInstance();
 
             //Context
@@ -141,6 +142,9 @@ namespace GradeProject.GameCatalogService
             builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<IGamesService>()))
                                                                         .As<ICommandHandler<RegisterGameCommand>>()
                                                                         .SingleInstance();
+
+            builder.Register(c => new RabbitMqManager(c.Resolve<IOptions<RabbitMqConfig>>(), c.Resolve<ICommandBus>()))
+                .AsImplementedInterfaces();
 
             return builder.Build();
         }

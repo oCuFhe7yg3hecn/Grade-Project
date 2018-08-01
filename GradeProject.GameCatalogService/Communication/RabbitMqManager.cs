@@ -1,4 +1,6 @@
-﻿using GradeProject.GameCatalogService.Communication.Commands;
+﻿using GradeProject.CommandBusInterfaces;
+using GradeProject.GameCatalogService;
+using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
@@ -15,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Communication
 {
-    public class RabbitMqBus : IEventBus
+    public class RabbitMqManager : IRabbitMqManager
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
@@ -24,13 +26,10 @@ namespace GradeProject.GameCatalogService.Communication
         //Gueues
         private readonly string _gameRegisteredQueue;
 
-        //private readonly string _replyQueueName;
-        //private readonly IBasicProperties _props;
-
         //Dependencies
         private readonly ICommandBus _commandBus;
 
-        public RabbitMqBus(IOptions<RabbitMqConfig> config, ICommandBus commandBus)
+        public RabbitMqManager(IOptions<RabbitMqConfig> config, ICommandBus commandBus)
         {
             _commandBus = commandBus;
 
@@ -51,7 +50,6 @@ namespace GradeProject.GameCatalogService.Communication
 
         public void RegisterConsumers()
         {
-            //Dependinc on number of consumers
             _consumer.Received += async (model, ea) =>
             {
                 var gameString = Encoding.Default.GetString(ea.Body);
@@ -61,20 +59,6 @@ namespace GradeProject.GameCatalogService.Communication
             };
 
             _channel.BasicConsume(_gameRegisteredQueue, true, _consumer);
-        }
-
-        public void Register(string routingKey, RegisterGameCommand command)
-        {
-            //If it get complex I will add some routingKey switch
-            // and work with ICommand
-            _consumer.Received += async (model, ea) =>
-             {
-                 var gameString = Encoding.Default.GetString(ea.Body);
-                 var gameInfo = JsonConvert.DeserializeObject<GameInfo>(gameString);
-
-                 command.GameInfo = gameInfo;
-                 await _commandBus.SubmitAsync(command);
-             };
         }
 
         public void Publish(string queueName, string data)

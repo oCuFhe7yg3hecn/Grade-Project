@@ -1,4 +1,6 @@
-﻿using GradeProject.GameCatalogService.Communication.Commands;
+﻿using GradeProject.CommandBusInterfaces;
+using GradeProject.GameCatalogService;
+using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;

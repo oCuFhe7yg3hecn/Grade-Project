@@ -1,4 +1,5 @@
-﻿using GradeProject.GameCatalogService.Models;
+﻿using GradeProject.CommandBusInterfaces;
+using GradeProject.GameCatalogService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
