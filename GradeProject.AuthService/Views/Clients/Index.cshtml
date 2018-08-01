@@ -1,4 +1,4 @@
-﻿@model GradeProject.AuthService.Models.Clients.ClientInsertModel
+﻿@model IEnumerable<GradeProject.AuthService.Models.Clients.UserClientDTO>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,16 +11,21 @@
 <div class="row">
     <div class="col-md-12">
 
-        <form asp-action="Index">
+        @foreach(var client in Model)
+        {
+            @client.ClientId
+        }
+
+        @*<form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-6">
+            <div class="col-md-6">*@
                 @*<div class="form-group">
                     <label asp-for="ClientId" class="control-label"></label>
                     <input asp-for="ClientId" class="form-control" value="@Guid.NewGuid().ToString()" />
                     <span asp-validation-for="ClientId" class="text-danger"></span>
                 </div>*@
-            </div>
-            <div class="col-md-4">
+            @*</div>
+            <div class="col-md-4">*@
                 @*<div class="form-group">
                     <label asp-for="RedirectUris" class="control-label"></label>
                     <input asp-for="RedirectUris" class="form-control" />
@@ -31,11 +36,11 @@
                     <input asp-for="PostLogoutUris" class="form-control" />
                     <span asp-validation-for="PostLogoutUris" class="text-danger"></span>
                 </div>*@
-            </div>
+            @*</div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
+        </form>*@
     </div>
 </div>
 

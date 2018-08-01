@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Models.Clients;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -25,11 +26,11 @@ namespace GradeProject.AuthService.Mappings
 
                 .ForMember(dest => dest.AllowedScopes, opts => opts.UseValue(new List<string>() { IdentityServerConstants.StandardScopes.OpenId,
                                                                                                   IdentityServerConstants.StandardScopes.Profile}));
-
-            //CreateMap<ClientInsertModel, ApiResource>()
-            //    .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.ApiName))
-            //    .ForMember(dest => dest.ApiSecrets, opts => opts.MapFrom(src => src.ApiSecret));
-            //.ForAllOtherMembers(dest => dest.Ignore());
+            CreateMap<Client, UserClientDTO>()
+                .ForMember(dest => dest.Type, opts => opts.Ignore())
+                .ForMember(dest => dest.Secret, opts => opts.Ignore());
+            //.ForMember(dest => dest.ClientType, opts => opts.MapFrom(src => src.AllowedGrantTypes.FirstOrDefault().ToString()))
+            //.ForMember(dest => dest.opts => opts.Ignore());
         }
     }
 }

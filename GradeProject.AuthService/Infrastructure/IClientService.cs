@@ -10,6 +10,6 @@ namespace GradeProject.AuthService.Infrastructure
     public interface IClientService
     {
         void AddClient(ClientInsertModel clientDto, Guid userId);
-        void GetUserClients(string userId);
+        Task<List<UserClientDTO>> GetUserClients(Guid userId);
     }
 }

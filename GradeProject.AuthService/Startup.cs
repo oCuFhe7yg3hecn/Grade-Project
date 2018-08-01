@@ -115,7 +115,7 @@ namespace GradeProject.AuthService
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddScoped<IClientService, ClientService>();
-            //services.AddScoped<IClientStore, CustomClientStore>();
+            services.AddScoped<IClientStore, CustomClientStore>();
             services.AddScoped<IApiManagmentService, ApiManagmentService>();
             services.AddScoped<IFilesSaveService, FileSaveService>();
         }

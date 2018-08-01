@@ -14,12 +14,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GradeProject.AuthService.Controllers
 {
+    [Authorize]
     public class ClientsController : Controller
     {
         private readonly IClientService _clientSvc;
         private readonly IMapper _mapper;
         private readonly IApiManagmentService _apiMng;
         private readonly IFilesSaveService _filesSvc;
+        private Guid _userId;
 
         public ClientsController(
             IClientService clientSvc,
@@ -34,14 +36,16 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);
+            var clients = await _clientSvc.GetUserClients(_userId);
+            return View(clients);
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Add(string type="oauth-client")
+        public IActionResult Add(string type="oauth")
         {
             return View(new ClientInsertModel() { Type = type });
         }
@@ -52,16 +56,16 @@ namespace GradeProject.AuthService.Controllers
         [Authorize]
         public async Task<IActionResult> Add(ClientInsertModel clientDto)
         {
-            if (clientDto.Type.Equals("oauth-client"))
+            _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);
+
+            if (clientDto.Type.Equals("oauth"))
             {
                 var fileName = $"images/Clients/{Guid.NewGuid()}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
                 await _filesSvc.SaveFile(fileName, clientDto.ClientLogo);
                 clientDto.LogoUri = fileName;
             }
 
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-
-            _clientSvc.AddClient(clientDto, Guid.Parse(userId));
+            _clientSvc.AddClient(clientDto, _userId);
 
             return RedirectToAction(nameof(Index));
         }

@@ -14,18 +14,25 @@ using System.Threading.Tasks;
 
 namespace GradeProject.AuthService.Infrastructure
 {
+    public enum ClientTypes { oauth, application }
+
     public class ClientService : IClientService
     {
         private readonly ConfigurationDbContext _context;
-        private readonly IClientStore _clientStore;
+        private readonly ConfigurationDbContext _confContext;
         private readonly UsersContext _userCtx;
         private readonly IMapper _mapper;
 
-        public ClientService(ConfigurationDbContext context, IMapper mapper, UsersContext userCtx)
+        public ClientService(
+            ConfigurationDbContext context,
+            ConfigurationDbContext confContext, 
+            IMapper mapper, 
+            UsersContext userCtx)
         {
-            _context = context;
             _mapper = mapper;
+            _context = context;
             _userCtx = userCtx;
+            _confContext = confContext;
         }
 
         public void AddClient(ClientInsertModel clientDto, Guid userId)
@@ -58,9 +65,36 @@ namespace GradeProject.AuthService.Infrastructure
             _context.SaveChanges();
         }
 
-        public void GetUserClients(string userId)
+        public async Task<List<UserClientDTO>> GetUserClients(Guid userId)
         {
+            var clients = new List<UserClientDTO>();
 
+            var userClientIds = await _userCtx.UserClient.Where(uc => uc.UserId == userId)
+                                                         .Select(uc => uc.ClientId)
+                                                         .ToListAsync();
+            foreach (var clientId in userClientIds)
+            {
+                var client = await _confContext.Clients.Include(c => c.AllowedGrantTypes)
+                                                       .Include(c => c.ClientSecrets)
+                                                       .FirstOrDefaultAsync(c => c.ClientId == clientId);
+
+                var userClient = _mapper.Map<UserClientDTO>(client);
+
+                switch (client.AllowedGrantTypes[0].ToString())
+                {
+                    case "implicit":
+                        userClient.Type = "oauth";
+                        break;
+                    default:
+                        userClient.Type = "application";
+                        //userClient.ClientSecret = client.ClientSecrets[0].Value;
+                        break;
+                }
+
+                clients.Add(userClient);
+            }
+
+            return clients;
         }
     }
 }
