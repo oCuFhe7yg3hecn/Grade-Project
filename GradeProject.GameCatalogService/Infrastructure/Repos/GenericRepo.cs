@@ -16,7 +16,7 @@ namespace GradeProject.GameCatalogService.Infrastructure.Repos
         public GenericRepo(MongoDbContext context)
         {
             var collName = (CollectionNameAttribute)Attribute.GetCustomAttribute(typeof(T), typeof(CollectionNameAttribute));
-            _coll = context.GetClollection<T>(collName.Name ?? nameof(T));
+            _coll = context.GetClollection<T>(collName?.Name ?? typeof(T).Name);
         }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
