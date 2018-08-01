@@ -15,7 +15,7 @@ namespace GradeProject.ScoreService
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            BuildWebHost(args).Run();
 
             //using (var scope = host.Services.CreateScope())
             //{
@@ -25,7 +25,7 @@ namespace GradeProject.ScoreService
             //    Seeder.Seed(context);
             //}
 
-            host.Run();
+            //host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

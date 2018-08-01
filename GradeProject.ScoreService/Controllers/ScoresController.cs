@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GradeProject.ScoreService.Domain;
 using GradeProject.ScoreService.Infrastructure.Repos;
+using GradeProject.ScoreService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +14,9 @@ namespace GradeProject.ScoreService.Controllers
     [Route("api/Scores")]
     public class ScoresController : Controller
     {
-        private readonly IRepository<User> _userRepo;
+        private readonly IRepository<UserScores> _userRepo;
 
-        public ScoresController(IRepository<User> userRepo)
+        public ScoresController(IRepository<UserScores> userRepo)
         {
             _userRepo = userRepo;
         }

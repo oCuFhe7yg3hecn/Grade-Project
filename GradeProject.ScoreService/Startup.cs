@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using GradeProject.ScoreService.Controllers;
 using GradeProject.ScoreService.Infrastructure;
@@ -28,17 +28,19 @@ namespace GradeProject.ScoreService
 
         public IConfiguration Configuration { get; }
 
-        public Autofac.IContainer AppContainer { get; set; }
+        public IContainer AppContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling =
-                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                }); ;
+            services.AddMvc();
+                //.AddJsonOptions(options =>
+                //{
+                //    options.SerializerSettings.ReferenceLoopHandling =
+                //        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                //}); ;
+
+            services.AddLogging();
 
 
             //Register Dependencies
@@ -63,25 +65,21 @@ namespace GradeProject.ScoreService
             //Configurations
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
 
-            var sp = services.BuildServiceProvider();
-
-            var mongoSettings = sp.GetService<IOptions<MongoDbSettings>>();
-
             var builder = new ContainerBuilder();
+            builder.Populate(services);
 
             //Context
-            builder.RegisterInstance(mongoSettings.Value).SingleInstance();
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()))
-                                                                    .InstancePerLifetimeScope();
+            builder.RegisterType<MongoDbContext>()
+                   .AsSelf();
 
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>))
-                                                                    .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope();
 
-            //Services
-            builder.Register(c => new UserService(c.Resolve<IRepository<Domain.User>>(new NamedParameter("collectionName", "Users"))))
-                                                                                                                            .As<IUserService>()
-                                                                                                                            .InstancePerLifetimeScope();
+            var assembly = Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly)
+                   .AsImplementedInterfaces();
 
             return builder.Build();
         }
