@@ -2,15 +2,10 @@
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.CommandBusInterfaces;
-using GradeProject.GameCatalogService;
-using GradeProject.GameCatalogService.Communication;
-using GradeProject.GameCatalogService.Communication.CommandHandlers;
-using GradeProject.GameCatalogService.Communication.Commands;
 using GradeProject.GameCatalogService.Configurations;
 using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
-using GradeProject.GameCatalogService.Infrastructure.Services;
 using GradeProject.GameCatalogService.Models;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
+using System.Reflection;
 
 namespace GradeProject.GameCatalogService
 {
@@ -109,46 +105,19 @@ namespace GradeProject.GameCatalogService
 
             //Utils
 
-            builder.Register(c => new CommandBus(c.Resolve<IComponentContext>()))
-                                            .AsImplementedInterfaces()
-                                            .SingleInstance();
-
-            builder.Register(c => new RabbitMqManager(c.Resolve<IOptions<RabbitMqConfig>>(),
-                                                     c.Resolve<ICommandBus>()))
-                                                                       .AsImplementedInterfaces()
-                                                                       .SingleInstance();
-
             //Context
             builder.Register(c => new MongoDbSettings());
             builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()))
                                                                     .InstancePerLifetimeScope();
 
+            var assembly = Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly)
+                   .AsImplementedInterfaces();
+
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>))
                                                                     .InstancePerLifetimeScope();
-
-            //Services
-            builder.Register(c => new CatalogService(c.Resolve<IRepository<GameInfo>>(), c.Resolve<IMapper>()))
-                                                                      .AsImplementedInterfaces()
-                                                                      .InstancePerLifetimeScope();
-
-            builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(),
-                                                      c.Resolve<IRepository<GameInfo>>()))
-                                                                            .As<ICategoryService>()
-                                                                            .InstancePerLifetimeScope();
-
-            builder.Register(c => new FileSaveService(c.Resolve<IHostingEnvironment>()))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<ICatalogService>()))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            //CommandHandler
-
-            builder.Register(c => new RabbitMqManager(c.Resolve<IOptions<RabbitMqConfig>>(), c.Resolve<ICommandBus>()))
-                .AsImplementedInterfaces();
 
             return builder.Build();
         }
