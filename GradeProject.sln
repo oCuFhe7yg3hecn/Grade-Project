@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameRegService", "GradeProject.GameRegService\GradeProject.GameRegService.csproj", "{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{FB436A7B-BC21-4C81-8313-0804414B7C59}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{D98D35DD-D272-4FA9-87CC-0CA5E6359C24}"
@@ -14,8 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameCatalog Service", "GameCatalog Service", "{5A147F73-0027-47E1-980B-89302641247A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Reg Service", "Game Reg Service", "{F73C6966-2A80-48E3-AA37-108845064131}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{70E6B0F8-1CAC-4358-A04C-6B245B81119B}"
 EndProject
@@ -43,6 +39,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Angular", "Gra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService", "GradeProject.ScoreService\GradeProject.ScoreService.csproj", "{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Score Service", "Score Service", "{EF1A5FA5-A390-45CA-B525-559E81072CE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +53,6 @@ Global
 		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,16 +65,20 @@ Global
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4} = {5A147F73-0027-47E1-980B-89302641247A}
-		{6ED5D0CE-B4F7-43CC-A019-ADA70BA0D0D0} = {F73C6966-2A80-48E3-AA37-108845064131}
 		{FB436A7B-BC21-4C81-8313-0804414B7C59} = {70E6B0F8-1CAC-4358-A04C-6B245B81119B}
 		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50} = {D98D35DD-D272-4FA9-87CC-0CA5E6359C24}
+		{F01EBE1D-F1FE-43DE-80FE-D8A48E5E4AEF} = {EF1A5FA5-A390-45CA-B525-559E81072CE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}
