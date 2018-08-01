@@ -128,20 +128,24 @@ namespace GradeProject.GameCatalogService
                                                                     .InstancePerLifetimeScope();
 
             //Services
-            builder.Register(c => new GamesService(c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData")),
-                                                   c.Resolve<IMapper>()))
-                                                                      .As<IGamesService>()
+            builder.Register(c => new CatalogService(c.Resolve<IRepository<GameInfo>>(), c.Resolve<IMapper>()))
+                                                                      .AsImplementedInterfaces()
                                                                       .InstancePerLifetimeScope();
 
-            builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(new NamedParameter("collectionName", "Categories")),
-                                                      c.Resolve<IRepository<GameInfo>>(new NamedParameter("collectionName", "GamesData"))))
-                                                                                                                                   .As<ICategoryService>()
-                                                                                                                                   .InstancePerLifetimeScope();
+            builder.Register(c => new CategoryService(c.Resolve<IRepository<Category>>(),
+                                                      c.Resolve<IRepository<GameInfo>>()))
+                                                                            .As<ICategoryService>()
+                                                                            .InstancePerLifetimeScope();
 
-            //CommandHandlers
-            builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<IGamesService>()))
-                                                                        .As<ICommandHandler<RegisterGameCommand>>()
-                                                                        .SingleInstance();
+            builder.Register(c => new FileSaveService(c.Resolve<IHostingEnvironment>()))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.Register(c => new GameRegisteredCommandHandler(c.Resolve<ICatalogService>()))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            //CommandHandler
 
             builder.Register(c => new RabbitMqManager(c.Resolve<IOptions<RabbitMqConfig>>(), c.Resolve<ICommandBus>()))
                 .AsImplementedInterfaces();

@@ -43,7 +43,7 @@ namespace GradeProject.GameCatalogService.Controllers
         public async Task<IActionResult> GetByCategories(string categories, PagingOptions pageOptions)
         {
             var categoriesList = categories.Split(",").Select(x => x.Trim()).ToList();
-            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions);
+            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions); 
 
             return Ok(gamesResponse);
         }
