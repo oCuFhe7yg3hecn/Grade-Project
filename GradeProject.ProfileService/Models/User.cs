@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradeProject.ProfileService.Infrastructure.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace GradeProject.ProfileService.Models
         Offline
     }
 
+    [CollectionName("Users")]
     public class User
     {
         public User()

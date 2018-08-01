@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -85,18 +86,21 @@ namespace GradeProject.ProfileService
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
+            var assembly = Assembly.GetExecutingAssembly();
+
             //Context
-            builder.Register(c => new MongoDbSettings());
-            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
+            builder.RegisterType<MongoDbContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            //builder.Register(c => new MongoDbSettings());
+            //builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
 
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            //Services
-            builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
-                                                  c.Resolve<IMapper>()))
-                                                                 .As<IUserService>()
-                                                                 .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assembly)
+                   .AsImplementedInterfaces();
 
             return builder.Build();
         }
