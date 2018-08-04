@@ -1,9 +1,14 @@
-﻿using IdentityServer4.Extensions;
+﻿using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
+using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -18,12 +23,17 @@ namespace GradeProject.AuthService.Infrastructure
             _userRepo = userRepo;
         }
 
-        public Task GetProfileDataAsync(ProfileDataRequestContext context)
+        public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var user = _userRepo.FindBySubjectId(context.Subject.GetSubjectId());
-            context.IssuedClaims.Add(new Claim(ClaimTypes.GivenName, user.Email));
+            var userId = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).SubjectId;
+            var client = new HttpClient();
+            var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Users/getShortInfo/{userId}");
+            var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
 
-            return Task.FromResult(0);
+            context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
+            context.IssuedClaims.Add(new Claim("FirstName", user.FirstName));
+            context.IssuedClaims.Add(new Claim("LastName", user.LastName));
+            context.IssuedClaims.Add(new Claim("NickName", user.NickName));
         }
 
         public Task IsActiveAsync(IsActiveContext context)

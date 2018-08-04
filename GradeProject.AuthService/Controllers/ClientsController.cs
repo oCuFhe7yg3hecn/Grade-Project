@@ -11,6 +11,9 @@ using System.IO;
 using IdentityServer4;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
+using GradeProject.AuthService.Models.Account;
+using Newtonsoft.Json;
 
 namespace GradeProject.AuthService.Controllers
 {
@@ -36,6 +39,7 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);

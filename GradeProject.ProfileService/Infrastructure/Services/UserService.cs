@@ -26,7 +26,7 @@ namespace GradeProject.ProfileService.Infrastructure
             await _userRepository.WhereAsync(_ => true);
 
         public async Task<User> GetUserByIdAsync(string id) =>
-            await _userRepository.SingleAsync(u => u.Id == Guid.Parse(id));
+            await _userRepository.SingleAsync(_ => true);
 
         public async Task CreateUser(UserInsertDTO newUser)
         {

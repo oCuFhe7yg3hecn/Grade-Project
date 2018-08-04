@@ -57,6 +57,8 @@ namespace GradeProject.ProfileService.Models
 
         public string Slogan { get; set; }
 
+        public string CoverImage { get; set; }
+
         [Required]
         public UserStatus Status { get; set; }
         public string CurrentAction { get; set; }

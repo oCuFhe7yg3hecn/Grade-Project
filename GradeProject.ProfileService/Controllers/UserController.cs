@@ -30,8 +30,25 @@ namespace GradeProject.ProfileService.Controllers
         [EnableCors("AllowAll")]
         public async Task<List<User>> GetAsync() => await _userSvc.GetUsersAsync();
 
+        [HttpGet]
+        [Route("getShortInfo/{id}")]
+        [EnableCors("AllowAll")]
+        public async Task<IActionResult> GetShortInfo(string id)
+        {
+            var user = await _userSvc.GetUserByIdAsync(id);
+            return Ok(new
+            {
+                Id = user.Id.ToString(),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NickName = user.FirstName
+            });
+        }
+
+
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(string id)
         {
             var user = await _userSvc.GetUserByIdAsync(id);
