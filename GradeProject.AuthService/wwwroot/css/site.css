@@ -140,3 +140,16 @@
     height: 150px;
     border-radius: 50%;
 }
+
+
+/*              Register */
+.Register{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: rotate(-50% -50%);
+}
+
+.Register label{
+    padding-left: 0px;
+}

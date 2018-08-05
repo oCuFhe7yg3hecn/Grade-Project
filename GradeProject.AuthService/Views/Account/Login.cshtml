@@ -1,18 +1,83 @@
 @model LoginViewModel
 
-
+@*Інакше ніяк. Баг *@ 
+<br /><br /><br /><br /><br />
 
 <div class="container">
     <div class="login-page">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Platform Login</h1>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-md-offset-4 demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Welcome</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <form asp-route="Login">
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <fieldset>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input class="form-control loginInput" placeholder="Username" asp-for="Email" autofocus>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                </div>
+                @if (Model.AllowRememberLogin)
+                {
+                    @*<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+                               for="checkbox2">
+                            <input type="checkbox" id="checkbox2" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">Single</span>
+                        </label>*@
+                    @*<input type="checkbox" class="mdl-checkbox__input" value="Remember Login" />*@
+                    <div class="form-group login-remember">
+                        <label asp-for="RememberLogin">
+                            <input asp-for="RememberLogin">
+                            <strong>Remember My Login</strong>
+                        </label>
+                    </div>
+                }
+                <div class="buttons">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="button" value="login">
+                        Login
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised" name="button" value="cancel">
+                        Cancel
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" asp-action="Register">
+            Register
+        </a>
+    </div>
+</div>
+
+
+
+
+
+@*<div class="container">
+    <div class="login-page">
         <div class="page-header col-md-6 col-md-offset-3">
-            <h1>System Login</h1>
+            <h1>Platform Login</h1>
         </div>
 
         @Html.Partial("_ValidationSummary")
 
-        @*<div class="row">*@
         @if (Model.EnableLocalLogin)
         {
+
+
+
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -38,75 +103,77 @@
                                            for="checkbox2">
                                         <input type="checkbox" id="checkbox2" class="mdl-checkbox__input">
                                         <span class="mdl-checkbox__label">Single</span>
-                                    </label>
+                                    </label>*@
                                     @*<input type="checkbox" class="mdl-checkbox__input" value="Remember Login" />*@
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
-                                }
-                                <div class="buttons">
-                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="button" value="login">
-                                        Login
-                                    </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--raised" name="button" value="cancel">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
+                                    @*<div class="form-group login-remember">
+                                            <label asp-for="RememberLogin">
+                                                <input asp-for="RememberLogin">
+                                                <strong>Remember My Login</strong>
+                                            </label>
+                                        </div>*@
+                                    @*                    }*@
+                                    @*<div class="buttons">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="button" value="login"></button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised" name="button" value="cancel">
+                                Cancel
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>*@
+
+
+
+@*  }*@
+
+<!-- @if (Model.VisibleExternalProviders.Any())
+    {
+        <div class="col-md-4 col-sm-6 external-providers col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">External Login</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-inline">
+                        @foreach (var provider in Model.VisibleExternalProviders)
+                        {
+                            <li>
+                                <a class="btn btn-default"
+                                   asp-controller="External"
+                                   asp-action="Challenge"
+                                   asp-route-provider="@provider.AuthenticationScheme"
+                                   asp-route-returnUrl="@Model.ReturnUrl">
+                                    @provider.DisplayName
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-        <!-- @if (Model.VisibleExternalProviders.Any())
-            {
-                <div class="col-md-4 col-sm-6 external-providers col-md-offset-1">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">External Login</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="list-inline">
-                                @foreach (var provider in Model.VisibleExternalProviders)
-                                {
-                                    <li>
-                                        <a class="btn btn-default"
-                                           asp-controller="External"
-                                           asp-action="Challenge"
-                                           asp-route-provider="@provider.AuthenticationScheme"
-                                           asp-route-returnUrl="@Model.ReturnUrl">
-                                            @provider.DisplayName
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-            {
-                <div class="alert alert-warning">
-                    <strong>Invalid login request</strong>
-                    There are no login schemes configured for this client.
-                </div>
-            }
-        </div> -->
-        @*</div>*@
+    @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+    {
+        <div class="alert alert-warning">
+            <strong>Invalid login request</strong>
+            There are no login schemes configured for this client.
+        </div>
+    }
+</div> -->
+@*</div>*@
 
     </div>
-    <style>
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-        }
-    </style>
+<style>
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
 
-    <script>
-        mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
-    </script>
+<script>
+    mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+</script>
+@*</div>*@
