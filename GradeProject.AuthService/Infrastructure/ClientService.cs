@@ -25,8 +25,8 @@ namespace GradeProject.AuthService.Infrastructure
 
         public ClientService(
             ConfigurationDbContext context,
-            ConfigurationDbContext confContext, 
-            IMapper mapper, 
+            ConfigurationDbContext confContext,
+            IMapper mapper,
             UsersContext userCtx)
         {
             _mapper = mapper;
@@ -50,6 +50,8 @@ namespace GradeProject.AuthService.Infrastructure
                     client.AllowedGrantTypes = GrantTypes.ClientCredentials;
                     client.ClientSecrets = new List<Secret>() { new Secret(Guid.NewGuid().ToString()) };
                     client.AllowedScopes.Add("Platform.ProfileService");
+                    client.AllowedScopes.Add("Platform.ScoreService");
+                    client.AllowedScopes.Add("Platform.GameCatalogService");
                     break;
                 default:
                     break;
@@ -80,14 +82,14 @@ namespace GradeProject.AuthService.Infrastructure
 
                 var userClient = _mapper.Map<UserClientDTO>(client);
 
-                switch (client.AllowedGrantTypes[0].ToString())
+                switch (client.AllowedGrantTypes[0].GrantType)
                 {
                     case "implicit":
                         userClient.Type = "oauth";
                         break;
                     default:
                         userClient.Type = "application";
-                        //userClient.ClientSecret = client.ClientSecrets[0].Value;
+                        userClient.Secret = client.ClientSecrets[0].Value;
                         break;
                 }
 

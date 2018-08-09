@@ -49,7 +49,7 @@ namespace GradeProject.AuthService.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Add(string type="oauth")
+        public IActionResult Add(string type = "oauth-client")
         {
             return View(new ClientInsertModel() { Type = type });
         }
@@ -62,7 +62,7 @@ namespace GradeProject.AuthService.Controllers
         {
             _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);
 
-            if (clientDto.Type.Equals("oauth"))
+            if (clientDto.Type.Equals("oauth-client"))
             {
                 var fileName = $"images/Clients/{Guid.NewGuid()}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
                 await _filesSvc.SaveFile(fileName, clientDto.ClientLogo);
