@@ -1,8 +1,13 @@
-﻿using GradeProject.AuthService.Models;
+﻿using Flurl.Http;
+using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GradeProject.AuthService.Infrastructure
@@ -51,7 +56,6 @@ namespace GradeProject.AuthService.Infrastructure
             if (user == null) { throw new ArgumentNullException(nameof(user)); }
 
             if (_context.Users.FirstOrDefault(u => u.Email == user.Email) != null) { throw new Exception("User with such email is already registered"); }
-            //if (FindByUsername(user.Username) != null) { throw new Exception("User with such email is already registered"); }
 
             var hashedPwd = _hasher.HashPassword(user, user.Password);
             user.Password = hashedPwd;
@@ -59,6 +63,21 @@ namespace GradeProject.AuthService.Infrastructure
 
             _context.Add(user);
             _context.SaveChanges();
+        }
+
+        public async Task RegisterProfileAsync(PlayerRegisteModel profile)
+        {
+            var responseString = await "http://www.example.com/recepticle.aspx"
+                                .PostJsonAsync(JsonConvert.SerializeObject(profile));
+
+            if (responseString.IsSuccessStatusCode) { return; }
+            else
+            {
+                var response = await responseString.Content.ReadAsStringAsync();
+                throw new Exception(response);
+            }
+
+            //var resp = await http.SendAsync();
         }
     }
 }

@@ -18,8 +18,10 @@ using System.IO;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
+    [EnableCors("AllowAll")]
     [Produces("application/json")]
     [Route("api/Games")]
+    [Authorize]
     public class GamesController : ODataController
     {
         private readonly ICatalogService _gamesSvc;
@@ -38,6 +40,20 @@ namespace GradeProject.GameCatalogService.Controllers
             _logger = logger;
             _mapper = mapper;
             _fileSaveSvc = fileSaveSvc;
+        }
+
+
+        public class UserScoreModel
+        {
+            public Guid UserId { get; set; }
+            public double Scores { get; set; }
+        }
+
+        [HttpPost]
+        [Route("PostTest")]
+        public IActionResult PostScores([FromBody]UserScoreModel scores)
+        {
+            return Ok();
         }
 
         [HttpGet]

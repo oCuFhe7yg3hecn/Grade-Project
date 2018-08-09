@@ -1,4 +1,5 @@
 ﻿using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace GradeProject.AuthService.Infrastructure
         User FindBySubjectId(string subjectId);
 
         User FindByEmail(string email);
+
+        Task RegisterUser(UserRegisterModel user);
+
+        Task RegisterProfileAsync(ProfileRegisterModel profile);
 
         void RegisterUser(User user);
     }

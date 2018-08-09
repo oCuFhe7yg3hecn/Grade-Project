@@ -242,13 +242,30 @@ namespace GradeProject.AuthService.Controllers
             var user = _mapper.Map<User>(model);
             _users.RegisterUser(user);
 
-            return RedirectToAction(nameof(this.Login));
+            await _users.RegisterProfileAsync();
+
+            return RedirectToAction(nameof(this.RegisterProfile));
         }
 
-        /*****************************************/
-        /* helper APIs for the AccountController */
-        /*****************************************/
-        private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
+        [HttpGet]
+        [Route("Register-profile")]
+        public async Task<IActionResult> RegisterProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterProfile(PlayerRegisteModel model)
+        {
+            await _users.RegisterProfileAsync(model);
+            return Redirect("");
+        }
+
+            /*****************************************/
+            /* helper APIs for the AccountController */
+            /*****************************************/
+            private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (context?.IdP != null)

@@ -1,13 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.AuthService.Models.Account
+namespace GradeProject.AuthService.Models.Account.Register
 {
-    public class UserRegisterModel
+    public class PlayerRegisteModel
     {
+        public PlayerRegisteModel()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -25,5 +31,29 @@ namespace GradeProject.AuthService.Models.Account
         [Required(ErrorMessage = "Password confirmation is required")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
+
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        [Required]
+        public DateTime DOB { get; set; }
+
+        public string Gender { get; set; }
+
+        [Required]
+        public IFormFile ImageURL { get; set; }
+
+        public IFormFile CoverImage { get; set; }
+
+        [Required]
+        public string Rank { get; set; }
+
+        public string Slogan { get; set; }
     }
 }

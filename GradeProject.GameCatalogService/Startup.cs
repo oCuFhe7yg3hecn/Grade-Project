@@ -48,7 +48,8 @@ namespace GradeProject.GameCatalogService
             //Cors
             //Cors
             services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
-                                                                            .AllowAnyMethod()));
+                                                                            .AllowAnyMethod()
+                                                                            .AllowAnyHeader()));
 
             //Add Authentication
             services.AddAuthentication("Bearer")
@@ -57,8 +58,8 @@ namespace GradeProject.GameCatalogService
                       // SET THIS TO true IN PRODUCTION!
                       options.RequireHttpsMetadata = false;
 
-                      options.Authority = "http://localhost:5000";
-                      options.ApiName = $"Platform.GameCatalogService";
+                      options.Authority = "https://localhost:44362";
+                      options.ApiName = $"Platform.ProfileService";
                   });
 
             //REgister Dependencies
@@ -84,6 +85,8 @@ namespace GradeProject.GameCatalogService
             app.UseAuthentication();
 
             app.UseCors("AllowAll");
+
+            app.UseAuthentication();
 
             app.UseMvc(routebuilder =>
             {

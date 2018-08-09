@@ -42,6 +42,18 @@ namespace GradeProject.ScoreService
 
             services.AddLogging();
 
+            services.AddCors(conf => conf.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod()));
+
+            //services.AddAuthentication("Bearer")
+            //   .AddIdentityServerAuthentication(options =>
+            //   {
+            //       options.RequireHttpsMetadata = false;
+            //            // SET THIS TO true IN PRODUCTION!
+
+            //            options.ApiSecret = "secret";
+            //       options.Authority = "http://localhost:5000";
+            //       options.ApiName = "Platform.ProfileService";
+            //   });
 
             //Register Dependencies
             AppContainer = RegisterDependencies(services);
@@ -56,6 +68,9 @@ namespace GradeProject.ScoreService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
+
 
             app.UseMvc();
         }
