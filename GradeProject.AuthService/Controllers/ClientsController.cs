@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 using GradeProject.AuthService.Models.Account;
 using Newtonsoft.Json;
+using GradeProject.AuthService.Infrastructure.Clients;
 
 namespace GradeProject.AuthService.Controllers
 {

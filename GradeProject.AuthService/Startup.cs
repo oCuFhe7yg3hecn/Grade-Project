@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
+using GradeProject.AuthService.Infrastructure.Clients;
 using GradeProject.AuthService.MongoInfrastructure;
 using GradeProject.AuthService.Services;
 using IdentityServer4;

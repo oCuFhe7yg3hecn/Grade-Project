@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.AuthService.Infrastructure
+namespace GradeProject.AuthService.Infrastructure.Clients
 {
     public interface IClientService
     {

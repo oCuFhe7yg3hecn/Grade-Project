@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GradeProject.AuthService.Infrastructure
+namespace GradeProject.AuthService.Infrastructure.Clients
 {
     public enum ClientTypes { oauth, application }
 
@@ -37,33 +37,29 @@ namespace GradeProject.AuthService.Infrastructure
 
         public void AddClient(ClientInsertModel clientDto, Guid userId)
         {
-            var client = _mapper.Map<Client>(clientDto);
+            var client = new Client(); 
 
             switch (clientDto.Type)
             {
                 case "oauth-client":
-                    client.AllowedGrantTypes = GrantTypes.Implicit;
-                    client.RedirectUris = clientDto.RedirectUris.Split(",").Select(x => x.Trim()).ToList();
-                    client.PostLogoutRedirectUris = clientDto.PostLogoutUris.Split(",").Select(x => x.Trim()).ToList();
+                    client = _mapper.MapClient(new ImplicitClientMapStrategy(_mapper), clientDto);
                     break;
                 case "application":
-                    client.AllowedGrantTypes = GrantTypes.ClientCredentials;
-                    client.ClientSecrets = new List<Secret>() { new Secret(Guid.NewGuid().ToString()) };
-                    client.AllowedScopes.Add("Platform.ProfileService");
-                    client.AllowedScopes.Add("Platform.ScoreService");
-                    client.AllowedScopes.Add("Platform.GameCatalogService");
+                    client = _mapper.MapClient(new ApplicationClientMapStrategy(_mapper), clientDto);
                     break;
                 default:
                     break;
             }
 
-            var user = _userCtx.Users.Include(u => u.Clients).FirstOrDefault(u => u.SubjectId == userId);
-            var userClient = new UserClient() { UserId = userId, ClientId = client.ClientId };
-            user.Clients.Add(userClient);
-
-            _userCtx.SaveChanges();
-
             _context.Add(client.ToEntity());
+
+            var user = _userCtx.Users.Include(u => u.Clients).FirstOrDefault(u => u.SubjectId == userId);
+            user.Clients.Add(new UserClient()
+            {
+                UserId = userId,
+                ClientId = client.ClientId
+            });
+
             _context.SaveChanges();
         }
 
