@@ -41,7 +41,7 @@ namespace GradeProject.ProfileService.Infrastructure
                .Set(u => u.LastName, newUser.LastName)
                .Set(u => u.MiddleName, newUser.MiddleName)
                .Set(u => u.DOB, newUser.DOB)
-               .Set(u => u.ImageURL, newUser.ImageUrl)
+               //.Set(u => u.ImageURL, newUser)
                .Set(u => u.Slogan, newUser.Slogan);
 
             return await _userRepository.UpdateOneAsync(u => u.Id == Guid.Parse(id), updateDeff);

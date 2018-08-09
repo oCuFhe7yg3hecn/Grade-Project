@@ -48,10 +48,10 @@ namespace GradeProject.AuthService.Models.Account.Register
 
         public string Gender { get; set; }
 
-        [Required]
-        public IFormFile AvatarImage { get; set; }
+        //[Required]
+        //public IFormFile AvatarImage { get; set; }
 
-        public IFormFile CoverImage { get; set; }
+        //public IFormFile CoverImage { get; set; }
 
         public string Slogan { get; set; }
     }

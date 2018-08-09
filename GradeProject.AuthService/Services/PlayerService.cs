@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Models;
 using GradeProject.AuthService.Models.Account.Register;
+using Microsoft.AspNetCore.Http;
 
 namespace GradeProject.AuthService.Services
 {
@@ -28,7 +30,7 @@ namespace GradeProject.AuthService.Services
         {
             var profile = _mapper.Map<ProfileRegisterModel>(userRegModel);
 
-            var res = await _client.PostAsJsonAsync(API.Profiles.RegisterProfile("http://localhost:44312"), profile);
+            var res = await _client.PostAsJsonAsync(API.Profiles.RegisterProfile("https://localhost:44312"), profile);
 
             if (res.StatusCode != System.Net.HttpStatusCode.Created) { throw new Exception(res.RequestMessage.Content.ToString()); }
         }

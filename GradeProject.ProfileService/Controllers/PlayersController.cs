@@ -15,13 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace GradeProject.ProfileService.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Users")]
+    [Route("api/Players")]
     // !!!!!!!!!!!! Players for Auth Service
-    public class UsersController : Controller
+    public class PlayersController : Controller
     {
         private readonly IUserService _userSvc;
 
-        public UsersController(IUserService userServie)
+        public PlayersController(IUserService userServie)
         {
             _userSvc = userServie;
         }
@@ -58,10 +58,11 @@ namespace GradeProject.ProfileService.Controllers
 
         // POST: api/User
         [HttpPost]
+        [EnableCors("AllowAll")]
         public async Task<IActionResult> Post([FromBody]UserInsertDTO newUser)
         {
             await _userSvc.CreateUser(newUser);
-            return NoContent();
+            return CreatedAtAction(nameof(Get), new { id = "21" }, newUser);
         }
 
 

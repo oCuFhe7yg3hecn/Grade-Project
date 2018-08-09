@@ -249,7 +249,7 @@ namespace GradeProject.AuthService.Controllers
             if (!String.Equals(regModel.Password, regModel.PasswordConfirm)) { return BadRequest("Password doenst match"); }
 
             await _playerSvc.RegisterUserAsync(regModel);
-            //await _playerSvc.RegisterProfileAsync(regModel);
+            await _playerSvc.RegisterProfileAsync(regModel);
 
             return RedirectToAction(nameof(this.Login));
         }

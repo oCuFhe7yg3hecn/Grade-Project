@@ -52,12 +52,15 @@ namespace GradeProject.ProfileService
 
             //Added Automapper
             services.AddAutoMapper();
-            
+
             AppContainer = RegisterDependencies(services);
 
             //Cors
-            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
-                                                                            .AllowAnyMethod()));
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin().AllowAnyMethod());
+                opts.AddPolicy("AuthServiceOnly", conf => conf.WithOrigins("https://localhost:44362").WithMethods("POST"));
+            });
 
             return new AutofacServiceProvider(this.AppContainer);
         }
@@ -77,7 +80,7 @@ namespace GradeProject.ProfileService
             app.UseMvc();
         }
 
-        private IContainer RegisterDependencies(IServiceCollection services) 
+        private IContainer RegisterDependencies(IServiceCollection services)
         {
             //Configuration
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
