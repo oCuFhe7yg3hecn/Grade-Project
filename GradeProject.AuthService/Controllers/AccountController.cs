@@ -6,6 +6,8 @@ using AutoMapper;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Models;
 using GradeProject.AuthService.Models.Account;
+using GradeProject.AuthService.Models.Account.Register;
+using GradeProject.AuthService.Services;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -33,25 +35,31 @@ namespace GradeProject.AuthService.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        private readonly IPlayerService _playerSvc;
         private readonly IUserRepository _users;
-        private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
-        private readonly IAuthenticationSchemeProvider _schemeProvider;
-        private readonly IEventService _events;
         private readonly IMapper _mapper;
 
+        private readonly IEventService _events;
+        private readonly IAuthenticationSchemeProvider _schemeProvider;
+        private readonly IIdentityServerInteractionService _interaction;
+
         public AccountController(
-            IMapper mapper,
-            IIdentityServerInteractionService interaction,
-            IClientStore clientStore,
-            IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IUserRepository users)
+            IIdentityServerInteractionService interaction,
+            IAuthenticationSchemeProvider schemeProvider,
+
+            IMapper mapper,
+            IClientStore clientStore,
+            IUserRepository users,
+            IPlayerService playerSvc)
         {
             _users = users;
 
             _interaction = interaction;
             _clientStore = clientStore;
+            _playerSvc = playerSvc;
+
             _schemeProvider = schemeProvider;
             _events = events;
 
@@ -174,7 +182,7 @@ namespace GradeProject.AuthService.Controllers
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -236,36 +244,35 @@ namespace GradeProject.AuthService.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegisterModel model)
+        public async Task<IActionResult> Register(PlayerRegisteModel regModel)
         {
-            if (!String.Equals(model.Password, model.PasswordConfirm)) { return BadRequest("Password doenst match"); }
-            var user = _mapper.Map<User>(model);
-            _users.RegisterUser(user);
+            if (!String.Equals(regModel.Password, regModel.PasswordConfirm)) { return BadRequest("Password doenst match"); }
 
-            await _users.RegisterProfileAsync();
+            await _playerSvc.RegisterUserAsync(regModel);
+            //await _playerSvc.RegisterProfileAsync(regModel);
 
-            return RedirectToAction(nameof(this.RegisterProfile));
+            return RedirectToAction(nameof(this.Login));
         }
 
-        [HttpGet]
-        [Route("Register-profile")]
-        public async Task<IActionResult> RegisterProfile()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //[Route("Register-profile")]
+        //public async Task<IActionResult> RegisterProfile()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterProfile(PlayerRegisteModel model)
-        {
-            await _users.RegisterProfileAsync(model);
-            return Redirect("");
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> RegisterProfile(PlayerRegisteModel model)
+        //{
+        //    await _users.RegisterProfileAsync(model);
+        //    return Redirect("");
+        //}
 
-            /*****************************************/
-            /* helper APIs for the AccountController */
-            /*****************************************/
-            private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
+        /*****************************************/
+        /* helper APIs for the AccountController */
+        /*****************************************/
+        private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (context?.IdP != null)

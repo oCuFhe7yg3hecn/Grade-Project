@@ -6,6 +6,7 @@ using AutoMapper;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.MongoInfrastructure;
+using GradeProject.AuthService.Services;
 using IdentityServer4;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
@@ -118,6 +119,7 @@ namespace GradeProject.AuthService
             services.AddScoped<IClientStore, CustomClientStore>();
             services.AddScoped<IApiManagmentService, ApiManagmentService>();
             services.AddScoped<IFilesSaveService, FileSaveService>();
+            services.AddScoped<IPlayerService, PlayerService>();
         }
     }
 }

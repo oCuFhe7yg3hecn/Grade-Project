@@ -27,16 +27,8 @@ namespace GradeProject.AuthService.Infrastructure
 
         public bool ValidateCredentials(string username, string password)
         {
-            // Seed
-            //var testUser = new User() { Username = "bob", Email = "bob@mail.com", Password = "password" };
-            //var pwd = _hasher.HashPassword(testUser, testUser.Password);
-            //testUser.Password = pwd;
-            //_context.Users.Add(testUser);
-            //_context.SaveChanges();
-
             var user = FindByEmail(username);
             if (user != null) { return _hasher.VerifyHashedPassword(user, user.Password, password) == PasswordVerificationResult.Success; }
-
             return false;
         }
 
@@ -51,7 +43,7 @@ namespace GradeProject.AuthService.Infrastructure
             return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
-        public void RegisterUser(User user)
+        public async Task AddAsync(User user)
         {
             if (user == null) { throw new ArgumentNullException(nameof(user)); }
 
@@ -61,23 +53,8 @@ namespace GradeProject.AuthService.Infrastructure
             user.Password = hashedPwd;
             user.IsActive = true;
 
-            _context.Add(user);
+            await _context.AddAsync(user);
             _context.SaveChanges();
-        }
-
-        public async Task RegisterProfileAsync(PlayerRegisteModel profile)
-        {
-            var responseString = await "http://www.example.com/recepticle.aspx"
-                                .PostJsonAsync(JsonConvert.SerializeObject(profile));
-
-            if (responseString.IsSuccessStatusCode) { return; }
-            else
-            {
-                var response = await responseString.Content.ReadAsStringAsync();
-                throw new Exception(response);
-            }
-
-            //var resp = await http.SendAsync();
         }
     }
 }

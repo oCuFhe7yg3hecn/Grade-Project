@@ -15,10 +15,6 @@ namespace GradeProject.AuthService.Infrastructure
 
         User FindByEmail(string email);
 
-        Task RegisterUser(UserRegisterModel user);
-
-        Task RegisterProfileAsync(ProfileRegisterModel profile);
-
-        void RegisterUser(User user);
+        Task AddAsync(User user);
     }
 }

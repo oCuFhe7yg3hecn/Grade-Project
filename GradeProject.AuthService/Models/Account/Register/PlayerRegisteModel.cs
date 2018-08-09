@@ -11,7 +11,7 @@ namespace GradeProject.AuthService.Models.Account.Register
     {
         public PlayerRegisteModel()
         {
-            Id = Guid.NewGuid();
+
         }
 
         [Required(ErrorMessage = "Email is required")]
@@ -32,6 +32,8 @@ namespace GradeProject.AuthService.Models.Account.Register
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
 
+        [Required]
+        public bool IsDeveloper { get; set; }
 
         [Required]
         public string FirstName { get; set; }
@@ -47,12 +49,9 @@ namespace GradeProject.AuthService.Models.Account.Register
         public string Gender { get; set; }
 
         [Required]
-        public IFormFile ImageURL { get; set; }
+        public IFormFile AvatarImage { get; set; }
 
         public IFormFile CoverImage { get; set; }
-
-        [Required]
-        public string Rank { get; set; }
 
         public string Slogan { get; set; }
     }

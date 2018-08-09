@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GradeProject.AuthService.Models;
 using GradeProject.AuthService.Models.Account;
+using GradeProject.AuthService.Models.Account.Register;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace GradeProject.AuthService.Mappings
         public UserMappings()
         {
             CreateMap<UserRegisterModel, User>();
+
+            CreateMap<PlayerRegisteModel, User>();
+
+            CreateMap<PlayerRegisteModel, ProfileRegisterModel>();
         }
     }
 }
