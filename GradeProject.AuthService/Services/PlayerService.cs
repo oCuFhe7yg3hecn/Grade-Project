@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
+using GradeProject.AuthService.Communication;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Models;
@@ -18,11 +19,16 @@ namespace GradeProject.AuthService.Services
         private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
         private readonly HttpClient _client;
+        private readonly IEventBus _eventBus;
 
-        public PlayerService(IUserRepository userRepo, IMapper mapper)
+        public PlayerService(
+            IUserRepository userRepo,
+            IMapper mapper,
+            IEventBus eventBus)
         {
             _userRepo = userRepo;
             _mapper = mapper;
+            _eventBus = eventBus;
             _client = new HttpClient();
         }
 
@@ -30,9 +36,11 @@ namespace GradeProject.AuthService.Services
         {
             var profile = _mapper.Map<ProfileRegisterModel>(userRegModel);
 
-            var res = await _client.PostAsJsonAsync(API.Profiles.RegisterProfile("https://localhost:44312"), profile);
+            _eventBus.SendProfile(profile);
 
-            if (res.StatusCode != System.Net.HttpStatusCode.Created) { throw new Exception(res.RequestMessage.Content.ToString()); }
+            //var res = await _client.PostAsJsonAsync(API.Profiles.RegisterProfile("https://localhost:44312"), profile);
+
+            //if (res.StatusCode != System.Net.HttpStatusCode.Created) { throw new Exception(res.RequestMessage.Content.ToString()); }
         }
 
         public async Task RegisterUserAsync(PlayerRegisteModel userRegModel)

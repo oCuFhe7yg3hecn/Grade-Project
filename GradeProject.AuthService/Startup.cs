@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using GradeProject.AuthService.Communication;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.MongoInfrastructure;
@@ -34,6 +35,9 @@ namespace GradeProject.AuthService
             services.AddMvc();
 
             RegisterServices(services);
+
+            RabbitMqConfig.HostName = Configuration["RabbitMqConfig:HostName"];
+            RabbitMqConfig.RegisterProfileExchange = Configuration["RabbitMqConfig:RegisterProfileExchange"];
 
             services.Configure<MongoDbSettings>(opts =>
             {
@@ -117,6 +121,7 @@ namespace GradeProject.AuthService
             services.AddTransient<IProfileService, ProfileService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientStore, CustomClientStore>();
+            services.AddScoped<IEventBus, RabbitMqBus>();
             services.AddScoped<IApiManagmentService, ApiManagmentService>();
             services.AddScoped<IFilesSaveService, FileSaveService>();
             services.AddScoped<IPlayerService, PlayerService>();

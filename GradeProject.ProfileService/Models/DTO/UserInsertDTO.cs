@@ -14,7 +14,7 @@ namespace GradeProject.ProfileService.Models.DTO
         public string Gender { get; set; }
         public DateTime DOB { get; set; }
         public string Slogan { get; set; }
-        public IFormFile AvatarImage { get; set; }
-        public IFormFile CoverImage { get; set; }
+        //public IFormFile AvatarImage { get; set; }
+        //public IFormFile CoverImage { get; set; }
     }
 }

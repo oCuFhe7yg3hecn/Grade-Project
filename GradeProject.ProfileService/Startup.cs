@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using GradeProject.ProfileService.Communication;
 using GradeProject.ProfileService.Config;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Infrastructure.Repos;
@@ -29,7 +30,7 @@ namespace GradeProject.ProfileService
         }
 
         public IConfiguration Configuration { get; }
-
+        public IEventBus RabbitMqBus { get; set; }
         public IContainer AppContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -62,7 +63,11 @@ namespace GradeProject.ProfileService
                 opts.AddPolicy("AuthServiceOnly", conf => conf.WithOrigins("https://localhost:44362").WithMethods("POST"));
             });
 
+
+            RabbitMqBus = AppContainer.Resolve<IEventBus>();
+
             return new AutofacServiceProvider(this.AppContainer);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GradeProject.ProfileService.Utils
+namespace GradeProject.Utils
 {
     public static class ObjectConverter
     {
@@ -24,7 +24,7 @@ namespace GradeProject.ProfileService.Utils
 
         public static T ByteToObject<T>(byte[] bytes)
         {
-            if (bytes.Count() != 0)
+            if (bytes.Count() == 0)
             {
                 var stringyfied = Encoding.Default.GetString(bytes);
                 return JsonConvert.DeserializeObject<T>(stringyfied); ;
