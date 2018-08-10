@@ -29,6 +29,12 @@ namespace GradeProject.ScoreService.Controllers
             return Ok(await _userRepo.WhereAsync(_ => true));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
+        {
+
+            return Ok();
+        }
 
     }
 }
