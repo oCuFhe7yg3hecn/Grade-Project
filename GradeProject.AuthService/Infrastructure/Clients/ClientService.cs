@@ -57,9 +57,12 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             user.Clients.Add(new UserClient()
             {
                 UserId = userId,
-                ClientId = client.ClientId
+                ClientId = client.ClientId,
+                User = user
             });
+            _userCtx.Users.Update(user);
 
+            _userCtx.SaveChanges();
             _context.SaveChanges();
         }
 

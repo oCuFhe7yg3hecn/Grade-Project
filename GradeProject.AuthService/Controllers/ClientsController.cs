@@ -63,7 +63,7 @@ namespace GradeProject.AuthService.Controllers
         {
             _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);
 
-            if (clientDto.Type.Equals("oauth-client"))
+            if (clientDto.Type.Equals("oauth-client") && clientDto.ClientLogo != null)
             {
                 var fileName = $"images/Clients/{Guid.NewGuid()}{Path.GetExtension(clientDto.ClientLogo.FileName)}";
                 await _filesSvc.SaveFile(fileName, clientDto.ClientLogo);
