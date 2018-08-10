@@ -20,7 +20,7 @@ namespace GradeProject.AuthService.Mappings
                 .ForMember(dest => dest.LogoUri, src => src.Ignore())
                 .ForMember(dest => dest.AllowOfflineAccess, src => src.UseValue(true))
                 .ForMember(dest => dest.RequireConsent, src => src.UseValue(true))
-                .ForMember(dest => dest.LogoUri, opts => opts.MapFrom(src => src.LogoUri ?? "/images/logo.png"))
+                .ForMember(dest => dest.LogoUri, opts => opts.MapFrom(src => src.LogoUri))
                 .ForMember(dest => dest.RedirectUris, opts => opts.Ignore())
                 .ForMember(dest => dest.PostLogoutRedirectUris, opts => opts.Ignore())
                 .ForMember(dest => dest.AllowedScopes, opts => opts.UseValue(new List<string>() { IdentityServerConstants.StandardScopes.OpenId,

@@ -23,6 +23,7 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             client.AllowedGrantTypes = GrantTypes.Implicit;
             client.RedirectUris = insertModel.RedirectUris.Split(",").Select(x => x.Trim()).ToList();
             client.PostLogoutRedirectUris = insertModel.PostLogoutUris.Split(",").Select(x => x.Trim()).ToList();
+            client.LogoUri = client.LogoUri ?? "/images/oauth-app-default.svg";
 
             return client;
         }

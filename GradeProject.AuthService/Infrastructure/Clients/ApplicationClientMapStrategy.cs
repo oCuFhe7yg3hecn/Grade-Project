@@ -27,6 +27,8 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             client.AllowedScopes.Add("Platform.ScoreService");
             client.AllowedScopes.Add("Platform.GameCatalogService");
 
+            client.LogoUri = client.LogoUri ?? "/images/server-app-default.svg";
+
             return client;
         }
     }
