@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -5,22 +6,27 @@ import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 import { RouterModule, Routes } from '@angular/router';
-import { TestDashboardComponent } from './test-dashboard/test-dashboard.component';
 import { TestTableComponent } from './test-table/test-table.component';
 import { MaterialsImportModule } from './materials-import/materials-import.module';
+import { ItemsDashboardComponent } from './items-dashboard/items-dashboard.component';
+import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
+import { routes } from './Routes';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    TestDashboardComponent,
-    TestTableComponent
+    TestTableComponent,
+    ItemsDashboardComponent,
+    GamesCatalogComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
@@ -34,7 +40,11 @@ import { MaterialsImportModule } from './materials-import/materials-import.modul
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MaterialsImportModule
+    MaterialsImportModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

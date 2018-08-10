@@ -1,0 +1,21 @@
+<h1>{{Genre}}</h1>
+<form class="example-form">
+    <label>Search : </label>
+    <mat-form-field class="example-full-width">
+        <input matInput #searchBox
+               name="seacrhField" 
+               placeholder="Name" 
+               [(ngModel)]='nameFilter' 
+               (keyup)="searchByName(searchBox.value)" >
+    </mat-form-field>
+</form>
+
+<div class="NotFoundDiv" *ngIf='Games.length==0' >
+    Nothing found
+</div>
+
+<div *ngIf='Games.length>0'>
+    <app-items-dashboard [DataSrc]='Games'></app-items-dashboard>
+</div>
+
+<label>Searched By {{nameFilter}}</label>
