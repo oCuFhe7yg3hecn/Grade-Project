@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using GradeProject.AuthService.Communication;
@@ -55,6 +56,12 @@ namespace GradeProject.AuthService
             // Idnetity Server  Register
             services.AddIdentityService(Configuration);
 
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("DevelopersOnly", builder => builder.RequireRole("Developer").Build());
+
+            });
+
             // External Providers
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
@@ -105,6 +112,8 @@ namespace GradeProject.AuthService
 
             app.UseIdentityServer();
 
+            //app.UseAuthorization();
+
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
@@ -118,7 +127,7 @@ namespace GradeProject.AuthService
             services.AddScoped<UsersContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientStore, CustomClientStore>();
             services.AddScoped<IEventBus, RabbitMqBus>();
