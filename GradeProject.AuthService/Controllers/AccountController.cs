@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GradeProject.AuthService.Controllers
@@ -137,12 +138,12 @@ namespace GradeProject.AuthService.Controllers
                         props = new AuthenticationProperties
                         {
                             IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration),
                         };
                     };
 
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId.ToString(), user.Username, props);
+                    await HttpContext.SignInAsync(user.SubjectId.ToString(), user.Username, props, new Claim("Role", "Developer"));
 
                     if (context != null)
                     {

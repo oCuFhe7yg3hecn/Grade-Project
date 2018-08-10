@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using GradeProject.AuthService.Communication;
 using GradeProject.AuthService.Extensions;
 using GradeProject.AuthService.Infrastructure;
 using GradeProject.AuthService.Infrastructure.Clients;
@@ -36,6 +38,9 @@ namespace GradeProject.AuthService
 
             RegisterServices(services);
 
+            RabbitMqConfig.HostName = Configuration["RabbitMqConfig:HostName"];
+            RabbitMqConfig.RegisterProfileExchange = Configuration["RabbitMqConfig:RegisterProfileExchange"];
+
             services.Configure<MongoDbSettings>(opts =>
             {
                 opts.Database = Configuration["MongoDbSettings:Database"];
@@ -51,6 +56,12 @@ namespace GradeProject.AuthService
 
             // Idnetity Server  Register
             services.AddIdentityService(Configuration);
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("DevelopersOnly", builder => builder.RequireRole("Developer").Build());
+
+            });
 
             // External Providers
             services.AddAuthentication()
@@ -102,6 +113,8 @@ namespace GradeProject.AuthService
 
             app.UseIdentityServer();
 
+            //app.UseAuthorization();
+
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
@@ -115,9 +128,10 @@ namespace GradeProject.AuthService
             services.AddScoped<UsersContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientStore, CustomClientStore>();
+            services.AddScoped<IEventBus, RabbitMqBus>();
             services.AddScoped<IApiManagmentService, ApiManagmentService>();
             services.AddScoped<IFilesSaveService, FileSaveService>();
             services.AddScoped<IPlayerService, PlayerService>();

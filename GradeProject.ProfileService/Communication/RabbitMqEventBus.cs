@@ -41,7 +41,7 @@ namespace GradeProject.ProfileService.Communication
 
             _gameRegisteredQueue = _channel.QueueDeclare().QueueName;
 
-            _channel.QueueBind(_gameRegisteredQueue, config.Value.Exchange, config.Value.QueueRoutingKey);
+            _channel.QueueBind(_gameRegisteredQueue, config.Value.Exchange, "register");
 
             _consumer = new EventingBasicConsumer(_channel);
 

@@ -19,6 +19,7 @@ using GradeProject.AuthService.Infrastructure.Clients;
 namespace GradeProject.AuthService.Controllers
 {
     [Authorize]
+    [Authorize(Policy = "DevelopersOnly")]
     public class ClientsController : Controller
     {
         private readonly IClientService _clientSvc;
@@ -40,7 +41,6 @@ namespace GradeProject.AuthService.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             _userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "sub").Value);
