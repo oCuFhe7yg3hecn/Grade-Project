@@ -20,7 +20,9 @@ namespace GradeProject.AuthService.Infrastructure.Clients
         public Client Map(ClientInsertModel insertModel)
         {
             var client = _mapper.Map<Client>(insertModel);
+            client.AllowOfflineAccess = false;
             client.AllowedGrantTypes = GrantTypes.Implicit;
+            client.AllowAccessTokensViaBrowser = true;
             client.RedirectUris = insertModel.RedirectUris.Split(",").Select(x => x.Trim()).ToList();
             client.PostLogoutRedirectUris = insertModel.PostLogoutUris.Split(",").Select(x => x.Trim()).ToList();
             client.LogoUri = client.LogoUri ?? "/images/oauth-app-default.svg";

@@ -21,7 +21,7 @@ namespace GradeProject.AuthService.Infrastructure.Clients
         {
             var client = _mapper.Map<Client>(insertModel);
             client.AllowedGrantTypes = GrantTypes.ClientCredentials;
-            client.ClientSecrets = new List<Secret>() { new Secret($"sercret-{Guid.NewGuid()}") };
+            client.ClientSecrets = new List<Secret>() { new Secret($"sercret-{Guid.NewGuid()}".Sha256()) };
 
             client.AllowedScopes.Add("Platform.ProfileService");
             client.AllowedScopes.Add("Platform.ScoreService");

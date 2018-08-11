@@ -25,15 +25,15 @@ namespace GradeProject.AuthService.Infrastructure
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var userId = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).SubjectId;
-            var client = new HttpClient();
-            var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Users/getShortInfo/{userId}");
-            var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
+            //var userId = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).SubjectId;
+            //var client = new HttpClient();
+            //var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Users/getShortInfo/{userId}");
+            //var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
 
-            context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
-            context.IssuedClaims.Add(new Claim("FirstName", user.FirstName));
-            context.IssuedClaims.Add(new Claim("LastName", user.LastName));
-            context.IssuedClaims.Add(new Claim("NickName", user.NickName));
+            context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, "test-test"));
+            context.IssuedClaims.Add(new Claim("FirstName", "FirstName"));
+            context.IssuedClaims.Add(new Claim("LastName", "LastName"));
+            context.IssuedClaims.Add(new Claim("NickName", "NickName"));
         }
 
         public Task IsActiveAsync(IsActiveContext context)
