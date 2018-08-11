@@ -3,10 +3,6 @@
   /* background-color: #0070b2; */
 }
 
-.navbar-inverse {
-  background-color: #004582;
-}
-
 .navbar-header {
   position: relative;
   top: -4px;
@@ -157,4 +153,8 @@
 
 .user-client-card{
     width: 500px;
+}
+
+.user-client-card:hover{
+    top: -10px;
 }

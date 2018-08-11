@@ -37,7 +37,7 @@ namespace GradeProject.AuthService.Infrastructure.Clients
 
         public void AddClient(ClientInsertModel clientDto, Guid userId)
         {
-            var client = new Client(); 
+            var client = new Client();
 
             switch (clientDto.Type)
             {
@@ -81,15 +81,18 @@ namespace GradeProject.AuthService.Infrastructure.Clients
 
                 var userClient = _mapper.Map<UserClientDTO>(client);
 
-                switch (client.AllowedGrantTypes[0].GrantType)
+                if (client.ClientSecrets.Count > 0)
                 {
-                    case "implicit":
-                        userClient.Type = "oauth";
-                        break;
-                    default:
-                        userClient.Type = "application";
-                        userClient.Secret = client.ClientSecrets[0].Value;
-                        break;
+                    switch (client.AllowedGrantTypes[0].GrantType)
+                    {
+                        case "implicit":
+                            userClient.Type = "oauth";
+                            break;
+                        default:
+                            userClient.Type = "application";
+                            userClient.Secret = client.ClientSecrets[0].Value;
+                            break;
+                    }
                 }
 
                 clients.Add(userClient);
