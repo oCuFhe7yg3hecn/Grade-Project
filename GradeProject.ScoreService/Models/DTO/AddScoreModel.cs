@@ -1,6 +1,6 @@
 ﻿namespace GradeProject.ScoreService.Services
 {
-    public class UserScore
+    public class AddScoreModel
     {
     }
 }
