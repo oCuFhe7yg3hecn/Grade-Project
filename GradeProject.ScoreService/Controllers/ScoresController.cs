@@ -29,6 +29,13 @@ namespace GradeProject.ScoreService.Controllers
             return Ok(await _userRepo.WhereAsync(_ => true));
         }
 
+        [HttpGet]
+        [Route("/user/{id}")]
+        public async Task<IActionResult> GetUserScores(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPost]
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
         {

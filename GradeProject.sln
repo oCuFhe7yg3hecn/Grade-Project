@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4D0034
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.CommandBusInterfaces", "GradeProject.CommandBusInterfaces\GradeProject.CommandBusInterfaces.csproj", "{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ScoreService", "GradeProject.ScoreService\GradeProject.ScoreService.csproj", "{80F180B1-534B-4867-B72B-29CDB1476815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoreService", "GradeProject.ScoreService\GradeProject.ScoreService.csproj", "{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,10 +73,10 @@ Global
 		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80F180B1-534B-4867-B72B-29CDB1476815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80F180B1-534B-4867-B72B-29CDB1476815}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80F180B1-534B-4867-B72B-29CDB1476815}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80F180B1-534B-4867-B72B-29CDB1476815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,7 +87,7 @@ Global
 		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
 		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50} = {D98D35DD-D272-4FA9-87CC-0CA5E6359C24}
 		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC} = {4D003403-E944-4C24-9E4E-DD5339C14275}
-		{80F180B1-534B-4867-B72B-29CDB1476815} = {EF1A5FA5-A390-45CA-B525-559E81072CE9}
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631} = {EF1A5FA5-A390-45CA-B525-559E81072CE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace GradeProject.ScoreService.Models
 {
-    public class UserScores
+    [CollectionName("Scores")]
+    public class GameScore
     {
+        public string Game { get; set; }
         public Guid UserId { get; set; }
-        public Dictionary<string, double> Scores { get; set; }
+        public float Score { get; set; }
     }
 }
