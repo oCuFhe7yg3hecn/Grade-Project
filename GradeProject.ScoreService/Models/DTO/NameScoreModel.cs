@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace GradeProject.ScoreService.Models.DTO
 {
-    public class GameScoreModel
+    public class NameScoreModel
     {
-        public GameScoreModel(string name, float score)
+        public NameScoreModel(string name, float score)
         {
             Name = name;
             Score = score;

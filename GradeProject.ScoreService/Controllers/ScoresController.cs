@@ -48,6 +48,14 @@ namespace GradeProject.ScoreService.Controllers
             return Ok(res);
         }
 
+        [HttpGet]
+        [Route("game/{gameName}")]
+        public async Task<IActionResult> GetGameTopScores(string gameName)
+        {
+            var res = await _scoreSvc.GetGameScores(gameName);
+            return Ok(res);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
         {

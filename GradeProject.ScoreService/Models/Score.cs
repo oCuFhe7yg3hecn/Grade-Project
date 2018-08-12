@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace GradeProject.ScoreService.Models
 {
     [CollectionName("Scores")]
-    public class GameScore
+    public class Score
     {
-        public GameScore()
+        public Score()
         {
             Id = Guid.NewGuid();
         }
@@ -20,6 +20,6 @@ namespace GradeProject.ScoreService.Models
 
         public string Game { get; set; }
         public Guid UserId { get; set; }
-        public float Score { get; set; }
+        public float Value { get; set; }
     }
 }

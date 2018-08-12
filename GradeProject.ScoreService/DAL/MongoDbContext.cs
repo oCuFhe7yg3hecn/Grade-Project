@@ -18,37 +18,37 @@ namespace GradeProject.ScoreService.Infrastructure
             var client = new MongoClient(settings.Value.ConnectionString);
             if (client != null) { _database = client.GetDatabase(settings.Value.Database); }
 
-            //Initialize();
+            Initialize();
         }
 
 
         private void Initialize()
         {
-            var coll = GetClollection<GameScore>("Scores");
-            coll.InsertMany(new List<GameScore>() {
-                new GameScore()
+            var coll = GetClollection<Score>("Scores");
+            coll.InsertMany(new List<Score>() {
+                new Score()
                 {
                     UserId = Guid.Parse("bfe28474-8297-4638-bcc9-14a7f3a9a7d3"),
                     Game = "Game1",
-                    Score = 25.04f
+                    Value = 25.04f
                 },
-                new GameScore()
+                new Score()
                 {
                     UserId = Guid.Parse("bfe28474-8297-4638-bcc9-14a7f3a9a7d3"),
                     Game = "Game2",
-                    Score = 25.04f
+                    Value  = 25.04f
                 },
-                new GameScore()
+                new Score()
                 {
                     UserId = Guid.Parse("bfe28474-8297-4638-bcc9-14a7f3a9a7d3"),
                     Game = "Game3",
-                    Score = 25.04f
+                    Value  = 25.04f
                 },
-                new GameScore()
+                new Score()
                 {
                     UserId = Guid.Parse("bfe28474-8297-4638-bcc9-14a7f3a9a7d3"),
                     Game = "Game4",
-                    Score = 25.04f
+                    Value = 25.04f
                 }
             });
         }

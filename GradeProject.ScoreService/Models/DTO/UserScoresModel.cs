@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace GradeProject.ScoreService.Models
 {
-    public class UserScores
+    public class UserScoresModel
     {
-        public UserScores()
+        public UserScoresModel()
         {
             UserId = Guid.NewGuid();
-            Scores = new List<GameScoreModel>();
+            Scores = new List<NameScoreModel>();
         }
 
         public Guid UserId { get; set; }
-        public List<GameScoreModel> Scores { get; set; }
+        public List<NameScoreModel> Scores { get; set; }
     }
 }
