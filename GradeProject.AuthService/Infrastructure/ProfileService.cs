@@ -27,15 +27,16 @@ namespace GradeProject.AuthService.Infrastructure
         {
             var userId = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).SubjectId;
             var client = new HttpClient();
-            //var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Users/getShortInfo/{userId}");
-            //var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
+            var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Players/getShortInfo/{userId}");
+            var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
 
+            var isDeveloper = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).IsDeveloper;
 
-            context.IssuedClaims.Add(new Claim(ClaimTypes.Role, "Developer"));
-            //context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
-            //context.IssuedClaims.Add(new Claim("FirstName", user.FirstName));
-            //context.IssuedClaims.Add(new Claim("LastName", user.LastName));
-            //context.IssuedClaims.Add(new Claim("NickName", user.NickName));
+            context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
+            context.IssuedClaims.Add(new Claim(ClaimTypes.Role, isDeveloper ? "Developer" : "Player"));
+            context.IssuedClaims.Add(new Claim("FirstName", user.FirstName));
+            context.IssuedClaims.Add(new Claim("LastName", user.LastName));
+            context.IssuedClaims.Add(new Claim("NickName", user.NickName));
         }
 
         public Task IsActiveAsync(IsActiveContext context)
