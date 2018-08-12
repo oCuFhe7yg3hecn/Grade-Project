@@ -19,7 +19,7 @@ using GradeProject.AuthService.Infrastructure.Clients;
 namespace GradeProject.AuthService.Controllers
 {
     [Authorize]
-    [Authorize(Policy = "DevelopersOnly")]
+    //[Authorize(Policy = "DevelopersOnly")]
     public class ClientsController : Controller
     {
         private readonly IClientService _clientSvc;
