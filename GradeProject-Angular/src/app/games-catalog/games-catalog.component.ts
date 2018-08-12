@@ -1,4 +1,4 @@
-import { GamesService } from "./../Services/games-service.service";
+import { GamesService } from "../Services/games-service.service";
 import { Component, OnInit } from "@angular/core";
 import { GameInfo } from "../Models/GamesInfo";
 

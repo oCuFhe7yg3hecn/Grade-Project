@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/collections';
-import { GameInfo } from './../Models/GamesInfo';
+import { GameInfo } from '../Models/GamesInfo';
 import { Component, Inject, Injectable, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from "@angular/core";
 import {
   Breakpoints,

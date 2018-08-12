@@ -15,6 +15,7 @@ import { ItemsDashboardComponent } from './items-dashboard/items-dashboard.compo
 import { GamesCatalogComponent } from './games-catalog/games-catalog.component';
 import { routes } from './Routes';
 import { FormsModule } from '@angular/forms';
+import { ScoresViewComponent } from './scores-view/scores-view.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     NavMenuComponent,
     TestTableComponent,
     ItemsDashboardComponent,
-    GamesCatalogComponent
+    GamesCatalogComponent,
+    ScoresViewComponent
   ],
   imports: [
     BrowserModule,
