@@ -30,6 +30,10 @@ namespace GradeProject.ScoreService
         {
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
 
+            services
+                .AddAuthentication("Bearer")
+               .AddIdentityServerAuthentication();
+
             services.AddAutoMapper();
 
             services.AddScoped(typeof(MongoDbContext));
@@ -46,6 +50,8 @@ namespace GradeProject.ScoreService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

@@ -20,7 +20,7 @@ namespace GradeProject.AuthService.Infrastructure.Clients
         public Client Map(ClientInsertModel insertModel)
         {
             var client = new Client();
-            client.ClientId = $"client-${Guid.NewGuid()}";
+            client.ClientId = $"client-{Guid.NewGuid()}";
             client.ClientName = insertModel.ClientName;
             client.AllowOfflineAccess = true;
             client.AllowedGrantTypes = GrantTypes.ClientCredentials;

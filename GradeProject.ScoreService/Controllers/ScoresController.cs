@@ -6,6 +6,7 @@ using AutoMapper;
 using GradeProject.ScoreService.Infrastructure.Repos;
 using GradeProject.ScoreService.Models;
 using GradeProject.ScoreService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,7 @@ namespace GradeProject.ScoreService.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
         {
             var score = _mapper.Map<Score>(scoresPost);
