@@ -35,9 +35,11 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             _confContext = confContext;
         }
 
-        public void AddClient(ClientInsertModel clientDto, Guid userId)
+        public string AddClient(ClientInsertModel clientDto, Guid userId)
         {
             var client = new Client();
+
+            var clientPwd = $"secret-{Guid.NewGuid()}";
 
             switch (clientDto.Type)
             {
@@ -46,10 +48,13 @@ namespace GradeProject.AuthService.Infrastructure.Clients
                     break;
                 case "application":
                     client = _mapper.MapClient(new ApplicationClientMapStrategy(_mapper), clientDto);
+                    client.ClientSecrets.Remove(client.ClientSecrets.FirstOrDefault());
+                    client.ClientSecrets.Add(new Secret(clientPwd.Sha256()));
                     break;
                 default:
                     break;
             }
+
 
             _context.Add(client.ToEntity());
 
@@ -64,6 +69,8 @@ namespace GradeProject.AuthService.Infrastructure.Clients
 
             _userCtx.SaveChanges();
             _context.SaveChanges();
+
+            return clientPwd;
         }
 
         public async Task<List<UserClientDTO>> GetUserClients(Guid userId)

@@ -48,13 +48,21 @@ namespace GradeProject.AuthService.Controllers
             return View(clients);
         }
 
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult NewClient(string pass = "none")
+        {
+            ViewData["password"] = pass;
+            return View();
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult Add(string type = "oauth-client")
         {
             return View(new ClientInsertModel() { Type = type });
         }
-
 
         //Add granual authorization
         [HttpPost]
@@ -70,9 +78,9 @@ namespace GradeProject.AuthService.Controllers
                 clientDto.LogoUri = fileName;
             }
 
-            _clientSvc.AddClient(clientDto, _userId);
+            var pwd = _clientSvc.AddClient(clientDto, _userId);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(NewClient), new { pass = pwd });
         }
     }
 }

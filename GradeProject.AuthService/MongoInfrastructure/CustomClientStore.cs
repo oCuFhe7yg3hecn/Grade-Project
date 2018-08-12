@@ -22,9 +22,8 @@ namespace GradeProject.AuthService
 
         public async Task<Client> FindClientByIdAsync(string clientId)
         {
+           var client = await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == clientId);
             return new Client();
-            // await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == clientId);
-            //return 
         }
     }
 }

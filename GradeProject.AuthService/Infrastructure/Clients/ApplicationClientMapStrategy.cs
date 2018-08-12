@@ -19,12 +19,14 @@ namespace GradeProject.AuthService.Infrastructure.Clients
 
         public Client Map(ClientInsertModel insertModel)
         {
-            var client = _mapper.Map<Client>(insertModel);
+            var client = new Client();
+            client.ClientId = $"client-${Guid.NewGuid()}";
+            client.ClientName = insertModel.ClientName;
+            client.AllowOfflineAccess = true;
             client.AllowedGrantTypes = GrantTypes.ClientCredentials;
-            client.ClientSecrets = new List<Secret>() { new Secret($"sercret-{Guid.NewGuid()}".Sha256()) };
 
-            client.AllowedScopes.Add("Platform.ProfileService");
             client.AllowedScopes.Add("Platform.ScoreService");
+            client.AllowedScopes.Add("Platform.ProfileService");
             client.AllowedScopes.Add("Platform.GameCatalogService");
 
             client.LogoUri = client.LogoUri ?? "/images/server-app-default.svg";

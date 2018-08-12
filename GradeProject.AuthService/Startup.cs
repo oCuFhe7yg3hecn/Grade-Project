@@ -13,6 +13,7 @@ using GradeProject.AuthService.Services;
 using IdentityServer4;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +61,6 @@ namespace GradeProject.AuthService
             services.AddAuthorization(config =>
             {
                 config.AddPolicy("DevelopersOnly", builder => builder.RequireRole("Developer").Build());
-
             });
 
             // External Providers
@@ -130,7 +130,7 @@ namespace GradeProject.AuthService
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IClientService, ClientService>();
-            services.AddScoped<IClientStore, CustomClientStore>();
+
             services.AddScoped<IEventBus, RabbitMqBus>();
             services.AddScoped<IApiManagmentService, ApiManagmentService>();
             services.AddScoped<IFilesSaveService, FileSaveService>();
