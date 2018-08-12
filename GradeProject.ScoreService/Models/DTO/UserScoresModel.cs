@@ -11,11 +11,10 @@ namespace GradeProject.ScoreService.Models
     {
         public UserScoresModel()
         {
-            UserId = Guid.NewGuid();
             Scores = new List<NameScoreModel>();
         }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public List<NameScoreModel> Scores { get; set; }
     }
 }

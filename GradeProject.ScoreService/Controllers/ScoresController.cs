@@ -42,7 +42,7 @@ namespace GradeProject.ScoreService.Controllers
 
         [HttpGet]
         [Route("user/{id:guid}")]
-        public async Task<IActionResult> GetUserScores(Guid id)
+        public async Task<IActionResult> GetUserScores(string id)
         {
             var res = await _scoreSvc.GetUserScores(id);
             return Ok(res);
@@ -59,7 +59,11 @@ namespace GradeProject.ScoreService.Controllers
         [HttpPost]
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
         {
-            throw new NotImplementedException();
+            var score = _mapper.Map<Score>(scoresPost);
+            score.Game = "Game";
+
+            await _scoreSvc.AddScore(score);
+            return NoContent();
         }
     }
 }

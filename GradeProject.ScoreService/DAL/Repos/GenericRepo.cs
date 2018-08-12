@@ -42,7 +42,7 @@ namespace GradeProject.ScoreService.Infrastructure.Repos
         public async Task AddOneAsync(T newGame) =>
             await _coll.InsertOneAsync(newGame);
 
-        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition, Guid gameId)
+        public async Task<bool> UpdateOneAsync(Expression<Func<T, bool>> filter, UpdateDefinition<T> updateDefinition)
         {
             var res = await _coll.UpdateOneAsync(filter,
                                                  updateDefinition);

@@ -19,7 +19,7 @@ namespace GradeProject.ScoreService.Models
         public Guid Id { get; set; }
 
         public string Game { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public float Value { get; set; }
     }
 }

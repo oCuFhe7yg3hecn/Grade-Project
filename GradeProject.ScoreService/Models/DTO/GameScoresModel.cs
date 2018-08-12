@@ -10,10 +10,10 @@ namespace GradeProject.ScoreService.Models.DTO
         public GameScoresModel(string gameName)
         {
             GameName = gameName;
-            Scores = new List<NameScoreModel>();
+            Scores = new List<GameUserScoresModel>();
         }
 
         public string GameName { get; set; }
-        public List<NameScoreModel> Scores { get; set; }
+        public List<GameUserScoresModel> Scores { get; set; }
     }
 }

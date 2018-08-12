@@ -8,7 +8,7 @@ namespace GradeProject.ScoreService.Services
     public interface IScoreService
     {
         Task AddScore(Score score);
-        Task<UserScoresModel> GetUserScores(Guid userId);
+        Task<UserScoresModel> GetUserScores(string userId);
         Task<GameScoresModel> GetGameScores(string gameName);
     }
 }
