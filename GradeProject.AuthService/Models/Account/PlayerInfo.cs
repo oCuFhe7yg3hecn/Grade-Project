@@ -24,5 +24,7 @@ namespace GradeProject.AuthService.Models.Account
         public string LastName { get; set; }
 
         public string NickName { get; set; }
+
+        public string Role { get; set; }
     }
 }

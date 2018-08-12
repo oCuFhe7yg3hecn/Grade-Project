@@ -42,7 +42,8 @@ namespace GradeProject.ProfileService.Controllers
                 Id = user.Id.ToString(),
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                NickName = user.FirstName
+                NickName = user.FirstName,
+                Role = user.Role
             });
         }
 

@@ -30,10 +30,8 @@ namespace GradeProject.AuthService.Infrastructure
             var userInfo = await client.GetStringAsync($"https://localhost:44312/api/Players/getShortInfo/{userId}");
             var user = JsonConvert.DeserializeObject<ProfileInfo>(userInfo);
 
-            var isDeveloper = _userRepo.FindBySubjectId(context.Subject.GetSubjectId()).IsDeveloper;
-
             context.IssuedClaims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
-            context.IssuedClaims.Add(new Claim(ClaimTypes.Role, isDeveloper ? "Developer" : "Player"));
+            context.IssuedClaims.Add(new Claim(ClaimTypes.Role, user.Role ?? "Player"));
             context.IssuedClaims.Add(new Claim("FirstName", user.FirstName));
             context.IssuedClaims.Add(new Claim("LastName", user.LastName));
             context.IssuedClaims.Add(new Claim("NickName", user.NickName));

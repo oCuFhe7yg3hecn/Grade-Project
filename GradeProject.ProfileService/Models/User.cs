@@ -25,6 +25,7 @@ namespace GradeProject.ProfileService.Models
             Rank = "Newcommer";
             Status = UserStatus.Online;
             Gender = "male";
+            Role = "Player";
 
             FavouriteGenres = new List<string>();
             Games = new Dictionary<string, double>();
@@ -58,6 +59,8 @@ namespace GradeProject.ProfileService.Models
         public string Slogan { get; set; }
 
         public string CoverImage { get; set; }
+
+        public string Role { get; set; }
 
         [Required]
         public UserStatus Status { get; set; }
