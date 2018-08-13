@@ -16,7 +16,6 @@ export class GamesService {
   }
 
   GetByName(name:string): Observable<OData<GameInfo>>{
-    var res = this.http.get<OData<GameInfo>>(`http://localhost:54554/odata/games?$filter=contains(Name, '${name}')`);
-    return res;
+    return this.http.get<OData<GameInfo>>(`http://localhost:54554/odata/games?$filter=contains(Name, '${name}')`);
   }
 }

@@ -57,6 +57,7 @@ namespace GradeProject.ScoreService.Controllers
             return Ok(res);
         }
 
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)

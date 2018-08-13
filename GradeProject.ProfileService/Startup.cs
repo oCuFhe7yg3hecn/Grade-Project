@@ -54,15 +54,14 @@ namespace GradeProject.ProfileService
             //Added Automapper
             services.AddAutoMapper();
 
-            AppContainer = RegisterDependencies(services);
-
             //Cors
             services.AddCors(opts =>
             {
-                opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin().AllowAnyMethod());
-                opts.AddPolicy("AuthServiceOnly", conf => conf.WithOrigins("https://localhost:44362").WithMethods("POST"));
+                opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                //opts.AddPolicy("AuthServiceOnly", conf => conf.WithOrigins("https://localhost:44362").WithMethods("POST"));
             });
 
+            AppContainer = RegisterDependencies(services);
 
             RabbitMqBus = AppContainer.Resolve<IEventBus>();
 

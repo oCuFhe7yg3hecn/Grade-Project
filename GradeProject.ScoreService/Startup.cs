@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using GradeProject.ScoreService.Extensions;
 using GradeProject.ScoreService.Infrastructure;
 using GradeProject.ScoreService.Infrastructure.Repos;
 using GradeProject.ScoreService.Models;
@@ -32,7 +33,9 @@ namespace GradeProject.ScoreService
 
             services
                 .AddAuthentication("Bearer")
-               .AddIdentityServerAuthentication();
+                .AddIdentityServerAuthentication();
+
+            services.AddAppCors();
 
             services.AddAutoMapper();
 
@@ -50,6 +53,8 @@ namespace GradeProject.ScoreService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
 

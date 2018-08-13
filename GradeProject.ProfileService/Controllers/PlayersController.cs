@@ -16,7 +16,7 @@ namespace GradeProject.ProfileService.Controllers
 {
     [Produces("application/json")]
     [Route("api/Players")]
-    // !!!!!!!!!!!! Players for Auth Service
+    [EnableCors("AllowAll")]
     public class PlayersController : Controller
     {
         private readonly IUserService _userSvc;
@@ -27,9 +27,9 @@ namespace GradeProject.ProfileService.Controllers
         }
 
         // GET: api/User
-        [HttpGet]
-        [EnableCors("AllowAll")]
-        public async Task<List<User>> GetAsync() => await _userSvc.GetUsersAsync();
+        //[HttpGet]
+        //[EnableCors("AllowAll")]
+        //public async Task<List<User>> GetAsync() => await _userSvc.GetUsersAsync();
 
         [HttpGet]
         [Route("getShortInfo/{id}")]
@@ -49,13 +49,13 @@ namespace GradeProject.ProfileService.Controllers
 
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Get(string id)
-        {
-            var user = await _userSvc.GetUserByIdAsync(id);
-            return Ok(user);
-        }
+        //[HttpGet("{id}", Name = "Get")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Get(string id)
+        //{
+        //    var user = await _userSvc.GetUserByIdAsync(id);
+        //    return Ok(user);
+        //}
 
         // POST: api/User
         [HttpPost]
@@ -63,9 +63,19 @@ namespace GradeProject.ProfileService.Controllers
         public async Task<IActionResult> Post([FromBody]UserInsertDTO newUser)
         {
             await _userSvc.CreateUser(newUser);
-            return CreatedAtAction(nameof(Get), new { id = "21" }, newUser);
+            return NoContent();
+            //return CreatedAtAction(nameof(Get), new { id = "21" }, newUser);
         }
 
+
+        [HttpGet]
+        [EnableCors("AllowAll")]
+        [Route("{userId}/name")]
+        public async Task<IActionResult> GetName(Guid userId)
+        {
+            var user = await _userSvc.GetUserByIdAsync(userId.ToString());
+            return Ok($"{user.FirstName} {user.LastName}");
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody]UserInsertDTO user)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,14 @@ namespace GradeProject.ScoreService.Extensions
 
                 options.Authority = "https://localhost:44362";
                 options.ApiName = "Platform.ProfileService";
+            });
+        }
+
+        public static void AddAppCors(this IServiceCollection services)
+        {
+            services.AddCors(builder =>
+            {
+                builder.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
         }
     }

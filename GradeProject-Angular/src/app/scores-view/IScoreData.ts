@@ -1,4 +1,4 @@
-export interface IScoreData{
-  name: string;
+export interface IScoreData {
+  userId: string;
   score: number;
 }
