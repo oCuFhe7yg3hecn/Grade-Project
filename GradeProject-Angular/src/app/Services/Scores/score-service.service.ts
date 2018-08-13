@@ -16,15 +16,9 @@ export class ScoreServiceService {
       .get<UserScore>(`https://localhost:44350/api/Scores/user/${userId}`);
   }
 
-  getGameScores(gameId: string): IScore[] {
-    let res: IScore[];
-    this.http
-      .get<IScoreData[]>(`https://localhost:44350/api/Scores/game/${gameId}`)
-      .subscribe(scores => {
-        console.log(scores);
-      });
-
-    return res;
+  getGameScores(gameId: string): Observable<IScoreData[]> {
+    return this.http
+      .get<IScoreData[]>(`https://localhost:44350/api/Scores/game/${gameId}`);
   }
 
   getOverAllScores() {}

@@ -39,7 +39,7 @@ namespace GradeProject.ProfileService.Infrastructure
             var updateDeff = new UpdateDefinitionBuilder<User>()
                .Set(u => u.FirstName, newUser.FirstName)
                .Set(u => u.LastName, newUser.LastName)
-               .Set(u => u.MiddleName, newUser.MiddleName)
+               //.Set(u => u.MiddleName, newUser.MiddleName)
                .Set(u => u.DOB, newUser.DOB)
                //.Set(u => u.ImageURL, newUser)
                .Set(u => u.Slogan, newUser.Slogan);

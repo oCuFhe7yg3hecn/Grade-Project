@@ -10,7 +10,6 @@ namespace GradeProject.ProfileService.Communication
 {
     public interface ICommandBus
     {
-        IContainer DependencyResolver { get; set; }
         Task SubmitAsync<TCommand>(TCommand command) where TCommand : ICommand;
     }
 }

@@ -2,10 +2,17 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.menus{
+    margin: auto;
 }
 
 table{
     margin: auto;
+    margin-top: 15px;
     width: 50%;
 }
 

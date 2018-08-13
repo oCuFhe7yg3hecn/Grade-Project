@@ -1,18 +1,26 @@
-<table mat-table [dataSource]='myDataArray' class='table-scores mat-elevation-z8' *ngIf='myDataArray'>
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="score">
-    <th mat-header-cell *matHeaderCellDef> Scores </th>
-    <td mat-cell *matCellDef="let element"> {{element.score}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+    User Scores
+  </button> -->
 
 <div class="wrapper">
+  <div class="menus">
+    <button mat-raised-button>User Scores</button>
+    <button mat-raised-button>Game Scores</button>
+    <button mat-raised-button>Top players</button>
+  </div>
+  <table mat-table [dataSource]='myDataArray' class='table-scores mat-elevation-z8' *ngIf='myDataArray'>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef> Scores </th>
+      <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
 </div>

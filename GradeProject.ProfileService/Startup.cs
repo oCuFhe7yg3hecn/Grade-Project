@@ -100,9 +100,8 @@ namespace GradeProject.ProfileService
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
-            //builder.Register(c => new MongoDbSettings());
-            //builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
-
+            builder.Register(c => new MongoDbSettings());
+            builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
