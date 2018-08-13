@@ -11,20 +11,9 @@ import { UserScore } from "./UserScore";
 export class ScoreServiceService {
   constructor(private http: HttpClient) {}
 
-  getUserScores(userId: string) {
+  getUserScores(userId: string): Observable<UserScore> {
     return this.http
-      .get<UserScore>(`https://localhost:44350/api/Scores/user/${userId}`)
-      .subscribe(res => {
-        debugger;
-        console.log(res);
-        this.http
-          .get<string>(
-            `https://localhost:44312/api/Players/${res.userId}/name`
-          )
-          .subscribe(name => {
-            res.userId = name;
-          });
-      });
+      .get<UserScore>(`https://localhost:44350/api/Scores/user/${userId}`);
   }
 
   getGameScores(gameId: string): IScore[] {

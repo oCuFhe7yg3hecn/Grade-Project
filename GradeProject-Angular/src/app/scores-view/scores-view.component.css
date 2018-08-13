@@ -3,3 +3,16 @@
     display: flex;
     justify-content: center;
 }
+
+table{
+    margin: auto;
+    width: 50%;
+}
+
+table th{
+    margin: 20px;
+}
+
+ng-container{
+    margin: 20px;
+}
