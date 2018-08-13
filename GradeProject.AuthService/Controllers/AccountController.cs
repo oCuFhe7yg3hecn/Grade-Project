@@ -252,7 +252,7 @@ namespace GradeProject.AuthService.Controllers
             await _playerSvc.RegisterUserAsync(regModel);
             await _playerSvc.RegisterProfileAsync(regModel);
 
-            return RedirectToAction(nameof(this.Login));
+            return RedirectToAction("Index", controllerName:"Clients" );
         }
 
         //[HttpGet]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using GradeProject.AuthService.Models.Clients;
@@ -24,6 +25,8 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             client.ClientName = insertModel.ClientName;
             client.AllowOfflineAccess = true;
             client.AllowedGrantTypes = GrantTypes.ClientCredentials;
+
+            client.Claims.Add(new Claim("GameName", client.ClientName));
 
             client.AllowedScopes.Add("Platform.ScoreService");
             client.AllowedScopes.Add("Platform.ProfileService");
