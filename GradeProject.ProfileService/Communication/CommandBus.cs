@@ -23,7 +23,6 @@ namespace GradeProject.ProfileService.Communication
             {
                 var handler = _componentContext.Resolve<ICommandHandler<TCommand>>();
                 if (handler != null) { await handler.ExecuteAsync(command); }
-                else { throw new ApiError("There no specified command handler for this command."); }
             }
         }
     }

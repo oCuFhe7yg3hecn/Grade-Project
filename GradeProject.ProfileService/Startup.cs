@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using GradeProject.ProfileService.Communication;
+using GradeProject.ProfileService.Communication.CommandHandlers;
 using GradeProject.ProfileService.Config;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Infrastructure.Repos;
@@ -104,6 +105,8 @@ namespace GradeProject.ProfileService
             builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
+            builder.Register(c => new AddProfileCommandHandler(c.Resolve<IUserService>()));
 
             builder.RegisterAssemblyTypes(assembly)
                    .AsImplementedInterfaces();
