@@ -26,11 +26,12 @@ namespace GradeProject.AuthService.Infrastructure.Clients
             client.AllowOfflineAccess = true;
             client.AllowedGrantTypes = GrantTypes.ClientCredentials;
 
-            client.Claims.Add(new Claim("GameName", client.ClientName));
+            //client.Claims.Add(new Claim("GameName", client.ClientName));
 
             client.AllowedScopes.Add("Platform.ScoreService");
-            client.AllowedScopes.Add("Platform.ProfileService");
+
             client.AllowedScopes.Add("Platform.GameCatalogService");
+            client.AllowedScopes.Add("Platform.ProfileService");
 
             client.LogoUri = client.LogoUri ?? "/images/server-app-default.svg";
 

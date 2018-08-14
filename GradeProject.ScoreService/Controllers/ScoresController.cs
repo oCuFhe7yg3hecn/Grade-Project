@@ -24,7 +24,7 @@ namespace GradeProject.ScoreService.Controllers
 
         public string GameName
         {
-            get => GetUserClaim("GameName");
+            get => GetUserClaim("client_GameName");
         }
 
         public ScoresController(
@@ -63,7 +63,7 @@ namespace GradeProject.ScoreService.Controllers
         public async Task<IActionResult> SetScores([FromBody]ScoresPostModel scoresPost)
         {
             var score = _mapper.Map<Score>(scoresPost);
-            score.Game = "Game";
+            score.Game = GameName;
 
             await _scoreSvc.AddScore(score);
             return NoContent();
