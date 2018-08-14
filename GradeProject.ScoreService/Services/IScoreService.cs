@@ -1,0 +1,14 @@
+﻿using System;
+using System.Threading.Tasks;
+using GradeProject.ScoreService.Models;
+using GradeProject.ScoreService.Models.DTO;
+
+namespace GradeProject.ScoreService.Services
+{
+    public interface IScoreService
+    {
+        Task AddScore(Score score);
+        Task<UserScoresModel> GetUserScores(string userId);
+        Task<GameScoresModel> GetGameScores(string gameName);
+    }
+}

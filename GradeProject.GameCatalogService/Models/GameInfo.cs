@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using GradeProject.GameCatalogService.Infrastructure.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Models
 {
+    [CollectionName("GamesData")]
     public class GameInfo
     {
         public GameInfo()

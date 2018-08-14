@@ -26,7 +26,7 @@ namespace GradeProject.ProfileService.Infrastructure
             await _userRepository.WhereAsync(_ => true);
 
         public async Task<User> GetUserByIdAsync(string id) =>
-            await _userRepository.SingleAsync(u => u.Id == Guid.Parse(id));
+            await _userRepository.SingleAsync(_ => true);
 
         public async Task CreateUser(UserInsertDTO newUser)
         {
@@ -39,9 +39,9 @@ namespace GradeProject.ProfileService.Infrastructure
             var updateDeff = new UpdateDefinitionBuilder<User>()
                .Set(u => u.FirstName, newUser.FirstName)
                .Set(u => u.LastName, newUser.LastName)
-               .Set(u => u.MiddleName, newUser.MiddleName)
+               //.Set(u => u.MiddleName, newUser.MiddleName)
                .Set(u => u.DOB, newUser.DOB)
-               .Set(u => u.ImageURL, newUser.ImageUrl)
+               //.Set(u => u.ImageURL, newUser)
                .Set(u => u.Slogan, newUser.Slogan);
 
             return await _userRepository.UpdateOneAsync(u => u.Id == Guid.Parse(id), updateDeff);

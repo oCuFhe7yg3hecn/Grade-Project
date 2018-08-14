@@ -1,5 +1,6 @@
 ﻿using GradeProject.ProfileService.Communication.Commands;
 using GradeProject.ProfileService.Infrastructure;
+using GradeProject.ProfileService.Infrastructure.Services;
 using GradeProject.ProfileService.Models;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -14,9 +15,9 @@ namespace GradeProject.ProfileService.Communication.CommandHandlers
 {
     public class AddProfileCommandHandler : ICommandHandler<AddProfileCommand>
     {
-        private readonly UserService _gameSvc;
+        private readonly IUserService _gameSvc;
 
-        public AddProfileCommandHandler(UserService gameService)
+        public AddProfileCommandHandler(IUserService gameService)
         {
             _gameSvc = gameService;
         }

@@ -2,6 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using AutoMapper;
+using GradeProject.AuthService.Infrastructure;
+using GradeProject.AuthService.Models;
+using GradeProject.AuthService.Models.Account;
+using GradeProject.AuthService.Models.Account.Register;
+using GradeProject.AuthService.Services;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -16,6 +22,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GradeProject.AuthService.Controllers
@@ -29,27 +36,35 @@ namespace GradeProject.AuthService.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly TestUserStore _users;
-        private readonly IIdentityServerInteractionService _interaction;
+        private readonly IPlayerService _playerSvc;
+        private readonly IUserRepository _users;
         private readonly IClientStore _clientStore;
-        private readonly IAuthenticationSchemeProvider _schemeProvider;
+        private readonly IMapper _mapper;
+
         private readonly IEventService _events;
+        private readonly IAuthenticationSchemeProvider _schemeProvider;
+        private readonly IIdentityServerInteractionService _interaction;
 
         public AccountController(
-            IIdentityServerInteractionService interaction,
-            IClientStore clientStore,
-            IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            TestUserStore users = null)
+            IIdentityServerInteractionService interaction,
+            IAuthenticationSchemeProvider schemeProvider,
+
+            IMapper mapper,
+            IClientStore clientStore,
+            IUserRepository users,
+            IPlayerService playerSvc)
         {
-            // if the TestUserStore is not in DI, then we'll just use the global users collection
-            // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-            _users = users ?? new TestUserStore(TestUsers.Users);
+            _users = users;
 
             _interaction = interaction;
             _clientStore = clientStore;
+            _playerSvc = playerSvc;
+
             _schemeProvider = schemeProvider;
             _events = events;
+
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -110,10 +125,10 @@ namespace GradeProject.AuthService.Controllers
             if (ModelState.IsValid)
             {
                 // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                if (_users.ValidateCredentials(model.Email, model.Password))
                 {
-                    var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
+                    var user = _users.FindByEmail(model.Email);
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId.ToString(), user.Username));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -123,12 +138,12 @@ namespace GradeProject.AuthService.Controllers
                         props = new AuthenticationProperties
                         {
                             IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration),
                         };
                     };
 
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+                    await HttpContext.SignInAsync(user.SubjectId.ToString(), user.Username, props, new Claim("Role", "Developer"));
 
                     if (context != null)
                     {
@@ -159,7 +174,7 @@ namespace GradeProject.AuthService.Controllers
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Email, "invalid credentials"));
                 ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -168,7 +183,7 @@ namespace GradeProject.AuthService.Controllers
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -222,7 +237,38 @@ namespace GradeProject.AuthService.Controllers
             return View("LoggedOut", vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(PlayerRegisteModel regModel)
+        {
+            if (!String.Equals(regModel.Password, regModel.PasswordConfirm)) { return BadRequest("Password doenst match"); }
+
+            await _playerSvc.RegisterUserAsync(regModel);
+            await _playerSvc.RegisterProfileAsync(regModel);
+
+            return RedirectToAction("Index", controllerName:"Clients" );
+        }
+
+        //[HttpGet]
+        //[Route("Register-profile")]
+        //public async Task<IActionResult> RegisterProfile()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> RegisterProfile(PlayerRegisteModel model)
+        //{
+        //    await _users.RegisterProfileAsync(model);
+        //    return Redirect("");
+        //}
 
         /*****************************************/
         /* helper APIs for the AccountController */
@@ -237,7 +283,7 @@ namespace GradeProject.AuthService.Controllers
                 {
                     EnableLocalLogin = false,
                     ReturnUrl = returnUrl,
-                    Username = context?.LoginHint,
+                    Email = context?.LoginHint,
                     ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
             }
@@ -274,7 +320,7 @@ namespace GradeProject.AuthService.Controllers
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                Username = context?.LoginHint,
+                Email = context?.LoginHint,
                 ExternalProviders = providers.ToArray()
             };
         }
@@ -282,7 +328,7 @@ namespace GradeProject.AuthService.Controllers
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            vm.Username = model.Username;
+            vm.Email = model.Email;
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }

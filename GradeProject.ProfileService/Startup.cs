@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using GradeProject.ProfileService.Communication;
+using GradeProject.ProfileService.Communication.CommandHandlers;
 using GradeProject.ProfileService.Config;
 using GradeProject.ProfileService.Infrastructure;
 using GradeProject.ProfileService.Infrastructure.Repos;
@@ -28,7 +31,7 @@ namespace GradeProject.ProfileService
         }
 
         public IConfiguration Configuration { get; }
-
+        public IEventBus RabbitMqBus { get; set; }
         public IContainer AppContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -44,20 +47,27 @@ namespace GradeProject.ProfileService
                         options.RequireHttpsMetadata = false;
                         // SET THIS TO true IN PRODUCTION!
 
+                        options.ApiSecret = "secret";
                         options.Authority = "http://localhost:5000";
                         options.ApiName = "Platform.ProfileService";
                     });
 
             //Added Automapper
             services.AddAutoMapper();
-            
-            AppContainer = RegisterDependencies(services);
 
             //Cors
-            services.AddCors(opts => opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin()
-                                                                            .AllowAnyMethod()));
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy("AllowAll", conf => conf.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                //opts.AddPolicy("AuthServiceOnly", conf => conf.WithOrigins("https://localhost:44362").WithMethods("POST"));
+            });
+
+            AppContainer = RegisterDependencies(services);
+
+            RabbitMqBus = AppContainer.Resolve<IEventBus>();
 
             return new AutofacServiceProvider(this.AppContainer);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +85,7 @@ namespace GradeProject.ProfileService
             app.UseMvc();
         }
 
-        private IContainer RegisterDependencies(IServiceCollection services) 
+        private IContainer RegisterDependencies(IServiceCollection services)
         {
             //Configuration
             services.Configure<MongoDbSettings>(Configuration.GetSection("MongoDbSettings"));
@@ -84,18 +94,22 @@ namespace GradeProject.ProfileService
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
+            var assembly = Assembly.GetExecutingAssembly();
+
             //Context
+            builder.RegisterType<MongoDbContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
             builder.Register(c => new MongoDbSettings());
             builder.Register(c => new MongoDbContext(c.Resolve<IOptions<MongoDbSettings>>()));
-
             //Repos
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            //Services
-            builder.Register(c => new UserService(c.Resolve<IRepository<User>>(new NamedParameter("collectionName", "Users")), 
-                                                  c.Resolve<IMapper>()))
-                                                                 .As<IUserService>()
-                                                                 .InstancePerLifetimeScope();
+            builder.Register(c => new AddProfileCommandHandler(c.Resolve<IUserService>()));
+
+            builder.RegisterAssemblyTypes(assembly)
+                   .AsImplementedInterfaces();
 
             return builder.Build();
         }

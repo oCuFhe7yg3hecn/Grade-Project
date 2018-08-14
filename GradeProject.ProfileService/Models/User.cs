@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradeProject.ProfileService.Infrastructure.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace GradeProject.ProfileService.Models
         Offline
     }
 
+    [CollectionName("Users")]
     public class User
     {
         public User()
@@ -23,6 +25,7 @@ namespace GradeProject.ProfileService.Models
             Rank = "Newcommer";
             Status = UserStatus.Online;
             Gender = "male";
+            Role = "Player";
 
             FavouriteGenres = new List<string>();
             Games = new Dictionary<string, double>();
@@ -54,6 +57,10 @@ namespace GradeProject.ProfileService.Models
         public string Rank { get; set; }
 
         public string Slogan { get; set; }
+
+        public string CoverImage { get; set; }
+
+        public string Role { get; set; }
 
         [Required]
         public UserStatus Status { get; set; }

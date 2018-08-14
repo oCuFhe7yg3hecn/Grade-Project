@@ -3,10 +3,6 @@
   /* background-color: #0070b2; */
 }
 
-.navbar-inverse {
-  background-color: #004582;
-}
-
 .navbar-header {
   position: relative;
   top: -4px;
@@ -128,4 +124,37 @@
 
 .navbar-brand {
   color: #f8fafc;
+}
+
+.form-group-client-image .inputs{
+    display: flex;
+    flex-direction: row;
+}
+
+#client-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+
+/*              Register */
+.Register{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: rotate(-50% -50%);
+}
+
+.Register label{
+    padding-left: 0px;
+}
+
+
+.user-client-card{
+    width: 500px;
+}
+
+.user-client-card:hover{
+    top: -10px;
 }

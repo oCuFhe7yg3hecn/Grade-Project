@@ -15,9 +15,9 @@ namespace GradeProject.GameCatalogService.Controllers
     public class TagsController : Controller
     {
         private readonly ILogger<TagsController> _logger;
-        private readonly IGamesService _gameSvc;
+        private readonly ICatalogService _gameSvc;
 
-        public TagsController(ILogger<TagsController> logger, IGamesService gameSvc)
+        public TagsController(ILogger<TagsController> logger, ICatalogService gameSvc)
         {
             _logger = logger;
             _gameSvc = gameSvc;

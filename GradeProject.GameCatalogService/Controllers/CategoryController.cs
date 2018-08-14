@@ -16,12 +16,12 @@ namespace GradeProject.GameCatalogService.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
-        private readonly IGamesService _gameSvc;
+        private readonly ICatalogService _gameSvc;
         private readonly ICategoryService _categorygSvc;
         private readonly ILogger<CategoryController> _logger;
 
         public CategoryController(
-            IGamesService gameSvc,
+            ICatalogService gameSvc,
             ICategoryService ctgRepo,
             ILogger<CategoryController> logger)
         {
@@ -43,7 +43,7 @@ namespace GradeProject.GameCatalogService.Controllers
         public async Task<IActionResult> GetByCategories(string categories, PagingOptions pageOptions)
         {
             var categoriesList = categories.Split(",").Select(x => x.Trim()).ToList();
-            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions);
+            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions); 
 
             return Ok(gamesResponse);
         }

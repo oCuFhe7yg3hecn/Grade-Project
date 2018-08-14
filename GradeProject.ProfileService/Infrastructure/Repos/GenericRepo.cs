@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using GradeProject.ProfileService.Infrastructure.Attributes;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,10 @@ namespace GradeProject.ProfileService.Infrastructure.Repos
     {
         private readonly IMongoCollection<T> _coll;
 
-        public GenericRepo(MongoDbContext context, string collectionName)
+        public GenericRepo(MongoDbContext context)
         {
-            _coll = context.GetClollection<T>(collectionName);
+            var collName = (CollectionNameAttribute)Attribute.GetCustomAttribute(typeof(T), typeof(CollectionNameAttribute));
+            _coll = context.GetClollection<T>(collName?.Name ?? typeof(T).Name);
         }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)

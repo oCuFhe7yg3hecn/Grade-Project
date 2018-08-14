@@ -1,0 +1,25 @@
+.wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.menus{
+    margin: auto;
+}
+
+table{
+    margin: auto;
+    margin-top: 15px;
+    width: 50%;
+}
+
+table th{
+    margin: 20px;
+}
+
+ng-container{
+    margin: 20px;
+}

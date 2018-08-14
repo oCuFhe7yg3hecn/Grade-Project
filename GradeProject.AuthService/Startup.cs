@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using GradeProject.AuthService.Communication;
+using GradeProject.AuthService.Extensions;
+using GradeProject.AuthService.Infrastructure;
+using GradeProject.AuthService.Infrastructure.Clients;
 using GradeProject.AuthService.MongoInfrastructure;
+using GradeProject.AuthService.Services;
 using IdentityServer4;
+using IdentityServer4.Services;
+using IdentityServer4.Stores;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,39 +35,35 @@ namespace GradeProject.AuthService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
+            RegisterServices(services);
+
+            RabbitMqConfig.HostName = Configuration["RabbitMqConfig:HostName"];
+            RabbitMqConfig.RegisterProfileExchange = Configuration["RabbitMqConfig:RegisterProfileExchange"];
+
             services.Configure<MongoDbSettings>(opts =>
             {
                 opts.Database = Configuration["MongoDbSettings:Database"];
                 opts.ConnectionString = Configuration["MongoDbSettings:ConnectionString"];
             });
 
-            services.AddTransient<MongoDbSettings>();
-            services.AddTransient<MongoDbContext>();
+            services.AddDbContext<UsersContext>(opts =>
+            {
+                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
+            services.AddAutoMapper();
 
-            services.AddCors(opts => opts.AddPolicy("AllowAll", builder =>
-             {
-                 builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-             }));
+            // Idnetity Server  Register
+            services.AddIdentityService(Configuration);
 
-            services.AddMvc();
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("DevelopersOnly", builder => builder.RequireRole("Developer").Build());
+            });
 
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddMongoRepository()
-            //    .AddIdentityApiResources()
-            //    .AddPersistedGrants()
-            //    .AddClients()
-            //    .AddTestUsers(IdentityConfig.GetUsers());
-
-            services.AddIdentityServer()
-                         .AddDeveloperSigningCredential()
-                         .AddInMemoryApiResources(IdentityConfig.GetApiResources())
-                         .AddInMemoryIdentityResources(IdentityConfig.GetIdentityResources())
-                         .AddInMemoryClients(IdentityConfig.GetClients())
-                         .AddTestUsers(IdentityConfig.GetUsers());
+            // External Providers
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {
@@ -79,6 +86,14 @@ namespace GradeProject.AuthService
                     opts.ConsumerKey = Configuration["TwitterProvider:ConsumerKey"];
                     opts.ConsumerSecret = Configuration["TwitterProvider:ConsumerSecret"];
                 });
+
+            // Cors
+            services.AddCors(opts => opts.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,9 +113,28 @@ namespace GradeProject.AuthService
 
             app.UseIdentityServer();
 
+            //app.UseAuthorization();
+
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
+        }
+
+        public void RegisterServices(IServiceCollection services)
+        {
+            services.AddTransient<MongoDbSettings>();
+            services.AddTransient<MongoDbContext>();
+
+            services.AddScoped<UsersContext>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IClientService, ClientService>();
+
+            services.AddScoped<IEventBus, RabbitMqBus>();
+            services.AddScoped<IApiManagmentService, ApiManagmentService>();
+            services.AddScoped<IFilesSaveService, FileSaveService>();
+            services.AddScoped<IPlayerService, PlayerService>();
         }
     }
 }

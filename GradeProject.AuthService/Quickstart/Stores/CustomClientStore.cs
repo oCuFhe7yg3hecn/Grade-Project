@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using GradeProject.AuthService.MongoInfrastructure.Repositories;
 using IdentityServer4.Models;
+using IdentityServer4.Stores;
 
 namespace QuickstartIdentityServer.Quickstart.Store
 {
-    public class CustomClientStore : IdentityServer4.Stores.IClientStore
+    public class CustomClientStore : IClientStore
     {
         protected IRepository _dbRepository;
 

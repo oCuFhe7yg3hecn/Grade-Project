@@ -24,7 +24,7 @@ namespace GradeProject.ProfileService.Utils
 
         public static T ByteToObject<T>(byte[] bytes)
         {
-            if (bytes.Count() == 0)
+            if (bytes.Count() != 0)
             {
                 var stringyfied = Encoding.Default.GetString(bytes);
                 return JsonConvert.DeserializeObject<T>(stringyfied); ;

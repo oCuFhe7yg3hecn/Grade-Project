@@ -1,50 +1,51 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Web", "GradeProject-Web\", "{78B87DE8-A66A-4309-AD58-2D8FF08434C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{FB436A7B-BC21-4C81-8313-0804414B7C59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{D98D35DD-D272-4FA9-87CC-0CA5E6359C24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameCatalog Service", "GameCatalog Service", "{5A147F73-0027-47E1-980B-89302641247A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{70E6B0F8-1CAC-4358-A04C-6B245B81119B}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradeProject-Angular", "GradeProject-Angular\", "{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_51572"
-		Debug.AspNetCompiler.PhysicalPath = "GradeProject-Web\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51572\"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53086"
+		Debug.AspNetCompiler.PhysicalPath = "GradeProject-Angular\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53086\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_51572"
-		Release.AspNetCompiler.PhysicalPath = "GradeProject-Web\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51572\"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53086"
+		Release.AspNetCompiler.PhysicalPath = "GradeProject-Angular\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53086\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "51572"
-		SlnRelativePath = "GradeProject-Web\"
+		VWDPort = "53086"
+		SlnRelativePath = "GradeProject-Angular\"
+		StartServerOnDebug = "false"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client - Angular", "Web Client - Angular", "{2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth Service", "Auth Service", "{2638D681-4D50-4AA3-AD6E-52E7297CA70C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Score Service", "Score Service", "{EF1A5FA5-A390-45CA-B525-559E81072CE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.AuthService", "GradeProject.AuthService\GradeProject.AuthService.csproj", "{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4D003403-E944-4C24-9E4E-DD5339C14275}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.GameCatalogService", "GradeProject.GameCatalogService\GradeProject.GameCatalogService.csproj", "{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.CommandBusInterfaces", "GradeProject.CommandBusInterfaces\GradeProject.CommandBusInterfaces.csproj", "{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeProject.ProfileService", "GradeProject.ProfileService\GradeProject.ProfileService.csproj", "{7727124F-0835-4017-A5B0-F35348F0F071}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profile Service", "Profile Service", "{D3D60674-A9D0-4D43-8F87-C8419AF807DD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Catalog Service", "Game Catalog Service", "{5E730C81-6181-45CB-B4E3-017B029B318C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.MVCWeb", "GradeProject.MVCWeb\GradeProject.MVCWeb.csproj", "{00546911-06AF-472F-B563-FBD455DE0DF6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Client - MVC", "Web Client - MVC", "{4B70FF24-21C6-44CD-80C4-0B18868D9794}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Registration Service", "Game Registration Service", "{6BCA6DAF-9FFF-4195-AD41-6B2EB0861F9C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.GameRegService", "GradeProject.GameRegService\GradeProject.GameRegService.csproj", "{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeProject.ScoreService", "GradeProject.ScoreService\GradeProject.ScoreService.csproj", "{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,43 +53,43 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{78B87DE8-A66A-4309-AD58-2D8FF08434C1}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7727124F-0835-4017-A5B0-F35348F0F071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7727124F-0835-4017-A5B0-F35348F0F071}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7727124F-0835-4017-A5B0-F35348F0F071}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00546911-06AF-472F-B563-FBD455DE0DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00546911-06AF-472F-B563-FBD455DE0DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00546911-06AF-472F-B563-FBD455DE0DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00546911-06AF-472F-B563-FBD455DE0DF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB436A7B-BC21-4C81-8313-0804414B7C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{78B87DE8-A66A-4309-AD58-2D8FF08434C1} = {2F3E4652-FE13-4D4F-A1A6-4DE81E23764B}
-		{48FFEDDD-BD95-44E6-8D5D-7D0B669951AD} = {2638D681-4D50-4AA3-AD6E-52E7297CA70C}
-		{A3AE3F75-21D9-4621-A8B9-E6405E73C6F5} = {5E730C81-6181-45CB-B4E3-017B029B318C}
-		{7727124F-0835-4017-A5B0-F35348F0F071} = {D3D60674-A9D0-4D43-8F87-C8419AF807DD}
-		{00546911-06AF-472F-B563-FBD455DE0DF6} = {4B70FF24-21C6-44CD-80C4-0B18868D9794}
-		{6965EE43-E488-46C8-9A0B-B5974E5A9D3D} = {6BCA6DAF-9FFF-4195-AD41-6B2EB0861F9C}
+		{F04A28D9-4EAD-49C5-AB74-922E9210FEC4} = {5A147F73-0027-47E1-980B-89302641247A}
+		{FB436A7B-BC21-4C81-8313-0804414B7C59} = {70E6B0F8-1CAC-4358-A04C-6B245B81119B}
+		{F0FD8B15-BC7C-4A91-BF7B-CE42EA61869E} = {C2373DEB-7BA1-4BF7-AAC0-886D955A3EA7}
+		{7CDCD4E3-DBA3-487B-8D69-AA8895AE2A50} = {D98D35DD-D272-4FA9-87CC-0CA5E6359C24}
+		{B34BC589-F8E0-450E-9F7B-189CDB99CFCC} = {4D003403-E944-4C24-9E4E-DD5339C14275}
+		{0EE425A3-9FA6-4056-8A4C-3D9F182E8631} = {EF1A5FA5-A390-45CA-B525-559E81072CE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {42482759-E2C3-4B02-BE1C-96D10B803BC0}
+		SolutionGuid = {8CA0C458-0100-4B66-8FE3-116342A3A6F8}
 	EndGlobalSection
 EndGlobal

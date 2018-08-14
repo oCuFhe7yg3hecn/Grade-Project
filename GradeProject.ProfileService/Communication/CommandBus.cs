@@ -10,18 +10,19 @@ namespace GradeProject.ProfileService.Communication
 {
     public class CommandBus : ICommandBus
     {
-        public IContainer DependencyResolver { get; set; }
+        private readonly IComponentContext _componentContext;
 
-        public CommandBus()
+        public CommandBus(IComponentContext componentContext)
         {
+            _componentContext = componentContext;
         }
 
         public async Task SubmitAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
             if (command != null)
             {
-                var commandHandler = DependencyResolver.Resolve<ICommandHandler<TCommand>>();
-                if (commandHandler != null) { await commandHandler.ExecuteAsync(command); }
+                var handler = _componentContext.Resolve<ICommandHandler<TCommand>>();
+                if (handler != null) { await handler.ExecuteAsync(command); }
             }
         }
     }
