@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GradeProject.ScoreService.Domain\GradeProject.ScoreService.Domain.csproj" />
+    <ProjectReference Include="..\GradeProject.ScoresService.Repo.Interfaces\GradeProject.ScoresService.Repo.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
