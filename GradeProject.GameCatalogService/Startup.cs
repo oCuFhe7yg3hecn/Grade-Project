@@ -7,7 +7,6 @@ using GradeProject.GameCatalogService.Filters;
 using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -87,6 +86,10 @@ namespace GradeProject.GameCatalogService
             app.UseCors("AllowAll");
 
             app.UseAuthentication();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(cfg => cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 
             app.UseMvc(routebuilder =>
             {

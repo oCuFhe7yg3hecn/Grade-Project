@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GradeProject.ProfileService.Models
 {
@@ -33,7 +31,6 @@ namespace GradeProject.ProfileService.Models
 
         }
 
-        //TODO :Change Type
         [Key]
         public Guid Id { get; set; }
 

@@ -15,13 +15,11 @@ export class GamesCatalogComponent implements OnInit {
   constructor(private gamesSvc: GamesService) {}
 
   searchByName(){
-    // this.Games = [];
     this.gamesSvc.GetByName(this.nameFilter).subscribe(res => this.Games = res.value);
   }
 
 
   ngOnInit() {
-    //Should send cards Absolutely
     this.gamesSvc.GetGamesByGenre().subscribe(res => {
       this.Games = res.value;
       console.log(this.Games);

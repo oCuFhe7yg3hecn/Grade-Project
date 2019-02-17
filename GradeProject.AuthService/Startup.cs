@@ -22,7 +22,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GradeProject.AuthService
 {
-    //For reviewers : Поки що весь інмеморі, бо буду писати майже кастомний. Треба більше часу, а ревю вже близбко
     public class Startup
     {
         public Startup(IConfiguration configuration)

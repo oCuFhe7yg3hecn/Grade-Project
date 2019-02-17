@@ -2,8 +2,6 @@ using AutoMapper;
 using GradeProject.GameCatalogService.Infrastructure.Repos;
 using GradeProject.GameCatalogService.Models;
 using GradeProject.GameCatalogService.Models.DTO;
-using GradeProject.GameCatalogService.Models.Exceptions;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +47,5 @@ namespace GradeProject.GameCatalogService.Infrastructure.Services
         }
 
         public async Task RegisterGameAsync(GameInfo newGame) => await _repo.AddOneAsync(newGame);
-
     }
 }

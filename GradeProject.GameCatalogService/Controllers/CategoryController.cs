@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GradeProject.GameCatalogService.Infrastructure;
-using GradeProject.GameCatalogService.Infrastructure.Repos;
+﻿using GradeProject.GameCatalogService.Infrastructure;
 using GradeProject.GameCatalogService.Infrastructure.Services;
-using GradeProject.GameCatalogService.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GradeProject.GameCatalogService.Controllers
 {
@@ -43,7 +38,7 @@ namespace GradeProject.GameCatalogService.Controllers
         public async Task<IActionResult> GetByCategories(string categories, PagingOptions pageOptions)
         {
             var categoriesList = categories.Split(",").Select(x => x.Trim()).ToList();
-            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions); 
+            var gamesResponse = await _gameSvc.GetByCategoriesAsync(categoriesList, pageOptions);
 
             return Ok(gamesResponse);
         }
